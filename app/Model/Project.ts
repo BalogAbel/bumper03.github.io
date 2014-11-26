@@ -31,7 +31,7 @@ module Model {
          */
         schedule() {
 			for(var i: number = 0; i < this.tasks.length; i++) {
-				tasks[i].reset();
+				this.tasks[i].reset();
 			}
             var tasks: HashSet<Schedulable> = this.calculateAllCriticalCosts();
             var orderedTasks: Schedulable[] = [];

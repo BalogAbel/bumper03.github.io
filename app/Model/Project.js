@@ -21,7 +21,7 @@ var Model;
         */
         Project.prototype.schedule = function () {
             for (var i = 0; i < this.tasks.length; i++) {
-                tasks[i].reset();
+                this.tasks[i].reset();
             }
             var tasks = this.calculateAllCriticalCosts();
             var orderedTasks = [];
