@@ -16,7 +16,8 @@ module Model {
      */
     export class Project {
 
-        start: Date;
+		start: Date;
+		finish: Date;
         tasks: Task[];
         workingCalendar: WorkingCalendar;
 
@@ -46,6 +47,11 @@ module Model {
             for(var i: number = 0; i < orderedTasks.length; i++) {
                 orderedTasks[i].calculateTime(this.start);
             }
+			this.finish = new Date(this.start.getTime());
+			for(var i: number = 0; i < this.tasks.length; i++) {
+				if(this.finish.getTime() < this.tasks[i].finish.getTime())
+					this.finish.setTime(this.tasks[i].finish.getTime());
+			}
         }
 
         /**

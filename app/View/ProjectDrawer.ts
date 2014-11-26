@@ -17,13 +17,25 @@ module View {
 		taskDrawers: TaskDrawer[];
 		private static _instance: ProjectDrawer = null;
 
-		constructor() {
+		constructor(project: Project) {
 			ProjectDrawer._instance = this;
+			this.project = project;
+
+			Utils.startDate = new Date(project.start.getTime());
+			Utils.startDate.setDate(Utils.startDate.getDate() - 7);
+
+			Utils.finishDate = new Date(project.finish.getTime());
+			Utils.finishDate.setDate(Utils.finishDate.getDate() + 7);
+
+			$("#timeLineWrapper").animate({
+				scrollLeft: 7 * Utils.dayWidth}, 1);
+
+			this.handleScroll();
+
 		}
 
 		draw() {
 			this.generateTaskDrawers();
-;
 			var taskStage = new Kinetic.Stage({
 				container: 'tasks',
 				width: 400,
@@ -32,10 +44,8 @@ module View {
 			taskStage.clear();
 			TaskDrawer.actualPosition = {x: 0, y: Utils.taskLineHeight};
 
-			Utils.startDate = this.project.start;
-
 			var taskLayer = new Kinetic.Layer();
-			var timeLineLayer = new Kinetic.Layer()
+			var timeLineLayer = new Kinetic.Layer();
 			for(var i: number = 0; i < this.taskDrawers.length; i++) {
 				this.taskDrawers[i].draw(taskLayer, timeLineLayer);
 			}
@@ -43,20 +53,16 @@ module View {
 			taskStage.add(taskLayer);
 			taskStage.height(TaskDrawer.actualPosition.y);
 
-
 			var timeLineStage = new Kinetic.Stage({
 				container: 'timeLine',
-				width: 3000,
+				width: Utils.getCanvasWidth(),
 				height: 100
 			});
 			var timelineDrawer: TimeLineDrawer = new TimeLineDrawer();
 			timelineDrawer.draw(timeLineLayer);
 
 			timeLineStage.add(timeLineLayer);
-
-
 			timeLineStage.height(Utils.getCanvasHeight());
-
 		}
 
 		static refresh() {
@@ -73,45 +79,17 @@ module View {
 			}
 		}
 
-
-		static
-		test(stage: Kinetic.IStage) {
-			var layer = new Kinetic.Layer();
-
-
-			var rect = new Kinetic.Rect({
-				cornerRadius: 10,
-				x: 0,
-				y: 0,
-				width: 100,
-				height: 50,
-				fill: 'green',
-				stroke: 'black',
-				strokeWidth: 1
+		private handleScroll() {
+			var that = this;
+			$("#addBefore").click(function() {
+				Utils.startDate.setDate(Utils.startDate.getDate() - 7 );
+				that.draw();
 			});
-
-			var group = new Kinetic.Group({
-				x: 200,
-				y: 150,
-				draggable: true,
-				dragBoundFunc: function(pos: Kinetic.Vector2d) {
-					var y: number = this.getAbsolutePosition().y;
-					return {
-						x: pos.x,
-						y: y
-					};
-				}
+			$("#addAfter").click(function() {
+				Utils.finishDate.setDate(Utils.finishDate.getDate() + 7 );
+				that.draw();
 			});
-
-			var taskName = new Kinetic.Text({
-				name: 'TaskName',
-				text: 'Sample task name',
-			});
-
-			group.add(rect);
-			group.add(taskName);
-			layer.add(group);
-			stage.add(layer);
 		}
+
 	}
 }

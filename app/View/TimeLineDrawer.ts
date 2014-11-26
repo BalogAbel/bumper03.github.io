@@ -11,16 +11,16 @@ module View {
 
         draw(layer: Kinetic.ILayer) {
             if(TimeLineDrawer.sampleDay == null) this.createSample();
-            for(var i: number = 0; i < 20; i++) {
-                var date: Date = new Date();
-                date.setDate(date.getDate() + i);
+			var date: Date = new Date(Utils.startDate.getTime());
+            for(var i: number = 0; date.getTime() < Utils.finishDate.getTime(); i++) {
                 var node: Kinetic.IGroup = <Kinetic.IGroup>TimeLineDrawer.sampleDay.clone({});
                 var dateText = <Kinetic.IText>node.find('.Date')[0];
                 dateText.name("taskdate" + date.getTime());
                 dateText.setText(date.getMonth()+1 + ". " + this.padding(date.getDate(), 2)+ ".");
                 node.setPosition({x: Utils.dayWidth * i, y: node.getPosition().y});
-
                 layer.add(node);
+
+				date.setDate(date.getDate() + 1);
             }
         }
 

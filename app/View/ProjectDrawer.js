@@ -12,12 +12,22 @@ var View;
     var Utils = View.Utils;
 
     var ProjectDrawer = (function () {
-        function ProjectDrawer() {
+        function ProjectDrawer(project) {
             ProjectDrawer._instance = this;
+            this.project = project;
+
+            Utils.startDate = new Date(project.start.getTime());
+            Utils.startDate.setDate(Utils.startDate.getDate() - 7);
+
+            Utils.finishDate = new Date(project.finish.getTime());
+            Utils.finishDate.setDate(Utils.finishDate.getDate() + 7);
+
+            $("#timeLineWrapper").animate({ scrollLeft: 7 * Utils.dayWidth }, 1);
+
+            this.handleScroll();
         }
         ProjectDrawer.prototype.draw = function () {
             this.generateTaskDrawers();
-            ;
             var taskStage = new Kinetic.Stage({
                 container: 'tasks',
                 width: 400,
@@ -25,8 +35,6 @@ var View;
             });
             taskStage.clear();
             TaskDrawer.actualPosition = { x: 0, y: Utils.taskLineHeight };
-
-            Utils.startDate = this.project.start;
 
             var taskLayer = new Kinetic.Layer();
             var timeLineLayer = new Kinetic.Layer();
@@ -39,14 +47,13 @@ var View;
 
             var timeLineStage = new Kinetic.Stage({
                 container: 'timeLine',
-                width: 3000,
+                width: Utils.getCanvasWidth(),
                 height: 100
             });
             var timelineDrawer = new TimeLineDrawer();
             timelineDrawer.draw(timeLineLayer);
 
             timeLineStage.add(timeLineLayer);
-
             timeLineStage.height(Utils.getCanvasHeight());
         };
 
@@ -64,42 +71,16 @@ var View;
             }
         };
 
-        ProjectDrawer.test = function (stage) {
-            var layer = new Kinetic.Layer();
-
-            var rect = new Kinetic.Rect({
-                cornerRadius: 10,
-                x: 0,
-                y: 0,
-                width: 100,
-                height: 50,
-                fill: 'green',
-                stroke: 'black',
-                strokeWidth: 1
+        ProjectDrawer.prototype.handleScroll = function () {
+            var that = this;
+            $("#addBefore").click(function () {
+                Utils.startDate.setDate(Utils.startDate.getDate() - 7);
+                that.draw();
             });
-
-            var group = new Kinetic.Group({
-                x: 200,
-                y: 150,
-                draggable: true,
-                dragBoundFunc: function (pos) {
-                    var y = this.getAbsolutePosition().y;
-                    return {
-                        x: pos.x,
-                        y: y
-                    };
-                }
+            $("#addAfter").click(function () {
+                Utils.finishDate.setDate(Utils.finishDate.getDate() + 7);
+                that.draw();
             });
-
-            var taskName = new Kinetic.Text({
-                name: 'TaskName',
-                text: 'Sample task name'
-            });
-
-            group.add(rect);
-            group.add(taskName);
-            layer.add(group);
-            stage.add(layer);
         };
         ProjectDrawer._instance = null;
         return ProjectDrawer;

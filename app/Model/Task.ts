@@ -76,9 +76,10 @@ module Model {
 		}
 
 		getEarliestStartConstraint(): Date {
-			if(this.parent != null && this.earliestStartConstraint != null) {
+			if(this.parent != null) {
 				var parentDate: Date = this.parent.getEarliestStartConstraint();
-				if(parentDate != null && parentDate.getTime() > this.earliestStartConstraint.getTime()) {
+				if(this.earliestStartConstraint == null ||
+					(parentDate != null && parentDate.getTime() > this.earliestStartConstraint.getTime())) {
 					return parentDate;
 				}
 			}

@@ -2,54 +2,60 @@
 
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <title>TypeScript HTML App</title>
-    <link rel="stylesheet" href="app.css"/>
+	<meta charset="utf-8"/>
+	<title>TypeScript HTML App</title>
+	<link rel="stylesheet" href="app.css"/>
 
-    <script src="lib/jquery.js"></script>
-    <script src="lib/kineticjs.js"></script>
+	<script src="lib/jquery.js"></script>
+	<script src="lib/kineticjs.js"></script>
+	<script src="lib/jquery-resize.js"></script>
 
-    <script src="app/Util/Hashable.js"></script>
-    <script src="app/Util/HashSet.js"></script>
-    <script src="app/Util/IInterval.js"></script>
-    <script src="app/Util/IComparable.js"></script>
-    <script src="app/Util/IntervalOverlapError.js"></script>
-    <script src="app/Util/IntervalList.js"></script>
+	<script src="app/Util/Hashable.js"></script>
+	<script src="app/Util/HashSet.js"></script>
+	<script src="app/Util/IInterval.js"></script>
+	<script src="app/Util/IComparable.js"></script>
+	<script src="app/Util/IntervalOverlapError.js"></script>
+	<script src="app/Util/IntervalList.js"></script>
 
-    <script src="app/Model/WorkingCalendar/Duration.js"></script>
-    <script src="app/Model/WorkingCalendar/IntervalBounderiesError.js"></script>
-    <script src="app/Model/WorkingCalendar/WorkingHour.js"></script>
-    <script src="app/Model/WorkingCalendar/WorkingDay.js"></script>
-    <script src="app/Model/WorkingCalendar/Exclusion.js"></script>
-    <script src="app/Model/WorkingCalendar/WorkingCalendar.js"></script>
+	<script src="app/Model/WorkingCalendar/Duration.js"></script>
+	<script src="app/Model/WorkingCalendar/IntervalBounderiesError.js"></script>
+	<script src="app/Model/WorkingCalendar/WorkingHour.js"></script>
+	<script src="app/Model/WorkingCalendar/WorkingDay.js"></script>
+	<script src="app/Model/WorkingCalendar/Exclusion.js"></script>
+	<script src="app/Model/WorkingCalendar/WorkingCalendar.js"></script>
 
 
-    <script src="app/Model/Task.js"></script>
-    <script src="app/Model/Dependency.js"></script>
-    <script src="app/Model/Summary.js"></script>
-    <script src="app/Model/Schedulable.js"></script>
-    <script src="app/Model/Project.js"></script>
+	<script src="app/Model/Task.js"></script>
+	<script src="app/Model/Dependency.js"></script>
+	<script src="app/Model/Summary.js"></script>
+	<script src="app/Model/Schedulable.js"></script>
+	<script src="app/Model/Project.js"></script>
 
-    <script src="app/Util/ProjectGenerator.js"></script>
+	<script src="app/Util/ProjectGenerator.js"></script>
 
-    <script src="app/View/Utils.js"></script>
-    <script src="app/View/TimeLineDrawer.js"></script>
-    <script src="app/View/TaskDrawer.js"></script>
-    <script src="app/View/SchedulableDrawer.js"></script>
-    <script src="app/View/SummaryDrawer.js"></script>
-    <script src="app/View/TaskDrawerFactory.js"></script>
-    <script src="app/View/ProjectDrawer.js"></script>
+	<script src="app/View/Utils.js"></script>
+	<script src="app/View/TimeLineDrawer.js"></script>
+	<script src="app/View/TaskDrawer.js"></script>
+	<script src="app/View/SchedulableDrawer.js"></script>
+	<script src="app/View/SummaryDrawer.js"></script>
+	<script src="app/View/TaskDrawerFactory.js"></script>
+	<script src="app/View/ProjectDrawer.js"></script>
 
-    <script src="app.js"></script>
+	<script src="app.js"></script>
 </head>
 <body>
 
 <h1>TypeScript HTML App</h1>
 
 <div id="taskWrapper">
-    <span id="tasks"></span>
-</div><div id="timeLineWrapper"/>
-<span id="timeLine"></span>
+	<span id="tasks"></span>
+</div><div id="timeLineWrapper">
+	<span id="timeLine"></span>
+</div>
+<span id="arrows">
+	<span id="addBefore"><<</span>
+	<span id="addAfter">>></span>
+</span>
 
 </body>
 </html>

@@ -29,8 +29,13 @@ module View {
 			layer.add(node);
 
 			var line: Kinetic.IGroup = <Kinetic.IGroup>TaskDrawer.taskTimeLineSample.clone({});
-
+			var taskLine = <Kinetic.ILine>line.find('.TaskLine')[0];
+			taskLine.setPoints([
+				0, 0,
+				Utils.getCanvasWidth(), 0
+			]);
 			line.setPosition({x: 0, y: TaskDrawer.actualPosition.y});
+
 			timeLineLayer.add(line);
 
 			TaskDrawer.actualPosition.y += Utils.taskLineHeight;
@@ -64,7 +69,7 @@ module View {
 				y: 0,
 				points: [
 					0, 0,
-					Utils.getTimeLineWidth(), 0
+					Utils.getCanvasWidth(), 0
 				]
 			});
 
@@ -86,7 +91,7 @@ module View {
 				y: 0,
 				points: [
 					0, 0,
-					Utils.getTimeLineWidth(), 0
+					Utils.getCanvasWidth(), 0
 				]
 			});
 

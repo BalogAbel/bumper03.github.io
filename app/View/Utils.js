@@ -21,9 +21,14 @@ var View;
             var time = (position / this.dayWidth) * 24 * 60 * 60 * 1000;
             return new Date(this.startDate.getTime() + Math.round(time));
         };
+
+        Utils.getCanvasWidth = function () {
+            return Math.ceil((Utils.finishDate.getTime() - Utils.startDate.getTime()) / 1000 / 60 / 60 / 24) * Utils.dayWidth;
+        };
         Utils.taskLineHeight = 30;
         Utils.dayWidth = 100;
         Utils.startDate = new Date();
+        Utils.finishDate = new Date();
         return Utils;
     })();
     View.Utils = Utils;

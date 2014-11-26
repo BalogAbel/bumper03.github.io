@@ -15,9 +15,13 @@ module app {
             var project:Project = (new ProjectGenerator()).generateProject();
             project.schedule();
             console.log(project);
-            var projectDrawer: ProjectDrawer = new ProjectDrawer();
-            projectDrawer.project = project;
+            var projectDrawer: ProjectDrawer = new ProjectDrawer(project);
             projectDrawer.draw();
+
+			$("#taskWrapper").resize(function() {
+				var margin: number = 66 + $(this).width();
+				$("#arrows").css("margin-left", margin+"px");
+			});
 
 
         }

@@ -59,9 +59,9 @@ var Model;
         };
 
         Task.prototype.getEarliestStartConstraint = function () {
-            if (this.parent != null && this.earliestStartConstraint != null) {
+            if (this.parent != null) {
                 var parentDate = this.parent.getEarliestStartConstraint();
-                if (parentDate != null && parentDate.getTime() > this.earliestStartConstraint.getTime()) {
+                if (this.earliestStartConstraint == null || (parentDate != null && parentDate.getTime() > this.earliestStartConstraint.getTime())) {
                     return parentDate;
                 }
             }

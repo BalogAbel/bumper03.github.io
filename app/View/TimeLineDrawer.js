@@ -11,16 +11,16 @@ var View;
         TimeLineDrawer.prototype.draw = function (layer) {
             if (TimeLineDrawer.sampleDay == null)
                 this.createSample();
-            for (var i = 0; i < 20; i++) {
-                var date = new Date();
-                date.setDate(date.getDate() + i);
+            var date = new Date(Utils.startDate.getTime());
+            for (var i = 0; date.getTime() < Utils.finishDate.getTime(); i++) {
                 var node = TimeLineDrawer.sampleDay.clone({});
                 var dateText = node.find('.Date')[0];
                 dateText.name("taskdate" + date.getTime());
                 dateText.setText(date.getMonth() + 1 + ". " + this.padding(date.getDate(), 2) + ".");
                 node.setPosition({ x: Utils.dayWidth * i, y: node.getPosition().y });
-
                 layer.add(node);
+
+                date.setDate(date.getDate() + 1);
             }
         };
 

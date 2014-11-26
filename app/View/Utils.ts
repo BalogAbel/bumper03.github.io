@@ -5,6 +5,7 @@ module View {
 		static taskLineHeight: number = 30;
 		static dayWidth: number = 100;
 		static startDate: Date = new Date();
+		static finishDate: Date = new Date();
 
 		static getTimeLineWidth(): number {
 			return $("#timeLineWrapper").width();
@@ -22,6 +23,10 @@ module View {
 		static positionToDate(position: number): Date {
 			var time: number = (position / this.dayWidth) * 24 * 60 * 60 * 1000;
 			return new Date(this.startDate.getTime() + Math.round(time));
+		}
+
+		static getCanvasWidth(): number {
+			return Math.ceil((Utils.finishDate.getTime() - Utils.startDate.getTime()) / 1000 / 60 / 60 / 24) * Utils.dayWidth;
 		}
 
 

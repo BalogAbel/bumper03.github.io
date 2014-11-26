@@ -1,6 +1,6 @@
 #taskWrapper {
     display: inline-block;
-    margin: 50px 0 50px 50px;
+    margin: 50px 0 0 50px;
     padding: 10px 0 10px 10px;
     overflow: hidden;
     width: 200px;
@@ -11,7 +11,7 @@
 }
 #timeLineWrapper {
     display: inline-block;
-    margin: 50px 50px 50px 0;
+    margin: 50px 50px 0 0;
     padding: 10px 10px 10px 0;
     width: 1000px;
     overflow-x: scroll;
@@ -22,4 +22,19 @@
 
 body {
     width: 2000px;
+}
+
+#arrows{
+	margin-left: 266px;
+	display: inline-block;
+	width: 1000px;
+}
+
+#addBefore {
+	display: inline-block;
+	float: left;
+}
+#addAfter {
+	display: inline-block;
+	float: right;
 }
