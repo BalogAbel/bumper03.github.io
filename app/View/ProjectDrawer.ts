@@ -1,4 +1,6 @@
 ///<reference path='../../lib/kineticjs.d.ts'/>
+///<reference path='../../lib/jquery.d.ts'/>
+///<reference path='../../lib/jqueryui.d.ts'/>
 ///<reference path='../Model/Project.ts'/>
 ///<reference path='TaskDrawer.ts'/>
 ///<reference path='TaskDrawerFactory.ts'/>
@@ -31,6 +33,8 @@ module View {
 				scrollLeft: 7 * Utils.dayWidth}, 1);
 
 			this.handleScroll();
+			this.handleAddDates();
+			this.handleZoom();
 
 		}
 
@@ -42,7 +46,7 @@ module View {
 				height: 100
 			});
 			taskStage.clear();
-			TaskDrawer.actualPosition = {x: 0, y: Utils.taskLineHeight};
+			TaskDrawer.actualPosition = {x: 0, y: Utils.taskLineHeight*1.5};
 
 			var taskLayer = new Kinetic.Layer();
 			var timeLineLayer = new Kinetic.Layer();
@@ -81,6 +85,14 @@ module View {
 
 		private handleScroll() {
 			var that = this;
+		}
+
+		private getCenterDate() {
+
+		}
+
+		private handleAddDates() {
+			var that = this;
 			$("#addBefore").click(function() {
 				Utils.startDate.setDate(Utils.startDate.getDate() - 7 );
 				that.draw();
@@ -89,6 +101,14 @@ module View {
 				Utils.finishDate.setDate(Utils.finishDate.getDate() + 7 );
 				that.draw();
 			});
+		}
+
+		private handleZoom() {
+			var that = this;
+			$("#slider").on("slidechange", function(evt: JQueryEventObject, ui) {
+				Utils.dayWidth = ui.value;
+				that.draw();
+			})
 		}
 
 	}

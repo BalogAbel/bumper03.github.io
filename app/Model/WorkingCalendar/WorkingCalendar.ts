@@ -60,5 +60,9 @@ module Model.WorkingCalendar {
 			}
 			return this.normalWorkingDay;
 		}
+
+		isWorkingDay(date: Date): boolean {
+			return this.workingDays[date.getDay()];
+		}
 	}
 }

@@ -50,6 +50,10 @@ var Model;
                 }
                 return this.normalWorkingDay;
             };
+
+            WorkingCalendar.prototype.isWorkingDay = function (date) {
+                return this.workingDays[date.getDay()];
+            };
             WorkingCalendar._instance = null;
             return WorkingCalendar;
         })();

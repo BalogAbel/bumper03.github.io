@@ -25,6 +25,13 @@ var View;
         Utils.getCanvasWidth = function () {
             return Math.ceil((Utils.finishDate.getTime() - Utils.startDate.getTime()) / 1000 / 60 / 60 / 24) * Utils.dayWidth;
         };
+
+        Utils.getZoomLevel = function () {
+            if (Utils.dayWidth > 300)
+                return 1;
+
+            return 0;
+        };
         Utils.taskLineHeight = 30;
         Utils.dayWidth = 100;
         Utils.startDate = new Date();

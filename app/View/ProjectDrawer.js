@@ -1,4 +1,6 @@
 ///<reference path='../../lib/kineticjs.d.ts'/>
+///<reference path='../../lib/jquery.d.ts'/>
+///<reference path='../../lib/jqueryui.d.ts'/>
 ///<reference path='../Model/Project.ts'/>
 ///<reference path='TaskDrawer.ts'/>
 ///<reference path='TaskDrawerFactory.ts'/>
@@ -25,6 +27,8 @@ var View;
             $("#timeLineWrapper").animate({ scrollLeft: 7 * Utils.dayWidth }, 1);
 
             this.handleScroll();
+            this.handleAddDates();
+            this.handleZoom();
         }
         ProjectDrawer.prototype.draw = function () {
             this.generateTaskDrawers();
@@ -34,7 +38,7 @@ var View;
                 height: 100
             });
             taskStage.clear();
-            TaskDrawer.actualPosition = { x: 0, y: Utils.taskLineHeight };
+            TaskDrawer.actualPosition = { x: 0, y: Utils.taskLineHeight * 1.5 };
 
             var taskLayer = new Kinetic.Layer();
             var timeLineLayer = new Kinetic.Layer();
@@ -73,12 +77,27 @@ var View;
 
         ProjectDrawer.prototype.handleScroll = function () {
             var that = this;
+        };
+
+        ProjectDrawer.prototype.getCenterDate = function () {
+        };
+
+        ProjectDrawer.prototype.handleAddDates = function () {
+            var that = this;
             $("#addBefore").click(function () {
                 Utils.startDate.setDate(Utils.startDate.getDate() - 7);
                 that.draw();
             });
             $("#addAfter").click(function () {
                 Utils.finishDate.setDate(Utils.finishDate.getDate() + 7);
+                that.draw();
+            });
+        };
+
+        ProjectDrawer.prototype.handleZoom = function () {
+            var that = this;
+            $("#slider").on("slidechange", function (evt, ui) {
+                Utils.dayWidth = ui.value;
                 that.draw();
             });
         };

@@ -42,11 +42,11 @@ module View {
 
 		}
 
-
 		createSamples() {
 			this.createTaskNameSample();
 			this.createTaskTimeLineSample();
 		}
+
 
 		createTaskNameSample() {
 			TaskDrawer.taskNameSample = new Kinetic.Group({

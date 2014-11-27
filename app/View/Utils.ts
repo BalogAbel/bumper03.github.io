@@ -29,6 +29,12 @@ module View {
 			return Math.ceil((Utils.finishDate.getTime() - Utils.startDate.getTime()) / 1000 / 60 / 60 / 24) * Utils.dayWidth;
 		}
 
+		static getZoomLevel(): number {
+			if(Utils.dayWidth > 300) return 1;
+
+			return 0;
+		}
+
 
 	}
 }
