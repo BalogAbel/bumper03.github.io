@@ -1,8 +1,9 @@
 ///<reference path='Dependency.ts'/>
 ///<reference path='Schedulable.ts'/>
+///<reference path='Summary.ts'/>
+///<reference path='Resources/ResourceUsage.ts'/>
 ///<reference path='../Util/Hashable.ts'/>
 ///<reference path='../Util/HashSet.ts'/>
-///<reference path='Summary.ts'/>
 var Model;
 (function (Model) {
     var HashSet = Util.HashSet;
@@ -14,6 +15,7 @@ var Model;
             this.successors = [];
             this.parent = null;
             this.earliestStartConstraint = null;
+            this.resourceUsages = [];
         }
         Task.prototype.reset = function () {
             this.start = null;
@@ -25,10 +27,10 @@ var Model;
         };
 
         /**
-        * Returns the task's dependencies, not including transitive dependencies
+        * Returns the task's predecessors, not including transitive predecessors
         * @returns {Dependency[]}
         */
-        Task.prototype.getDependencies = function () {
+        Task.prototype.getPredecessors = function () {
             var result = [];
             var that = this;
             for (var i = 0; i < this.predecessors.length; i++) {
@@ -42,7 +44,7 @@ var Model;
                 });
             }
             if (this.parent != null) {
-                var deps = this.parent.getDependencies();
+                var deps = this.parent.getPredecessors();
                 for (var i = 0; i < deps.length; i++) {
                     result.push(deps[i]);
                 }
@@ -50,8 +52,30 @@ var Model;
             return result;
         };
 
-        Task.prototype.getCriticalCost = function () {
-            return null;
+        /**
+        * Returns the task's successors, not including transitive successors
+        * @returns {Dependency[]}
+        */
+        Task.prototype.getSuccessors = function () {
+            var result = [];
+            var that = this;
+            for (var i = 0; i < this.successors.length; i++) {
+                var subTasks = this.successors[i].task.getSubTasks();
+                subTasks.each(function (task) {
+                    var dep = new Model.Dependency();
+                    dep.task = task;
+                    dep.lag = that.successors[i].lag;
+                    result.push(dep);
+                    return true;
+                });
+            }
+            if (this.parent != null) {
+                var deps = this.parent.getSuccessors();
+                for (var i = 0; i < deps.length; i++) {
+                    result.push(deps[i]);
+                }
+            }
+            return result;
         };
 
         Task.prototype.hash = function () {
@@ -66,6 +90,14 @@ var Model;
                 }
             }
             return this.earliestStartConstraint;
+        };
+
+        Task.prototype.getResourceUsages = function () {
+            var result = this.resourceUsages;
+            if (this.parent != null) {
+                result = result.concat(this.parent.getResourceUsages());
+            }
+            return result;
         };
         return Task;
     })();

@@ -54,6 +54,10 @@ var Util;
         HashSet.prototype.length = function () {
             return this._length;
         };
+
+        HashSet.prototype.toArray = function () {
+            return this.set;
+        };
         return HashSet;
     })();
     Util.HashSet = HashSet;

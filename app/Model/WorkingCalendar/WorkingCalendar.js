@@ -18,41 +18,57 @@ var Model;
             };
 
             WorkingCalendar.prototype.add = function (date, duration) {
-                this.addMinutes(date, duration.getCost());
+                var result = new Date(date.getTime());
+                this.addMinutes(result, duration.getCost());
+                return result;
             };
 
-            WorkingCalendar.prototype.addDate = function (date, addDate) {
-                this.addMinutes(date, Math.floor(addDate.getTime() / 1000 / 60));
+            WorkingCalendar.prototype.subTract = function (date, duration) {
+                var result = new Date(date.getTime());
+                this.addMinutes(result, duration.getCost(), true);
+                return result;
             };
 
-            WorkingCalendar.prototype.addMinutes = function (date, remainingMinutes) {
+            WorkingCalendar.prototype.addMinutes = function (date, remainingMinutes, backward) {
+                if (typeof backward === "undefined") { backward = false; }
                 while (remainingMinutes != 0) {
-                    remainingMinutes = this.getActualWorkingDay(date).add(date, remainingMinutes);
+                    var workingDay = this.getActualWorkingDay(date, backward);
+                    remainingMinutes = backward ? workingDay.subtract(date, remainingMinutes) : workingDay.add(date, remainingMinutes);
                     if (remainingMinutes != 0) {
-                        date.setDate(date.getDate() + 1);
-                        date.setHours(0, 0, 0, 0);
+                        this.setToNextDay(date, backward);
                     }
                 }
             };
 
-            WorkingCalendar.prototype.setToWorkingPeriod = function (date) {
-                if (this.getActualWorkingDay(date).isEnd(date)) {
-                    date.setDate(date.getDate() + 1);
-                    date.setHours(0, 0, 0, 0);
+            WorkingCalendar.prototype.setToWorkingPeriod = function (date, backward) {
+                if (typeof backward === "undefined") { backward = false; }
+                if (this.getActualWorkingDay(date, backward).isEnd(date, backward)) {
+                    this.setToNextDay(date, backward);
                 }
-                this.getActualWorkingDay(date).setTimeToPeriod(date);
-            };
-
-            WorkingCalendar.prototype.getActualWorkingDay = function (date) {
-                while (!this.workingDays[date.getDay()]) {
-                    date.setDate(date.getDate() + 1);
-                    date.setHours(0, 0, 0, 0);
-                }
-                return this.normalWorkingDay;
+                this.getActualWorkingDay(date, backward).setTimeToPeriod(date, backward);
             };
 
             WorkingCalendar.prototype.isWorkingDay = function (date) {
                 return this.workingDays[date.getDay()];
+            };
+
+            WorkingCalendar.prototype.getActualWorkingDay = function (date, backward) {
+                if (typeof backward === "undefined") { backward = false; }
+                while (!this.workingDays[date.getDay()]) {
+                    this.setToNextDay(date, backward);
+                }
+                return this.normalWorkingDay;
+            };
+
+            WorkingCalendar.prototype.setToNextDay = function (date, backward) {
+                if (typeof backward === "undefined") { backward = false; }
+                if (backward) {
+                    date.setDate(date.getDate() - 1);
+                    date.setHours(23, 59, 0, 0);
+                } else {
+                    date.setDate(date.getDate() + 1);
+                    date.setHours(0, 0, 0, 0);
+                }
             };
             WorkingCalendar._instance = null;
             return WorkingCalendar;

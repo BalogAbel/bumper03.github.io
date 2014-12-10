@@ -59,6 +59,10 @@ module Util {
             return this._length;
         }
 
+		toArray(): T[] {
+			return this.set;
+		}
+
 
     }
 }

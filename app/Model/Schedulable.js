@@ -12,7 +12,7 @@ var __extends = this.__extends || function (d, b) {
 var Model;
 (function (Model) {
     var WorkingCalendar = Model.WorkingCalendar.WorkingCalendar;
-    var Duration = Model.WorkingCalendar.Duration;
+
     var Task = Model.Task;
 
     var HashSet = Util.HashSet;
@@ -28,50 +28,57 @@ var Model;
             return result;
         };
 
-        Schedulable.prototype.calculateTime = function (projectStartDate) {
-            if (this.criticalCost != null) {
-                var workingCalendar = WorkingCalendar.getWorkingCalendar();
-
-                var dependencies = this.getDependencies();
-                var start = new Date(projectStartDate.getTime());
-                var defaultStart = new Date(projectStartDate.getTime());
-                for (var i = 0; i < dependencies.length; i++) {
-                    var actualDate = new Date(dependencies[i].task.finish.getTime());
-                    workingCalendar.add(actualDate, dependencies[i].lag);
-                    if (actualDate.getTime() > start.getTime())
-                        start.setTime(actualDate.getTime());
-                }
-                var earliestStartConstraint = this.getEarliestStartConstraint();
-                if (earliestStartConstraint != null && earliestStartConstraint.getTime() > start.getTime()) {
-                    start.setTime(earliestStartConstraint.getTime());
-                }
-                workingCalendar.setToWorkingPeriod(start);
-                this.start = new Date(start.getTime());
-                workingCalendar.add(start, this.duration);
-                this.finish = new Date(start.getTime());
-
-                if (this.parent != null) {
-                    this.parent.notifyScheduled(this);
-                }
+        Schedulable.prototype.calculateCriticalCost = function (projectStartDate, predecessors) {
+            if (typeof predecessors === "undefined") { predecessors = null; }
+            if (predecessors == null) {
+                predecessors = this.getPredecessors();
             }
+
+            var workingCalendar = WorkingCalendar.getWorkingCalendar();
+
+            var start = new Date(projectStartDate.getTime());
+            var defaultStart = new Date(projectStartDate.getTime());
+            for (var i = 0; i < predecessors.length; i++) {
+                var actualDate = new Date(predecessors[i].task.earliestFinish.getTime());
+                actualDate = workingCalendar.add(actualDate, predecessors[i].lag);
+                if (actualDate.getTime() > start.getTime())
+                    start.setTime(actualDate.getTime());
+            }
+            var earliestStartConstraint = this.getEarliestStartConstraint();
+            if (earliestStartConstraint != null && earliestStartConstraint.getTime() > start.getTime()) {
+                start.setTime(earliestStartConstraint.getTime());
+            }
+            workingCalendar.setToWorkingPeriod(start);
+            this.earliestStart = new Date(start.getTime());
+            this.earliestFinish = workingCalendar.add(start, this.duration);
         };
 
-        Schedulable.prototype.getCriticalCost = function () {
-            return this.criticalCost;
-        };
+        Schedulable.prototype.calculateLatest = function (projectEndDate) {
+            var successors = this.getSuccessors();
 
-        Schedulable.prototype.calculateCriticalCost = function (dependencies) {
-            if (typeof dependencies === "undefined") { dependencies = null; }
-            var criticalCost = new Duration();
-            if (dependencies == null) {
-                dependencies = this.getDependencies();
+            var workingCalendar = WorkingCalendar.getWorkingCalendar();
+
+            var finish = new Date(projectEndDate.getTime());
+            var defaultFinish = new Date(projectEndDate.getTime());
+            for (var i = 0; i < successors.length; i++) {
+                var actualDate = new Date(successors[i].task.latestStart.getTime());
+                actualDate = workingCalendar.subTract(actualDate, successors[i].lag);
+                if (actualDate.getTime() < finish.getTime())
+                    finish.setTime(actualDate.getTime());
             }
 
-            for (var i = 0; i < dependencies.length; i++) {
-                if (dependencies[i].getCriticalCost().equals(criticalCost) > 0)
-                    criticalCost = dependencies[i].getCriticalCost();
-            }
-            this.criticalCost = criticalCost.add(this.duration);
+            workingCalendar.setToWorkingPeriod(finish, true);
+            this.latestFinish = new Date(finish.getTime());
+            this.latestStart = workingCalendar.subTract(finish, this.duration);
+
+            var predecessors = this.getPredecessors();
+            predecessors.sort(function (a, b) {
+                return b.task.earliestStart.getTime() - a.task.earliestStart.getTime();
+            });
+
+            predecessors.forEach(function (dependency) {
+                dependency.task.calculateLatest(projectEndDate);
+            });
         };
         return Schedulable;
     })(Task);

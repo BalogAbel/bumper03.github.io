@@ -25,44 +25,62 @@ module Model.WorkingCalendar {
 			this.normalWorkingDay = new WorkingDay();
 		}
 
-		add(date: Date, duration: Duration) {
-			this.addMinutes(date, duration.getCost());
+		add(date: Date, duration: Duration): Date {
+			var result = new Date(date.getTime());
+			this.addMinutes(result, duration.getCost());
+			return result;
 
 		}
 
-		addDate(date: Date, addDate: Date) {
-			this.addMinutes(date, Math.floor(addDate.getTime() / 1000 / 60));
+		subTract(date: Date, duration: Duration) {
+			var result = new Date(date.getTime());
+			this.addMinutes(result, duration.getCost(), true);
+			return result;
+
 		}
 
-		private addMinutes(date: Date, remainingMinutes: number) {
+
+		private addMinutes(date: Date, remainingMinutes: number, backward: boolean = false) {
 			while(remainingMinutes != 0) {
-				remainingMinutes = this.getActualWorkingDay(date).add(date, remainingMinutes);
+				var workingDay = this.getActualWorkingDay(date, backward);
+				remainingMinutes = backward
+					? workingDay.subtract(date, remainingMinutes)
+					: workingDay.add(date, remainingMinutes);
 				if(remainingMinutes != 0) {
-					date.setDate(date.getDate() + 1);
-					date.setHours(0, 0, 0, 0);
+					this.setToNextDay(date, backward);
 				}
 			}
 		}
 
-		setToWorkingPeriod(date: Date) {
-			if(this.getActualWorkingDay(date).isEnd(date)) {
-				date.setDate(date.getDate() + 1);
-				date.setHours(0, 0, 0, 0);
+		setToWorkingPeriod(date: Date, backward: boolean = false) {
+			if(this.getActualWorkingDay(date, backward).isEnd(date, backward)) {
+				this.setToNextDay(date, backward);
 			}
-			this.getActualWorkingDay(date).setTimeToPeriod(date);
+			this.getActualWorkingDay(date, backward).setTimeToPeriod(date, backward);
 
-		}
-
-		private getActualWorkingDay(date: Date): WorkingDay {
-			while(!this.workingDays[date.getDay()]) {
-				date.setDate(date.getDate() + 1);
-				date.setHours(0, 0, 0, 0);
-			}
-			return this.normalWorkingDay;
 		}
 
 		isWorkingDay(date: Date): boolean {
 			return this.workingDays[date.getDay()];
 		}
+
+
+		private getActualWorkingDay(date: Date, backward: boolean = false): WorkingDay {
+			while(!this.workingDays[date.getDay()]) {
+				this.setToNextDay(date, backward);
+			}
+			return this.normalWorkingDay;
+		}
+
+		private setToNextDay(date: Date, backward: boolean = false) {
+			if(backward) {
+				date.setDate(date.getDate() - 1);
+				date.setHours(23, 59, 0, 0);
+			} else {
+				date.setDate(date.getDate() + 1);
+				date.setHours(0, 0, 0, 0);
+			}
+		}
+
 	}
 }

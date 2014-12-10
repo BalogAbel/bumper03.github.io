@@ -28,12 +28,17 @@ module View {
                 y: TaskDrawer.actualPosition.y
             });
 
-            var durationRect = <Kinetic.IText>node.find('.durationRect')[0];
+
+            var durationRect = <Kinetic.IRect>node.find('.durationRect')[0];
 			durationRect.setWidth(Utils.dateToPosition(this.getTask().finish) - Utils.dateToPosition(this.getTask().start));
+			if(this.getTask().earliestFinish.getTime() == this.getTask().latestFinish.getTime()) {
+				durationRect.setStroke("red");
+			}
+
 			var that = this;
 			durationRect.on("dragend", function(evt) {
 				that.dragged(evt);
-			})
+			});
 
             timeLineLayer.add(node);
 
@@ -55,7 +60,7 @@ module View {
                 height: Utils.taskLineHeight,
                 fill: '#ADFF85',
                 stroke: 'black',
-                strokeWidth: 1,
+                strokeWidth: 2,
                 draggable: true,
                 dragBoundFunc: function(pos: Kinetic.Vector2d) {
                     var y: number = this.getAbsolutePosition().y;

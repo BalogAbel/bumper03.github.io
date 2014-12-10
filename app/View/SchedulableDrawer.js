@@ -34,6 +34,10 @@ var View;
 
             var durationRect = node.find('.durationRect')[0];
             durationRect.setWidth(Utils.dateToPosition(this.getTask().finish) - Utils.dateToPosition(this.getTask().start));
+            if (this.getTask().earliestFinish.getTime() == this.getTask().latestFinish.getTime()) {
+                durationRect.setStroke("red");
+            }
+
             var that = this;
             durationRect.on("dragend", function (evt) {
                 that.dragged(evt);
@@ -58,7 +62,7 @@ var View;
                 height: Utils.taskLineHeight,
                 fill: '#ADFF85',
                 stroke: 'black',
-                strokeWidth: 1,
+                strokeWidth: 2,
                 draggable: true,
                 dragBoundFunc: function (pos) {
                     var y = this.getAbsolutePosition().y;

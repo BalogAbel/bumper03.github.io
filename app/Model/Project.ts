@@ -1,108 +1,141 @@
 ///<reference path='Task.ts'/>
 ///<reference path='Schedulable.ts'/>
 ///<reference path='Summary.ts'/>
-///<reference path='../Util/HashSet.ts'/>
+///<reference path='Schedulers/Scheduler.ts'/>'/>
+///<reference path='Schedulers/LeastSlackTimeScheduler.ts'/>
 ///<reference path='WorkingCalendar/WorkingCalendar.ts'/>
+///<reference path='../Util/HashSet.ts'/>
 
 module Model {
-    import Schedulable = Model.Schedulable;
-    import Task = Model.Task;
-    import Summary = Model.Summary;
-    import WorkingCalendar = Model.WorkingCalendar.WorkingCalendar;
-    import HashSet = Util.HashSet;
+	import Schedulable = Model.Schedulable;
+	import Task = Model.Task;
+	import Summary = Model.Summary;
+	import Scheduler = Model.Schedulers.Scheduler;
+	import LeastSlackTimeScheduler = Model.Schedulers.LeastSlackTimeScheduler;
+	import WorkingCalendar = Model.WorkingCalendar.WorkingCalendar;
+	import HashSet = Util.HashSet;
 
-    /**
-     *
-     */
-    export class Project {
+	/**
+	 *
+	 */
+	export class Project {
 
 		start: Date;
 		finish: Date;
-        tasks: Task[];
-        workingCalendar: WorkingCalendar;
+		earliestFinish: Date;
+		tasks: Task[];
+		workingCalendar: WorkingCalendar;
+		scheduler: Scheduler;
 
-        constructor() {
-            this.tasks = [];
-            this.start = new Date();
-            this.start.setHours(0,0,0,0);
-        }
+		constructor() {
+			this.tasks = [];
+			this.start = new Date();
+			this.start.setHours(0, 0, 0, 0);
+			this.scheduler = new LeastSlackTimeScheduler();
+		}
 
-        /**
-         *
-         */
-        schedule() {
+		/**
+		 *
+		 */
+		schedule() {
+			var that = this;
+
 			for(var i: number = 0; i < this.tasks.length; i++) {
 				this.tasks[i].reset();
 			}
-            var tasks: HashSet<Schedulable> = this.calculateAllCriticalCosts();
-            var orderedTasks: Schedulable[] = [];
-            tasks.each(function(s: Schedulable): boolean {
-                orderedTasks.push(s);
-                return true;
-            });
-            orderedTasks.sort(function(a: Schedulable, b: Schedulable): number {
-                return a.criticalCost.equals(b.criticalCost);
-            });
+			var tasks = this.collectAllTasks();
+			this.calculateEarliestTimes(tasks);
+			this.calculateLatestTimes(tasks);
 
-            for(var i: number = 0; i < orderedTasks.length; i++) {
-                orderedTasks[i].calculateTime(this.start);
-            }
+
+			this.scheduler.schedule(tasks);
+
 			this.finish = new Date(this.start.getTime());
-			for(var i: number = 0; i < this.tasks.length; i++) {
-				if(this.finish.getTime() < this.tasks[i].finish.getTime())
-					this.finish.setTime(this.tasks[i].finish.getTime());
+			this.tasks.forEach(task => {
+				if(that.finish.getTime() < task.finish.getTime())
+					that.finish.setTime(task.finish.getTime());
+			});
+		}
+
+		/**
+		 *
+		 * @returns {Util.HashSet}
+		 */
+		private calculateEarliestTimes(tasks: Schedulable[]) {
+			this.earliestFinish = new Date(this.start.getTime());
+			var remaining = tasks.slice(0);
+			var completed: Schedulable[] = [];
+			try {
+				while(remaining.length != 0) {
+					var progress: boolean = false;
+					for(var i = remaining.length - 1; i >= 0; i--) {
+						var schedulable = remaining[i];
+						var dependencies: Dependency[] = schedulable.getPredecessors();
+						var containsAll: boolean = true;
+						dependencies.forEach(dependency  => {
+							if(completed.indexOf(<Schedulable>dependency.task) == -1) {
+								containsAll = false;
+							}
+						});
+						if(containsAll) {
+							var index = remaining.indexOf(schedulable);
+							if(index > -1) remaining.splice(index, 1);
+							schedulable.calculateCriticalCost(this.start, dependencies);
+							if(this.earliestFinish.getTime() < schedulable.earliestFinish.getTime()) {
+								this.earliestFinish.setTime(schedulable.earliestFinish.getTime());
+							}
+							progress = true;
+							completed.push(schedulable);
+						}
+					}
+					if(!progress) {
+						throw("Cyclic dependency, algorithm stopped!")
+					}
+				}
+			} catch(err) {
+				alert("Error: " + err);
+				throw err;
 			}
-        }
-
-        /**
-         *
-         * @returns {Util.HashSet}
-         */
-        calculateAllCriticalCosts(): HashSet<Schedulable> {
-            var remaining: HashSet<Schedulable> = this.collectAllTasks();
-            var completed = new HashSet<Schedulable>();
-            try {
-                while (remaining.length() != 0) {
-                    var progress:boolean = false;
-                    remaining.each(function(schedulable: Schedulable): boolean {
-                        var dependencies: Dependency[] = schedulable.getDependencies();
-                        var containsAll: boolean = true;
-                        for(var i: number = 0; i < dependencies.length; i++) {
-                            var sch: Schedulable = <Schedulable>dependencies[i].task
-                            if(!completed.contains(sch)) containsAll = false;
-                        }
-                        if (containsAll) {
-                            remaining.remove(schedulable);
-                            schedulable.calculateCriticalCost(dependencies);
-                            progress = true;
-                            completed.put(schedulable);
-                            return true;
-                        }
-                        if (!progress) {
-                            throw("Cyclic dependency, algorithm stopped!")
-                        }
-                    });
-                }
-            } catch(err) {
-                alert("Error: " + err);
-                throw err;
-            }
-            return completed;
-        }
-
-        /**
-         *
-         * @returns {Util.HashSet}
-         */
-        collectAllTasks():HashSet<Schedulable> {
-            var result = new HashSet<Schedulable>();
-            for (var i:number = 0; i < this.tasks.length; i++) {
-                result.putAll(this.tasks[i].getSubTasks());
-            }
-            return result;
+		}
 
 
-        }
+		/**
+		 *
+		 * @returns {Util.HashSet}
+		 */
+		private calculateLatestTimes(tasks: Schedulable[]) {
+			var endingTasks = this.getEndingTasks(tasks);
+			console.log(endingTasks);
+			var that = this;
+			endingTasks.forEach(task => {
+				task.calculateLatest(that.earliestFinish);
+			});
+		}
 
-    }
+		private getEndingTasks(tasks: Schedulable[]): Schedulable[] {
+			var result: Schedulable[]= tasks.slice(0);
+			tasks.forEach(task => {
+				task.getPredecessors().forEach(pred => {
+					var index = result.indexOf(<Schedulable>pred.task);
+					if(index > -1) result.splice(index, 1);
+				});
+			});
+			return result;
+		}
+
+		/**
+		 *
+		 * @returns {Util.HashSet}
+		 */
+		private collectAllTasks(): Schedulable[] {
+			var result = new HashSet<Schedulable>();
+			for(var i: number = 0; i < this.tasks.length; i++) {
+				result.putAll(this.tasks[i].getSubTasks());
+			}
+			return result.toArray().filter(s => s != undefined);
+		}
+
+
+
+	}
 }

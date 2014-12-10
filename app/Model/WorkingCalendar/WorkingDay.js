@@ -1,9 +1,9 @@
 ///<reference path='WorkingHour.ts'/>
-///<reference path='../../Util/IntervalList.ts'/>
+///<reference path='../../Util/IntervalList/IntervalList.ts'/>
 var Model;
 (function (Model) {
     (function (WorkingCalendar) {
-        var IntervalList = Util.IntervalList;
+        var IntervalList = Util.IntervalList.IntervalList;
         var WorkingDay = (function () {
             function WorkingDay() {
                 this.workingHours = new IntervalList();
@@ -17,12 +17,60 @@ var Model;
                 return remainingMinutes;
             };
 
-            WorkingDay.prototype.isEnd = function (date) {
-                var lastWHour = this.workingHours.last();
-                return ((lastWHour.toHour == date.getHours() && lastWHour.toMinute >= date.getMinutes()) || lastWHour.toHour < date.getHours());
+            WorkingDay.prototype.subtract = function (date, remainingMinutes) {
+                var i = 0;
+                this.workingHours.reverse(function (workingHour) {
+                    remainingMinutes = workingHour.subtract(date, remainingMinutes);
+                    return (remainingMinutes > 0);
+                });
+                return remainingMinutes;
             };
 
-            WorkingDay.prototype.setTimeToPeriod = function (date) {
+            WorkingDay.prototype.isEnd = function (date, backward) {
+                if (typeof backward === "undefined") { backward = false; }
+                if (!backward) {
+                    var lastWHour = this.workingHours.last();
+                    return ((lastWHour.toHour == date.getHours() && lastWHour.toMinute <= date.getMinutes()) || lastWHour.toHour < date.getHours());
+                } else {
+                    var firstWHour = this.workingHours.first();
+                    return ((firstWHour.fromHour == date.getHours() && firstWHour.fromMinute >= date.getMinutes()) || firstWHour.fromHour > date.getHours());
+                }
+            };
+
+            WorkingDay.prototype.setTimeToPeriod = function (date, backward) {
+                if (typeof backward === "undefined") { backward = false; }
+                if (backward) {
+                    this.setTimeToPeriodBackward(date);
+                } else {
+                    this.setTimeToPeriodForward(date);
+                }
+            };
+
+            WorkingDay.prototype.setTimeToPeriodBackward = function (date) {
+                this.workingHours.reverse(function (workingHour) {
+                    var contains = workingHour.contains(date.getHours(), date.getMinutes(), true);
+                    switch (contains) {
+                        case -1:
+                            //continue the iteration
+                            return true;
+                            break;
+                        case 0:
+                            //break the iteration
+                            return false;
+                            break;
+
+                        case 1:
+                            //set to the end of the period, and break the iteration
+                            date.setHours(workingHour.toHour, workingHour.toMinute);
+                            return false;
+                            break;
+                        default:
+                            return true;
+                    }
+                });
+            };
+
+            WorkingDay.prototype.setTimeToPeriodForward = function (date) {
                 this.workingHours.each(function (workingHour) {
                     var contains = workingHour.contains(date.getHours(), date.getMinutes());
                     switch (contains) {

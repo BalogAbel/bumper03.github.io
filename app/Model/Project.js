@@ -1,10 +1,14 @@
 ///<reference path='Task.ts'/>
 ///<reference path='Schedulable.ts'/>
 ///<reference path='Summary.ts'/>
-///<reference path='../Util/HashSet.ts'/>
+///<reference path='Schedulers/Scheduler.ts'/>'/>
+///<reference path='Schedulers/LeastSlackTimeScheduler.ts'/>
 ///<reference path='WorkingCalendar/WorkingCalendar.ts'/>
+///<reference path='../Util/HashSet.ts'/>
 var Model;
 (function (Model) {
+    var LeastSlackTimeScheduler = Model.Schedulers.LeastSlackTimeScheduler;
+
     var HashSet = Util.HashSet;
 
     /**
@@ -15,31 +19,69 @@ var Model;
             this.tasks = [];
             this.start = new Date();
             this.start.setHours(0, 0, 0, 0);
+            this.scheduler = new LeastSlackTimeScheduler();
         }
         /**
         *
         */
         Project.prototype.schedule = function () {
+            var that = this;
+
             for (var i = 0; i < this.tasks.length; i++) {
                 this.tasks[i].reset();
             }
-            var tasks = this.calculateAllCriticalCosts();
-            var orderedTasks = [];
-            tasks.each(function (s) {
-                orderedTasks.push(s);
-                return true;
-            });
-            orderedTasks.sort(function (a, b) {
-                return a.criticalCost.equals(b.criticalCost);
-            });
+            var tasks = this.collectAllTasks();
+            this.calculateEarliestTimes(tasks);
+            this.calculateLatestTimes(tasks);
 
-            for (var i = 0; i < orderedTasks.length; i++) {
-                orderedTasks[i].calculateTime(this.start);
-            }
+            this.scheduler.schedule(tasks);
+
             this.finish = new Date(this.start.getTime());
-            for (var i = 0; i < this.tasks.length; i++) {
-                if (this.finish.getTime() < this.tasks[i].finish.getTime())
-                    this.finish.setTime(this.tasks[i].finish.getTime());
+            this.tasks.forEach(function (task) {
+                if (that.finish.getTime() < task.finish.getTime())
+                    that.finish.setTime(task.finish.getTime());
+            });
+        };
+
+        /**
+        *
+        * @returns {Util.HashSet}
+        */
+        Project.prototype.calculateEarliestTimes = function (tasks) {
+            this.earliestFinish = new Date(this.start.getTime());
+            var remaining = tasks.slice(0);
+            var completed = [];
+            try  {
+                while (remaining.length != 0) {
+                    var progress = false;
+                    for (var i = remaining.length - 1; i >= 0; i--) {
+                        var schedulable = remaining[i];
+                        var dependencies = schedulable.getPredecessors();
+                        var containsAll = true;
+                        dependencies.forEach(function (dependency) {
+                            if (completed.indexOf(dependency.task) == -1) {
+                                containsAll = false;
+                            }
+                        });
+                        if (containsAll) {
+                            var index = remaining.indexOf(schedulable);
+                            if (index > -1)
+                                remaining.splice(index, 1);
+                            schedulable.calculateCriticalCost(this.start, dependencies);
+                            if (this.earliestFinish.getTime() < schedulable.earliestFinish.getTime()) {
+                                this.earliestFinish.setTime(schedulable.earliestFinish.getTime());
+                            }
+                            progress = true;
+                            completed.push(schedulable);
+                        }
+                    }
+                    if (!progress) {
+                        throw ("Cyclic dependency, algorithm stopped!");
+                    }
+                }
+            } catch (err) {
+                alert("Error: " + err);
+                throw err;
             }
         };
 
@@ -47,37 +89,25 @@ var Model;
         *
         * @returns {Util.HashSet}
         */
-        Project.prototype.calculateAllCriticalCosts = function () {
-            var remaining = this.collectAllTasks();
-            var completed = new HashSet();
-            try  {
-                while (remaining.length() != 0) {
-                    var progress = false;
-                    remaining.each(function (schedulable) {
-                        var dependencies = schedulable.getDependencies();
-                        var containsAll = true;
-                        for (var i = 0; i < dependencies.length; i++) {
-                            var sch = dependencies[i].task;
-                            if (!completed.contains(sch))
-                                containsAll = false;
-                        }
-                        if (containsAll) {
-                            remaining.remove(schedulable);
-                            schedulable.calculateCriticalCost(dependencies);
-                            progress = true;
-                            completed.put(schedulable);
-                            return true;
-                        }
-                        if (!progress) {
-                            throw ("Cyclic dependency, algorithm stopped!");
-                        }
-                    });
-                }
-            } catch (err) {
-                alert("Error: " + err);
-                throw err;
-            }
-            return completed;
+        Project.prototype.calculateLatestTimes = function (tasks) {
+            var endingTasks = this.getEndingTasks(tasks);
+            console.log(endingTasks);
+            var that = this;
+            endingTasks.forEach(function (task) {
+                task.calculateLatest(that.earliestFinish);
+            });
+        };
+
+        Project.prototype.getEndingTasks = function (tasks) {
+            var result = tasks.slice(0);
+            tasks.forEach(function (task) {
+                task.getPredecessors().forEach(function (pred) {
+                    var index = result.indexOf(pred.task);
+                    if (index > -1)
+                        result.splice(index, 1);
+                });
+            });
+            return result;
         };
 
         /**
@@ -89,7 +119,9 @@ var Model;
             for (var i = 0; i < this.tasks.length; i++) {
                 result.putAll(this.tasks[i].getSubTasks());
             }
-            return result;
+            return result.toArray().filter(function (s) {
+                return s != undefined;
+            });
         };
         return Project;
     })();

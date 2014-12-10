@@ -11,10 +11,6 @@ var Model;
         function Dependency() {
             this.lag = new Duration();
         }
-        Dependency.prototype.getCriticalCost = function () {
-            return this.task.getCriticalCost().add(this.lag);
-        };
-
         Dependency.prototype.hash = function () {
             return this.id;
         };

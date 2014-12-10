@@ -1,13 +1,15 @@
 ///<reference path='Dependency.ts'/>
 ///<reference path='Schedulable.ts'/>
+///<reference path='Summary.ts'/>
+///<reference path='Resources/ResourceUsage.ts'/>
 ///<reference path='../Util/Hashable.ts'/>
 ///<reference path='../Util/HashSet.ts'/>
-///<reference path='Summary.ts'/>
 
 module Model {
 	import Dependency = Model.Dependency;
 	import Schedulable = Model.Schedulable;
 	import Summary = Model.Summary;
+	import ResourceUsage = Model.Resources.ResourceUsage;
 	import HashSet = Util.HashSet;
 	import Hashable = Util.Hashable;
 
@@ -18,18 +20,20 @@ module Model {
 
 		name: string;
 		description: string;
-		successors: Task[];
+		successors: Dependency[];
 		predecessors: Dependency[];
 		parent: Summary;
 		start: Date;
 		finish: Date;
 		earliestStartConstraint: Date;
+		resourceUsages: ResourceUsage[];
 
 		constructor() {
 			this.predecessors = [];
 			this.successors = [];
 			this.parent = null;
 			this.earliestStartConstraint = null;
+			this.resourceUsages = [];
 		}
 
 		reset() {
@@ -42,10 +46,10 @@ module Model {
 		}
 
 		/**
-		 * Returns the task's dependencies, not including transitive dependencies
+		 * Returns the task's predecessors, not including transitive predecessors
 		 * @returns {Dependency[]}
 		 */
-		getDependencies(): Dependency[] {
+		getPredecessors(): Dependency[] {
 			var result: Dependency[] = [];
 			var that = this;
 			for(var i: number = 0; i < this.predecessors.length; i++) {
@@ -59,7 +63,7 @@ module Model {
 				});
 			}
 			if(this.parent != null) {
-				var deps = this.parent.getDependencies();
+				var deps = this.parent.getPredecessors();
 				for(var i: number = 0; i < deps.length; i++) {
 					result.push(deps[i]);
 				}
@@ -67,8 +71,30 @@ module Model {
 			return result;
 		}
 
-		getCriticalCost() {
-			return null;
+		/**
+		 * Returns the task's successors, not including transitive successors
+		 * @returns {Dependency[]}
+		 */
+		getSuccessors(): Dependency[] {
+			var result: Dependency[] = [];
+			var that = this;
+			for(var i: number = 0; i < this.successors.length; i++) {
+				var subTasks = this.successors[i].task.getSubTasks();
+				subTasks.each(function(task: Schedulable): boolean {
+					var dep: Dependency = new Model.Dependency();
+					dep.task = task;
+					dep.lag = that.successors[i].lag;
+					result.push(dep);
+					return true;
+				});
+			}
+			if(this.parent != null) {
+				var deps = this.parent.getSuccessors();
+				for(var i: number = 0; i < deps.length; i++) {
+					result.push(deps[i]);
+				}
+			}
+			return result;
 		}
 
 		hash(): number {
@@ -84,6 +110,15 @@ module Model {
 				}
 			}
 			return this.earliestStartConstraint;
+		}
+
+
+		getResourceUsages(): ResourceUsage[] {
+			var result = this.resourceUsages;
+			if(this.parent != null) {
+				result = result.concat(this.parent.getResourceUsages())
+			}
+			return result;
 		}
 	}
 }

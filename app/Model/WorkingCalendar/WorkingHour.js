@@ -1,17 +1,17 @@
-///<reference path='../../Util/IInterval.ts'/>
+///<reference path='../../Util/IntervalList/IInterval.ts'/>
 ///<reference path='../../Util/IComparable.ts'/>
-///<reference path='IntervalBounderiesError.ts'/>
+///<reference path='../../Util/IntervalList/IntervalBoundariesError.ts'/>
 var Model;
 (function (Model) {
     (function (WorkingCalendar) {
-        var IntervalBounderiesError = Model.WorkingCalendar.IntervalBounderiesError;
+        var IntervalBoundariesError = Util.IntervalList.IntervalBoundariesError;
 
         var WorkingHour = (function () {
             function WorkingHour(fromHour, fromMinute, toHour, toMinute) {
                 var newFromValue = fromHour * 100 + fromMinute;
                 var newToValue = toHour * 100 + toMinute;
                 if (newFromValue >= newToValue)
-                    throw new IntervalBounderiesError();
+                    throw new IntervalBoundariesError();
                 this.fromHour = fromHour;
                 this.toHour = toHour;
                 this.fromMinute = toMinute;
@@ -44,6 +44,8 @@ var Model;
                     date.setHours(this.fromHour, this.fromMinute, 0, 0);
                 }
                 var availableMinutes = this.toHour * 60 + this.toMinute - date.getHours() * 60 - date.getMinutes();
+                if (availableMinutes < 0)
+                    return remainingMinutes;
                 if (availableMinutes < remainingMinutes) {
                     date.setMinutes(date.getMinutes() + availableMinutes);
                     return remainingMinutes - availableMinutes;
@@ -53,14 +55,45 @@ var Model;
                 }
             };
 
-            WorkingHour.prototype.contains = function (hour, minute) {
+            WorkingHour.prototype.subtract = function (date, remainingMinutes) {
+                if (date.getHours() > this.toHour || (date.getHours() == this.toHour && date.getMinutes() > this.toMinute)) {
+                    date.setHours(this.toHour, this.toMinute, 0, 0);
+                }
+                var availableMinutes = date.getHours() * 60 + date.getMinutes() - this.fromHour * 60 - this.fromMinute;
+                if (availableMinutes < 0)
+                    return remainingMinutes;
+                if (availableMinutes < remainingMinutes) {
+                    date.setMinutes(date.getMinutes() - availableMinutes);
+                    return remainingMinutes - availableMinutes;
+                } else {
+                    date.setMinutes(date.getMinutes() - remainingMinutes);
+                    return 0;
+                }
+            };
+
+            WorkingHour.prototype.contains = function (hour, minute, backward) {
+                if (typeof backward === "undefined") { backward = false; }
+                if (backward) {
+                    minute--;
+                    if (minute == -1) {
+                        hour--;
+                        minute = 59;
+                    }
+                } else {
+                    minute++;
+                    if (minute == 60) {
+                        hour++;
+                        minute = 0;
+                    }
+                }
+
                 //if its before return -1
                 if (hour < this.fromHour || (hour == this.fromHour && minute < this.fromMinute)) {
                     return -1;
                 }
 
-                //if it's after (or on the end of the period) return 1
-                if (hour > this.toHour || (hour == this.toHour && minute >= this.toMinute)) {
+                //if it's after  return 1
+                if (hour > this.toHour || (hour == this.toHour && minute > this.toMinute)) {
                     return 1;
                 }
 

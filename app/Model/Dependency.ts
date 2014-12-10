@@ -21,10 +21,6 @@ module Model {
             this.lag = new Duration();
         }
 
-        public getCriticalCost() {
-            return this.task.getCriticalCost().add(this.lag);
-        }
-
         hash(): number {
             return this.id;
         }
