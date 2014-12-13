@@ -14,11 +14,9 @@ module Model.Schedulers {
 
 		private resourceManager: ResourceManager;
 
-		constructor() {
-			this.resourceManager = new ResourceManager();
-		}
 
 		public schedule(tasksParam: Schedulable[]) {
+			this.resourceManager = new ResourceManager();
 			var tasks = tasksParam.slice(0);
 
 			tasks.sort((t, t2): number => {
@@ -64,7 +62,6 @@ module Model.Schedulers {
 			var finish = workingCalendar.add(start, task.duration);
 
 			var allocationSucces = false;
-			console.log(task.name);
 			while(!allocationSucces) {
 				allocationSucces = true;
 				var resources = task.getResourceUsages();

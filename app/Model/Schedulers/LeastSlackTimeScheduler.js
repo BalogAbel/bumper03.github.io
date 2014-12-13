@@ -11,9 +11,9 @@ var Model;
 
         var LeastSlackTimeScheduler = (function () {
             function LeastSlackTimeScheduler() {
-                this.resourceManager = new ResourceManager();
             }
             LeastSlackTimeScheduler.prototype.schedule = function (tasksParam) {
+                this.resourceManager = new ResourceManager();
                 var tasks = tasksParam.slice(0);
 
                 tasks.sort(function (t, t2) {
@@ -60,7 +60,6 @@ var Model;
                 var finish = workingCalendar.add(start, task.duration);
 
                 var allocationSucces = false;
-                console.log(task.name);
                 while (!allocationSucces) {
                     allocationSucces = true;
                     var resources = task.getResourceUsages();

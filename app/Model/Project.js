@@ -91,7 +91,6 @@ var Model;
         */
         Project.prototype.calculateLatestTimes = function (tasks) {
             var endingTasks = this.getEndingTasks(tasks);
-            console.log(endingTasks);
             var that = this;
             endingTasks.forEach(function (task) {
                 task.calculateLatest(that.earliestFinish);

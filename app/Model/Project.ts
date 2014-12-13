@@ -105,7 +105,6 @@ module Model {
 		 */
 		private calculateLatestTimes(tasks: Schedulable[]) {
 			var endingTasks = this.getEndingTasks(tasks);
-			console.log(endingTasks);
 			var that = this;
 			endingTasks.forEach(task => {
 				task.calculateLatest(that.earliestFinish);
