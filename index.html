@@ -1,79 +1,95 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" ng-app="ganttApp">
 <head>
-	<meta charset="utf-8"/>
-	<title>TypeScript HTML App</title>
-	<link rel="stylesheet" href="app.css"/>
+    <meta charset="utf-8"/>
+    <title>TypeScript HTML App</title>
 
-	<script src="lib/jquery.js"></script>
-	<script src="lib/kineticjs.js"></script>
-	<script src="lib/jquery-resize.js"></script>
-	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
-	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+    <script src="lib/jquery.js"></script>
+    <script src="lib/kineticjs.js"></script>
+    <script src="lib/jquery-resize.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
 
-
-	<script src="app/Util/Hashable.js"></script>
-	<script src="app/Util/HashSet.js"></script>
-	<script src="app/Util/IComparable.js"></script>
-	<script src="app/Util/IntervalList/IInterval.js"></script>
-	<script src="app/Util/IntervalList/IntervalOverlapError.js"></script>
-	<script src="app/Util/IntervalList/IntervalBoundariesError.js"></script>
-	<script src="app/Util/IntervalList/IntervalList.js"></script>
-	<script src="app/Util/IntervalList/IntervalDate.js"></script>
-
-	<script src="app/Model/WorkingCalendar/Duration.js"></script>
-	<script src="app/Model/WorkingCalendar/WorkingHour.js"></script>
-	<script src="app/Model/WorkingCalendar/WorkingDay.js"></script>
-	<script src="app/Model/WorkingCalendar/Exclusion.js"></script>
-	<script src="app/Model/WorkingCalendar/WorkingCalendar.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js"></script>
+    <script src="lib/angular/angular-route.min.js"></script>
+    <script src="lib/angular/angular-ui-bootstrap.min.js"></script>
+    <script src="lib/angular/angular-local-storage.min.js"></script>
+    <script src="lib/cycle.js"></script>
 
 
-	<script src="app/Model/Schedulers/ResourceManager.js"></script>
-	<script src="app/Model/Schedulers/Scheduler.js"></script>
-	<script src="app/Model/Schedulers/LeastSlackTimeScheduler.js"></script>
+    <script src="app/gantt/Util/Hashable.js"></script>
+    <script src="app/gantt/Util/HashSet.js"></script>
+    <script src="app/gantt/Util/IComparable.js"></script>
+    <script src="app/gantt/Util/IntervalList/IInterval.js"></script>
+    <script src="app/gantt/Util/IntervalList/IntervalOverlapError.js"></script>
+    <script src="app/gantt/Util/IntervalList/IntervalBoundariesError.js"></script>
+    <script src="app/gantt/Util/IntervalList/IntervalList.js"></script>
+    <script src="app/gantt/Util/IntervalList/IntervalDate.js"></script>
 
-	<script src="app/Model/Resources/ResourceType.js"></script>
-	<script src="app/Model/Resources/ResourceUsage.js"></script>
+    <script src="app/gantt/Model/WorkingCalendar/Duration.js"></script>
+    <script src="app/gantt/Model/WorkingCalendar/WorkingHour.js"></script>
+    <script src="app/gantt/Model/WorkingCalendar/WorkingDay.js"></script>
+    <script src="app/gantt/Model/WorkingCalendar/Exclusion.js"></script>
+    <script src="app/gantt/Model/WorkingCalendar/WorkingCalendar.js"></script>
 
 
+    <script src="app/gantt/Model/Schedulers/ResourceManager.js"></script>
+    <script src="app/gantt/Model/Schedulers/Scheduler.js"></script>
+    <script src="app/gantt/Model/Schedulers/LeastSlackTimeScheduler.js"></script>
 
-	<script src="app/Model/Task.js"></script>
-	<script src="app/Model/Dependency.js"></script>
-	<script src="app/Model/Summary.js"></script>
-	<script src="app/Model/Schedulable.js"></script>
-	<script src="app/Model/Project.js"></script>
+    <script src="app/gantt/Model/Resources/ResourceType.js"></script>
+    <script src="app/gantt/Model/Resources/ResourceUsage.js"></script>
 
-	<script src="app/Util/ProjectGenerator.js"></script>
 
-	<script src="app/View/Utils.js"></script>
-	<script src="app/View/TimeLineDrawer.js"></script>
-	<script src="app/View/TaskDrawer.js"></script>
-	<script src="app/View/SchedulableDrawer.js"></script>
-	<script src="app/View/SummaryDrawer.js"></script>
-	<script src="app/View/TaskDrawerFactory.js"></script>
-	<script src="app/View/ProjectDrawer.js"></script>
+    <script src="app/gantt/Model/Task.js"></script>
+    <script src="app/gantt/Model/Dependency.js"></script>
+    <script src="app/gantt/Model/Summary.js"></script>
+    <script src="app/gantt/Model/Schedulable.js"></script>
+    <script src="app/gantt/Model/Project.js"></script>
 
-	<script src="app.js"></script>
+    <script src="app/gantt/Util/ProjectGenerator.js"></script>
+
+    <script src="app/gantt/View/Utils.js"></script>
+    <script src="app/gantt/View/TimeLineDrawer.js"></script>
+    <script src="app/gantt/View/TaskDrawer.js"></script>
+    <script src="app/gantt/View/SchedulableDrawer.js"></script>
+    <script src="app/gantt/View/SummaryDrawer.js"></script>
+    <script src="app/gantt/View/TaskDrawerFactory.js"></script>
+    <script src="app/gantt/View/ProjectDrawer.js"></script>
+
+
+    <script src="app/menu/menu_controller.js"></script>
+    <script src="app/gantt/gantt-controller.js"></script>
+
+    <script src="app.js"></script>
+
+
+    <link rel="stylesheet" href="app.css"/>
+    <link rel="stylesheet" href="app/menu/menu.css"/>
+    <link rel="stylesheet"
+          href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css"/>
+    <link rel="stylesheet" href="css/bootstrap-theme.css"/>
+    <link rel="stylesheet" href="css/bootstrap.css"/>
+
 </head>
 <body>
 
-<h1>TypeScript HTML App</h1>
-<div id="zoom">
-	<span id="slider"></span>
-	<span id="zoomValue"></span>
+<div id="site">
+    <header>
+        <h1>TypeScript HTML App</h1>
+    </header>
+
+    <!--<nav>-->
+    <!--<div class="nav_item">Menu 1</div>-->
+    <!--<div class="nav_item">Menu 2</div>-->
+    <!--<div class="nav_item">Menu 3</div>-->
+    <!--</nav>-->
+
+    <article>
+        <ng-view></ng-view>
+    </article>
 </div>
 
-
-<div id="taskWrapper">
-	<span id="tasks"></span>
-</div><div id="timeLineWrapper">
-	<span id="timeLine"></span>
-</div>
-<span id="arrows">
-	<span id="addBefore"><<</span>
-	<span id="addAfter">>></span>
-</span>
 
 </body>
 </html>

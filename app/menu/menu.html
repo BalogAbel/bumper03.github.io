@@ -1,0 +1,12 @@
+<div id="menu">
+    <div class="btn-group" dropdown>
+        <button type="button" class="btn-block btn-lg btn-primary" ng-click="menu.new()">New</button>
+        <button type="button" class="btn-block btn-lg btn-primary" dropdown-toggle ng-disabled="disabled">
+            Open <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="#" ng-click="menu.openFromLocal()">Local computer</a></li>
+            <li><a href="#" ng-click="menu.openFromGoogleDriver()">Google drive</a></li>
+        </ul>
+    </div>
+</div>
