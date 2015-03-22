@@ -2,14 +2,13 @@
 'use strict';
 var app;
 (function (app) {
-    var ganttapp = angular.module('ganttApp', ['ngRoute', 'ui.bootstrap', 'LocalStorageModule']);
-    ganttapp.config(function ($routeProvider) {
+    var ganttapp = angular.module('ganttApp', ['ngRoute', 'ui.bootstrap', 'LocalStorageModule']).service('projectService', app.ProjectService).config(function ($routeProvider) {
         $routeProvider.when('/gantt', {
-            templateUrl: 'app/gantt/gantt.html',
+            templateUrl: 'gantt/gantt.html',
             controller: app.GanttCtrl,
             controllerAs: "gantt"
         }).otherwise({
-            templateUrl: 'app/menu/menu.html',
+            templateUrl: 'menu/menu.html',
             controller: app.MenuCtrl,
             controllerAs: "menu"
         });
