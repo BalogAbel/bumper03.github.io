@@ -1,4 +1,4 @@
 interface JSON {
-    decycle(object: any): string;
-    retrocycle(str: string): any;
+    decycle(object: any): any;
+    retrocycle(str: any): any;
 }

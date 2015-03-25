@@ -39,6 +39,13 @@ var Model;
             Duration.prototype.getCost = function () {
                 return (this.day * this.hoursPerDay + this.hour) * 60 + this.minute;
             };
+            Duration.prototype.deserialize = function (input) {
+                this.day = input.day;
+                this.hour = input.hour;
+                this.minute = input.minute;
+                this.hoursPerDay = input.hoursPerDay;
+                return this;
+            };
             return Duration;
         })();
         WorkingCalendar.Duration = Duration;

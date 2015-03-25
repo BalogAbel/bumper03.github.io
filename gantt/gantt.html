@@ -1,5 +1,17 @@
 <h2>Hello</h2>
-
+<div id="add-task-btn-group">
+    <div class="btn-group" dropdown>
+        <!--<button type="button" class="btn-block btn-lg btn-primary" ng-click="menu.new()">New</button>-->
+        <div id="add-task-btn" dropdown-toggle ng-disabled="disabled">+</div>
+        <!--<button type="button" class="btn-block btn-lg btn-primary" dropdown-toggle ng-disabled="disabled">-->
+        <!--Open <span class="caret"></span>-->
+        <!--</button>-->
+        <ul class="dropdown-menu drop" role="menu">
+            <li><a ng-click="gantt.newTask()">Task</a></li>
+            <li><a>Wrapper</a></li>
+        </ul>
+    </div>
+</div>
 
 <div id="zoom">
     <span id="slider"></span>

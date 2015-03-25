@@ -3,8 +3,8 @@
 module Util.IntervalList {
 	import IInterval = Util.IntervalList.IInterval;
 	import IntervalOverlapError = Util.IntervalList.IntervalOverlapError;
-	export class IntervalList<T extends IInterval> {
-		private intervals: T[];
+	export class IntervalList<T extends IInterval> implements ISerializable<IntervalList<T>> {
+		private intervals: IInterval[];
 
 		constructor() {
 			this.intervals = [];
@@ -33,24 +33,40 @@ module Util.IntervalList {
 		}
 
 		last(): T {
-			return this.intervals[this.intervals.length - 1];
+			return <T>this.intervals[this.intervals.length - 1];
 		}
 
 		first(): T {
-			return this.intervals[0];
+			return <T>this.intervals[0];
 		}
 
 		each(callback: (t: T) => boolean) {
 			for(var prop in this.intervals) {
-				if(!callback(this.intervals[prop])) break;
+				if(!callback(<T>this.intervals[prop])) break;
 			}
 		}
 
 		reverse(callback: (t: T) => boolean) {
 			for(var i: number = this.intervals.length - 1; i >= 0; i--) {
-				if(!callback(this.intervals[i])) break;
+				if(!callback(<T>this.intervals[i])) break;
 			}
 
 		}
+
+		deserialize(input: any): IntervalList<T> {
+			for(var i = 0; i < input.intervals.length; i++) {
+				this.intervals.push(this.deserializeHelper(input.intervals[i]))
+			}
+			return this;
+		}
+
+		deserializeHelper(interval: any): IInterval {
+			if (interval.hasOwnProperty('fromHour')) {
+				var ret = <IInterval>(new Model.WorkingCalendar.WorkingHour(0, 0, 0, 1).deserialize(interval));
+				return ret;
+			}
+			throw "Not an interval: " + interval;
+		}
+
 	}
 }

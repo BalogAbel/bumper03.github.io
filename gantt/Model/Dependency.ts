@@ -7,7 +7,7 @@ module Model {
     import HashSet = Util.HashSet;
     import Hashable = Util.Hashable;
 
-    export class Dependency implements Hashable {
+    export class Dependency implements Hashable, Util.ISerializable<Dependency> {
 
         id: number;
         task: Task;
@@ -19,6 +19,13 @@ module Model {
 
         hash(): number {
             return this.id;
+        }
+
+        deserialize(input: any): Dependency {
+            this.id = input.id;
+            this.task = Task.deserializeHelper(input.task);
+            this.lag = new Duration().deserialize(input.lag);
+            return this;
         }
     }
 }

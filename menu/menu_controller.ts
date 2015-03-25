@@ -9,7 +9,7 @@ module app {
     export class MenuCtrl {
 
         private location: ng.ILocationService;
-        private projectService: ProjectService
+        private projectService: ProjectService;
 
         constructor($location: ng.ILocationService, projectService: ProjectService) {
             this.location = $location;

@@ -8,13 +8,17 @@ module app {
     import Utils = View.Utils;
     import ProjectService = app.ProjectService;
 
+    import ng = angular;
+
     export class GanttCtrl {
 
+        modalService: ng.ui.bootstrap.IModalService;
 
-        constructor(projectService: ProjectService, $location: ng.ILocationService) {
+        constructor(projectService: ProjectService, $location: ng.ILocationService, $modal: ng.ui.bootstrap.IModalService) {
+            this.modalService = $modal;
+
             var project = projectService.get();
 
-            console.log(project);
 
             project.schedule();
             var projectDrawer: ProjectDrawer = new ProjectDrawer(project);
@@ -34,7 +38,19 @@ module app {
                     $("#zoomValue").text(ui.value);
                 }
             });
+        }
 
+        public newTask() {
+
+            var modalInstance = this.modalService.open({
+                templateUrl: 'gantt/templates/newTask.html',
+                size: 'lg',
+                resolve: {
+                    //items: function () {
+                    //    return $scope.items;
+                    //}
+                }
+            });
 
         }
     }

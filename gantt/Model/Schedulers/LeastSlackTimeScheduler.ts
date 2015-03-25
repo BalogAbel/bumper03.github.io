@@ -7,9 +7,10 @@ module Model.Schedulers {
 	import WorkingCalendar = Model.WorkingCalendar.WorkingCalendar;
 
 
-	export class LeastSlackTimeScheduler implements Scheduler {
+	export class LeastSlackTimeScheduler extends Scheduler implements Util.ISerializable<LeastSlackTimeScheduler> {
 
-		private resourceManager: ResourceManager;
+		private leastSlackTimeScheduler:string = 'DO_NOT_REMOVE!!'
+
 
 
 		public schedule(tasksParam: Schedulable[]) {
@@ -82,6 +83,12 @@ module Model.Schedulers {
 				task.parent.notifyScheduled(task);
 			}
 		}
+
+		deserialize(input: any): LeastSlackTimeScheduler {
+			super.deserialize(input);
+			return this;
+		}
 	}
+
 
 }

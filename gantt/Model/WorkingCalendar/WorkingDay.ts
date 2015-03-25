@@ -3,7 +3,7 @@
 module Model.WorkingCalendar {
     import WorkingHour = Model.WorkingCalendar.WorkingHour;
     import IntervalList = Util.IntervalList.IntervalList;
-    export class WorkingDay {
+    export class WorkingDay implements Util.ISerializable<WorkingDay> {
         workingHours: IntervalList<WorkingHour>;
 
         constructor() {
@@ -103,6 +103,11 @@ module Model.WorkingCalendar {
 
 				}
 			})
+		}
+
+		deserialize(input: any): WorkingDay {
+			this.workingHours = new IntervalList<WorkingHour>().deserialize(input.workingHours);
+			return this;
 		}
 
     }

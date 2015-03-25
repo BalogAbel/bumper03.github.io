@@ -4,7 +4,7 @@ module Model.WorkingCalendar {
 	import WorkingDay = Model.WorkingCalendar.WorkingDay;
 	import Duration = Model.WorkingCalendar.Duration;
 
-	export class WorkingCalendar {
+	export class WorkingCalendar implements Util.ISerializable<WorkingCalendar> {
 		private static _instance: WorkingCalendar = null;
 
 		workingDays: boolean[];
@@ -79,6 +79,13 @@ module Model.WorkingCalendar {
 				date.setDate(date.getDate() + 1);
 				date.setHours(0, 0, 0, 0);
 			}
+		}
+
+		deserialize(input: any): WorkingCalendar {
+			this.workingDays = input.workingDays;
+			this.normalWorkingDay = new WorkingDay().deserialize(input.normalWorkingDay);
+			WorkingCalendar._instance = this;
+			return this;
 		}
 
 	}

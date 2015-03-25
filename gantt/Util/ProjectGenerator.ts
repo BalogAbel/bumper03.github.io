@@ -54,6 +54,7 @@ module Util {
 			var phase1: Summary = new Summary();
 			phase1.name = 'Phase 1';
 			phase1.description = 'Summary of phase 1';
+			phase1.id = idCtr++;
 			phase1.tasks.push(task11);
 			phase1.tasks.push(task12);
 			task11.parent = phase1;
@@ -97,6 +98,7 @@ module Util {
 			var phase2: Summary = new Summary();
 			phase2.name = 'Phase 2';
 			phase2.description = 'Summary of phase 2';
+			phase2.id = idCtr++;
 			var dep2: Dependency = new Dependency();
 			dep2.id = idCtr++;
 			dep2.task = phase1;
@@ -145,6 +147,7 @@ module Util {
 			normalWorkingDay.workingHours.push(new WorkingHour(8, 0, 12, 0));
 			normalWorkingDay.workingHours.push(new WorkingHour(12, 30, 16, 30));
 			workingCalendar.normalWorkingDay = normalWorkingDay;
+			project.workingCalendar = workingCalendar;
 
 			return project;
 

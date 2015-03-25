@@ -66,6 +66,5 @@ module Model.Schedulers {
 			return newFromDate;
 
 		}
-
 	}
 }

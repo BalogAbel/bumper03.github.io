@@ -88,6 +88,10 @@ var Model;
                     }
                 });
             };
+            WorkingDay.prototype.deserialize = function (input) {
+                this.workingHours = new IntervalList().deserialize(input.workingHours);
+                return this;
+            };
             return WorkingDay;
         })();
         WorkingCalendar.WorkingDay = WorkingDay;

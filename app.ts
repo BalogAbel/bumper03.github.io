@@ -2,7 +2,6 @@
 'use strict';
 module app {
     var ganttapp:ng.IModule = angular.module('ganttApp', ['ngRoute', 'ui.bootstrap', 'LocalStorageModule'])
-
         .service('projectService', app.ProjectService)
         .config(($routeProvider:ng.route.IRouteProvider) => {
             $routeProvider

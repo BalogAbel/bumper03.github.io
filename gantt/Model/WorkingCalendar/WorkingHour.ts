@@ -5,11 +5,12 @@ module Model.WorkingCalendar {
 	import IInterval = Util.IntervalList.IInterval;
 	import IntervalBoundariesError = Util.IntervalList.IntervalBoundariesError
 
-	export class WorkingHour implements IComparable, IInterval {
+	export class WorkingHour implements IComparable, IInterval, Util.ISerializable<WorkingHour> {
 		fromHour: number;
 		fromMinute: number;
 		toHour: number;
 		toMinute: number;
+
 
 		constructor(fromHour: number, fromMinute: number, toHour: number, toMinute: number) {
 			var newFromValue = fromHour * 100 + fromMinute;
@@ -95,6 +96,15 @@ module Model.WorkingCalendar {
 			}
 			//if non of the above, then it have to contain
 			return 0;
+		}
+
+		deserialize(input: any): WorkingHour {
+			this.fromHour = input.fromHour;
+			this.fromMinute = input.fromMinute;
+			this.toHour = input.toHour;
+			this.toMinute = input.toMinute;
+
+			return this;
 		}
 	}
 }

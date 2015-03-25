@@ -1,7 +1,7 @@
 ///<reference path='../../../references.ts'/>
 
 module Model.WorkingCalendar {
-    export class Duration {
+    export class Duration implements Util.ISerializable<Duration>{
 
         day: number;
         hour: number;
@@ -50,6 +50,13 @@ module Model.WorkingCalendar {
             return (this.day * this.hoursPerDay + this.hour) * 60 + this.minute;
         }
 
+        deserialize(input: any): Duration {
+            this.day = input.day;
+            this.hour = input.hour;
+            this.minute = input.minute;
+            this.hoursPerDay = input.hoursPerDay;
+            return this;
+        }
 
     }
 }

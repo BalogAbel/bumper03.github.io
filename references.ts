@@ -7,7 +7,7 @@
 ///<reference path='lib/types/angular/angular-local-storage.d.ts'/>'/>
 ///<reference path='lib/types/cycle.d.ts'/>
 
-
+///<reference path='gantt/Util/Serializer.ts'/>
 ///<reference path='gantt/Util/Hashable.ts'/>
 ///<reference path='gantt/Util/HashSet.ts'/>
 ///<reference path='gantt/Util/IComparable.ts'/>

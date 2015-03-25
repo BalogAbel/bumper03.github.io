@@ -8,6 +8,7 @@ var __extends = this.__extends || function (d, b) {
 var Model;
 (function (Model) {
     var WorkingCalendar = Model.WorkingCalendar.WorkingCalendar;
+    var Duration = Model.WorkingCalendar.Duration;
     var Task = Model.Task;
     var HashSet = Util.HashSet;
     var Schedulable = (function (_super) {
@@ -63,6 +64,15 @@ var Model;
             predecessors.forEach(function (dependency) {
                 dependency.task.calculateLatest(projectEndDate);
             });
+        };
+        Schedulable.prototype.deserialize = function (input) {
+            _super.prototype.deserialize.call(this, input);
+            this.duration = new Duration().deserialize(input.duration);
+            this.earliestStart = new Date(input.earliestStart);
+            this.earliestFinish = new Date(input.earliestFinish);
+            this.latestStart = new Date(input.latestStart);
+            this.latestFinish = new Date(input.latestFinish);
+            return this;
         };
         return Schedulable;
     })(Task);

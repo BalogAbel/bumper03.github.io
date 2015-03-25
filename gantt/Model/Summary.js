@@ -1,4 +1,5 @@
 ///<reference path='../../references.ts'/>
+///<reference path="Task.ts"/>
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -30,6 +31,15 @@ var Model;
             if (this.parent != null) {
                 this.parent.notifyScheduled(this);
             }
+        };
+        Summary.prototype.deserialize = function (input) {
+            _super.prototype.deserialize.call(this, input);
+            if (input.tasks != null) {
+                for (var i = 0; i < input.tasks.length; i++) {
+                    this.tasks.push(Model.Task.deserializeHelper(input.tasks[i]));
+                }
+            }
+            return this;
         };
         return Summary;
     })(Model.Task);

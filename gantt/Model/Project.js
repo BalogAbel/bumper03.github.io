@@ -1,7 +1,10 @@
 ///<reference path='../../references.ts'/>
 var Model;
 (function (Model) {
+    var Task = Model.Task;
+    var Scheduler = Model.Schedulers.Scheduler;
     var LeastSlackTimeScheduler = Model.Schedulers.LeastSlackTimeScheduler;
+    var WorkingCalendar = Model.WorkingCalendar.WorkingCalendar;
     var HashSet = Util.HashSet;
     /**
      *
@@ -12,6 +15,7 @@ var Model;
             this.start = new Date();
             this.start.setHours(0, 0, 0, 0);
             this.scheduler = new LeastSlackTimeScheduler();
+            this.workingCalendar = WorkingCalendar.getWorkingCalendar();
         }
         /**
          *
@@ -106,13 +110,16 @@ var Model;
             }
             return result.toArray().filter(function (s) { return s != undefined; });
         };
-        Project.prototype.toJSON = function () {
-            return JSON.decycle(this);
-        };
-        Project.fromJSON = function (json) {
-            var result = new Project();
-            JSON.retrocycle(json);
-            return result;
+        Project.prototype.deserialize = function (input) {
+            this.start = input.start != null ? new Date(input.start) : null;
+            this.finish = input.finish != null ? new Date(input.finish) : null;
+            this.earliestFinish = input.earlearliestFinish;
+            for (var i = 0; i < input.tasks.length; i++) {
+                this.tasks.push(Task.deserializeHelper(input.tasks[i]));
+            }
+            this.workingCalendar = new WorkingCalendar().deserialize(input.workingCalendar);
+            this.scheduler = Scheduler.deserializeHelper(input.scheduler);
+            return this;
         };
         return Project;
     })();

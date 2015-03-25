@@ -92,6 +92,13 @@ var Model;
                 //if non of the above, then it have to contain
                 return 0;
             };
+            WorkingHour.prototype.deserialize = function (input) {
+                this.fromHour = input.fromHour;
+                this.fromMinute = input.fromMinute;
+                this.toHour = input.toHour;
+                this.toMinute = input.toMinute;
+                return this;
+            };
             return WorkingHour;
         })();
         WorkingCalendar.WorkingHour = WorkingHour;

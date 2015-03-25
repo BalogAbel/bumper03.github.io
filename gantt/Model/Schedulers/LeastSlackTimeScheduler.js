@@ -1,12 +1,22 @@
 ///<reference path='../../../references.ts'/>
+var __extends = this.__extends || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
 var Model;
 (function (Model) {
     var Schedulers;
     (function (Schedulers) {
+        var Scheduler = Model.Schedulers.Scheduler;
         var ResourceManager = Model.Schedulers.ResourceManager;
         var WorkingCalendar = Model.WorkingCalendar.WorkingCalendar;
-        var LeastSlackTimeScheduler = (function () {
+        var LeastSlackTimeScheduler = (function (_super) {
+            __extends(LeastSlackTimeScheduler, _super);
             function LeastSlackTimeScheduler() {
+                _super.apply(this, arguments);
+                this.leastSlackTimeScheduler = 'DO_NOT_REMOVE!!';
             }
             LeastSlackTimeScheduler.prototype.schedule = function (tasksParam) {
                 this.resourceManager = new ResourceManager();
@@ -73,8 +83,12 @@ var Model;
                     task.parent.notifyScheduled(task);
                 }
             };
+            LeastSlackTimeScheduler.prototype.deserialize = function (input) {
+                _super.prototype.deserialize.call(this, input);
+                return this;
+            };
             return LeastSlackTimeScheduler;
-        })();
+        })(Scheduler);
         Schedulers.LeastSlackTimeScheduler = LeastSlackTimeScheduler;
     })(Schedulers = Model.Schedulers || (Model.Schedulers = {}));
 })(Model || (Model = {}));

@@ -63,6 +63,12 @@ var Model;
                     date.setHours(0, 0, 0, 0);
                 }
             };
+            WorkingCalendar.prototype.deserialize = function (input) {
+                this.workingDays = input.workingDays;
+                this.normalWorkingDay = new WorkingDay().deserialize(input.normalWorkingDay);
+                WorkingCalendar._instance = this;
+                return this;
+            };
             WorkingCalendar._instance = null;
             return WorkingCalendar;
         })();

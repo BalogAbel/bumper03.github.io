@@ -1,6 +1,7 @@
 ///<reference path='../../references.ts'/>
 var Model;
 (function (Model) {
+    var ResourceUsage = Model.Resources.ResourceUsage;
     var HashSet = Util.HashSet;
     //abstract class (no TS support for that :( ), do not instantiate!
     var Task = (function () {
@@ -86,6 +87,39 @@ var Model;
                 result = result.concat(this.parent.getResourceUsages());
             }
             return result;
+        };
+        Task.prototype.deserialize = function (input) {
+            this.id = input.id;
+            this.name = input.name;
+            this.description = input.description;
+            if (input.successors != null) {
+                for (var i = 0; i < input.successors.length; i++) {
+                    this.successors.push(new Model.Dependency().deserialize(input.successors[i]));
+                }
+            }
+            if (input.predecessors != null) {
+                for (var i = 0; i < input.predecessors.length; i++) {
+                    this.predecessors.push(new Model.Dependency().deserialize(input.predecessors[i]));
+                }
+            }
+            this.parent = input.parent != null ? Task.deserializeHelper(input.parent) : null;
+            this.start = input.start != null ? new Date(input.start) : null;
+            this.finish = input.finish != null ? new Date(input.finish) : null;
+            this.earliestStartConstraint = input.earliestStartConstraint;
+            if (input.resourceUsages != null) {
+                for (var i = 0; i < input.resourceUsages.length; i++) {
+                    this.resourceUsages.push(new ResourceUsage().deserialize(input.resourceUsages[i]));
+                }
+            }
+            return this;
+        };
+        Task.deserializeHelper = function (task) {
+            if (task.hasOwnProperty('tasks'))
+                return new Model.Summary().deserialize(task);
+            if (task.hasOwnProperty('duration'))
+                return new Model.Schedulable().deserialize(task);
+            return task;
+            //throw "Not a task: " + task;
         };
         return Task;
     })();

@@ -12,7 +12,7 @@ module Model {
     /**
      *
      */
-    export class Project {
+    export class Project implements Util.ISerializable<Project> {
 
         start:Date;
         finish:Date;
@@ -26,6 +26,7 @@ module Model {
             this.start = new Date();
             this.start.setHours(0, 0, 0, 0);
             this.scheduler = new LeastSlackTimeScheduler();
+            this.workingCalendar = WorkingCalendar.getWorkingCalendar();
         }
         /**
          *
@@ -127,14 +128,19 @@ module Model {
             return result.toArray().filter(s => s != undefined);
         }
 
-        public toJSON():string {
-            return JSON.decycle(this);
+
+        deserialize(input: any): Project {
+            this.start = input.start != null ? new Date(input.start) : null;
+            this.finish = input.finish != null ? new Date(input.finish) : null;
+            this.earliestFinish = input.earlearliestFinish;
+            for(var i = 0; i < input.tasks.length; i++) {
+                this.tasks.push(Task.deserializeHelper(input.tasks[i]))
+            }
+            this.workingCalendar = new WorkingCalendar().deserialize(input.workingCalendar)
+            this.scheduler = Scheduler.deserializeHelper(input.scheduler);
+            return this;
         }
 
-        public static fromJSON(json: string): Project {
-            var result = new Project();
-            JSON.retrocycle(json);
-            return result;
-        }
     }
+
 }

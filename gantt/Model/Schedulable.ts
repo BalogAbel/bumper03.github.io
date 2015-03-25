@@ -7,7 +7,7 @@ module Model {
 	import Dependency = Model.Dependency;
 	import HashSet = Util.HashSet;
 
-	export class Schedulable extends Task {
+	export class Schedulable extends Task implements Util.ISerializable<Schedulable>{
 		duration: Duration;
 		earliestStart: Date;
 		earliestFinish: Date;
@@ -43,7 +43,7 @@ module Model {
 			this.earliestFinish = workingCalendar.add(start, this.duration);
 		}
 
-		calculateLatest(projectEndDate: Date) {
+		calculateLatest(projectEndDate: Date): void {
 			var successors = this.getSuccessors();
 
 			var workingCalendar = WorkingCalendar.getWorkingCalendar();
@@ -69,6 +69,17 @@ module Model {
 			predecessors.forEach(dependency => {
 				(<Schedulable>dependency.task).calculateLatest(projectEndDate);
 			});
+		}
+
+		deserialize(input: any): Schedulable {
+			super.deserialize(input);
+			this.duration = new Duration().deserialize(input.duration);
+			this.earliestStart = new Date(input.earliestStart);
+			this.earliestFinish = new Date(input.earliestFinish);
+			this.latestStart = new Date(input.latestStart);
+			this.latestFinish = new Date(input.latestFinish);
+
+			return this;
 		}
 	}
 }

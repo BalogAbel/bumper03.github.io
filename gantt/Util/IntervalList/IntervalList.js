@@ -45,6 +45,19 @@ var Util;
                         break;
                 }
             };
+            IntervalList.prototype.deserialize = function (input) {
+                for (var i = 0; i < input.intervals.length; i++) {
+                    this.intervals.push(this.deserializeHelper(input.intervals[i]));
+                }
+                return this;
+            };
+            IntervalList.prototype.deserializeHelper = function (interval) {
+                if (interval.hasOwnProperty('fromHour')) {
+                    var ret = (new Model.WorkingCalendar.WorkingHour(0, 0, 0, 1).deserialize(interval));
+                    return ret;
+                }
+                throw "Not an interval: " + interval;
+            };
             return IntervalList;
         })();
         _IntervalList.IntervalList = IntervalList;

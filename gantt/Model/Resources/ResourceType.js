@@ -6,6 +6,12 @@ var Model;
         var ResourceType = (function () {
             function ResourceType() {
             }
+            ResourceType.prototype.deserialize = function (input) {
+                this.id = input.id;
+                this.available = input.available;
+                this.name = input.name;
+                return this;
+            };
             return ResourceType;
         })();
         Resources.ResourceType = ResourceType;
