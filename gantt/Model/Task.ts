@@ -131,7 +131,7 @@ module Model {
                     this.predecessors.push(new Model.Dependency().deserialize(input.predecessors[i]));
                 }
             }
-            this.parent = input.parent != null ? Task.deserializeHelper(input.parent) : null;
+            this.parent = input.parent != null ? <Summary>Task.deserializeHelper(input.parent) : null;
             this.start = input.start != null ? new Date(input.start) : null;
             this.finish = input.finish != null ? new Date(input.finish) : null;
             this.earliestStartConstraint = input.earliestStartConstraint;

@@ -1,6 +1,7 @@
 /// <reference path="../references.ts" />
 var app;
 (function (app) {
+    var Schedulable = Model.Schedulable;
     var ProjectDrawer = View.ProjectDrawer;
     var Utils = View.Utils;
     var GanttCtrl = (function () {
@@ -25,15 +26,23 @@ var app;
                 }
             });
         }
-        GanttCtrl.prototype.newTask = function () {
+        GanttCtrl.prototype.newSchedulable = function () {
             var modalInstance = this.modalService.open({
-                templateUrl: 'gantt/templates/newTask.html',
+                templateUrl: 'gantt/components/taskDetail/taskDetail.html',
+                controller: app.TaskDetailController,
+                controllerAs: 'taskDetail',
                 size: 'lg',
-                resolve: {}
+                resolve: {
+                    task: function () {
+                        var schedulable = new Schedulable();
+                        schedulable.name = "name";
+                        return schedulable;
+                    }
+                }
             });
         };
         return GanttCtrl;
     })();
     app.GanttCtrl = GanttCtrl;
 })(app || (app = {}));
-//# sourceMappingURL=gantt-controller.js.map
+//# sourceMappingURL=GanttController.js.map

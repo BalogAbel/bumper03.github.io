@@ -3,12 +3,13 @@
 module app {
 
     import Project = Model.Project;
+    import Summary = Model.Summary;
+    import Schedulable = Model.Schedulable;
+    import Task = Model.Task;
     import ProjectGenerator = Util.ProjectGenerator;
     import ProjectDrawer = View.ProjectDrawer;
     import Utils = View.Utils;
     import ProjectService = app.ProjectService;
-
-    import ng = angular;
 
     export class GanttCtrl {
 
@@ -40,15 +41,19 @@ module app {
             });
         }
 
-        public newTask() {
+        public newSchedulable() {
 
             var modalInstance = this.modalService.open({
-                templateUrl: 'gantt/templates/newTask.html',
+                templateUrl: 'gantt/components/taskDetail/taskDetail.html',
+                controller: app.TaskDetailController,
+                controllerAs: 'taskDetail',
                 size: 'lg',
                 resolve: {
-                    //items: function () {
-                    //    return $scope.items;
-                    //}
+                    task: function (): Task {
+                        var schedulable = new Schedulable();
+                        schedulable.name = "name"
+                        return schedulable;
+                    }
                 }
             });
 

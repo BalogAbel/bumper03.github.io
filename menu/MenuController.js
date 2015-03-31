@@ -26,4 +26,4 @@ var app;
     })();
     app.MenuCtrl = MenuCtrl;
 })(app || (app = {}));
-//# sourceMappingURL=menu_controller.js.map
+//# sourceMappingURL=MenuController.js.map

@@ -50,5 +50,6 @@
 
 
 ///<reference path='components/ProjectService.ts'/>
-///<reference path='menu/menu_controller.ts'/>
-///<reference path='gantt/gantt-controller.ts'/>
+///<reference path='menu/MenuController.ts'/>
+///<reference path='gantt/components/taskDetail/TaskDetailController.ts'/>
+///<reference path='gantt/GanttController.ts'/>
