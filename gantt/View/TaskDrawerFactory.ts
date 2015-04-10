@@ -9,21 +9,21 @@ module View {
     import TaskDrawer = View.TaskDrawer;
 
     export class TaskDrawerFactory {
-        static getTaskDrawer(task:Task): TaskDrawer {
+        static getTaskDrawer(task: Task): TaskDrawer {
             var drawer: TaskDrawer;
 
-            if(task instanceof Summary) drawer = TaskDrawerFactory.getSummaryDrawer(<Summary>task);
-            else if(task instanceof Schedulable) drawer = new SchedulableDrawer();
+            if (task instanceof Summary) drawer = TaskDrawerFactory.getSummaryDrawer(<Summary>task);
+            else if (task instanceof Schedulable) drawer = new SchedulableDrawer();
             else throw("Task type error");
 
-            drawer.task  = task;
+            drawer.task = task;
             return drawer;
         }
 
-        private static getSummaryDrawer(summary:Summary): SummaryDrawer{
+        private static getSummaryDrawer(summary: Summary): SummaryDrawer {
             var sumDrawer: SummaryDrawer = new SummaryDrawer();
             sumDrawer.task = summary;
-            for(var i: number = 0; i < summary.tasks.length; i++) {
+            for (var i: number = 0; i < summary.tasks.length; i++) {
                 sumDrawer.subDrawers.push(TaskDrawerFactory.getTaskDrawer(summary.tasks[i]))
             }
             return sumDrawer;

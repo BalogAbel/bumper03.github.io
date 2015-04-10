@@ -11,12 +11,13 @@ var View;
             for (var i = 0; date.getTime() < Utils.finishDate.getTime(); i++) {
                 var dayNode = this.getSingleDay(date);
                 layer.add(dayNode);
+                dayNode.moveToBottom();
                 if (Utils.getZoomLevel() > 0) {
                     for (var j = 1; j < 24; j++) {
                         dayNode.add(this.getSingleHour(j));
                     }
                 }
-                dayNode.setPosition({ x: Utils.dayWidth * i, y: dayNode.getPosition().y });
+                dayNode.position({ x: Utils.dayWidth * i, y: dayNode.position().y });
                 date.setDate(date.getDate() + 1);
             }
         };
@@ -28,13 +29,13 @@ var View;
             dateText.width(Utils.dayWidth);
             dateText.name("taskdate" + date.getTime());
             if (!WorkingCalendar.getWorkingCalendar().isWorkingDay(date)) {
-                dateText.setFill("grey");
+                dateText.fill("grey");
                 node.find('.breakRect')[0].width(Utils.dayWidth);
             }
             else {
                 node.find('.breakRect')[0].remove();
             }
-            dateText.setText(date.getMonth() + 1 + ". " + this.padding(date.getDate(), 2) + ".");
+            dateText.text(this.padding(date.getMonth() + 1, 2) + ". " + this.padding(date.getDate(), 2) + ".");
             return node;
         };
         TimeLineDrawer.prototype.getSingleHour = function (hour) {
@@ -42,34 +43,25 @@ var View;
                 TimeLineDrawer.createSampleHour();
             var node = TimeLineDrawer.sampleHour.clone({});
             var hourText = node.find('.hourText')[0];
-            hourText.setText(hour.toString());
-            node.setPosition({ x: Utils.dayWidth / 23 * (hour - 1), y: Utils.taskLineHeight / 1.3 });
+            hourText.text(hour.toString());
+            node.position({ x: Utils.dayWidth / 23 * (hour - 1), y: Utils.taskLineHeight / 1.3 });
             return node;
         };
         TimeLineDrawer.createSampleDay = function () {
-            TimeLineDrawer.sampleDay = new Kinetic.Group({
+            TimeLineDrawer.sampleDay = new Konva.Group({
                 x: 0,
                 y: 0
             });
-            var line1 = new Kinetic.Line({
+            var line1 = new Konva.Line({
                 name: 'TaskLine',
+                strokeWidth: 0.5,
                 stroke: 'grey',
-                dash: [1, 1],
+                //dash: [1, 1],
                 x: 0,
                 y: 0,
                 points: [0, 0, 0, Utils.getCanvasHeight() - 2]
             });
-            var date = new Kinetic.Text({
-                width: Utils.dayWidth,
-                height: Utils.taskLineHeight,
-                align: 'center',
-                name: 'Date',
-                text: 'Sample Date',
-                fontSize: Utils.taskLineHeight * 2 / 3,
-                fontFamily: 'Calibri',
-                fill: 'blue'
-            });
-            var breakRect = new Kinetic.Rect({
+            var breakRect = new Konva.Rect({
                 y: Utils.taskLineHeight * 1.5,
                 name: 'breakRect',
                 width: Utils.dayWidth,
@@ -78,36 +70,36 @@ var View;
                 fill: 'black',
                 listening: false
             });
-            var date = new Kinetic.Text({
+            var date = new Konva.Text({
                 width: Utils.dayWidth,
                 height: Utils.taskLineHeight,
                 align: 'center',
                 name: 'Date',
                 text: 'Sample Date',
                 fontSize: Utils.taskLineHeight * 2 / 3,
-                fontFamily: 'Calibri',
-                fill: 'blue'
+                fontFamily: 'Roboto',
+                fill: '#009688'
             });
             TimeLineDrawer.sampleDay.add(line1);
             TimeLineDrawer.sampleDay.add(date);
             TimeLineDrawer.sampleDay.add(breakRect);
         };
         TimeLineDrawer.createSampleHour = function () {
-            TimeLineDrawer.sampleHour = new Kinetic.Group({
+            TimeLineDrawer.sampleHour = new Konva.Group({
                 x: 0,
                 y: 0
             });
             var hourWidth = Utils.dayWidth / 23;
-            var text = new Kinetic.Text({
+            var text = new Konva.Text({
                 name: 'hourText',
                 text: '99',
                 width: hourWidth,
                 align: 'center',
                 fontSize: Utils.taskLineHeight / 2.8,
-                fontFamily: 'Calibri',
+                fontFamily: 'Roboto',
                 fill: 'black'
             });
-            var line = new Kinetic.Line({
+            var line = new Konva.Line({
                 name: 'hourLine',
                 points: [
                     hourWidth / 2,

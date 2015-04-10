@@ -13,44 +13,50 @@ var View;
             Utils.startDate.setDate(Utils.startDate.getDate() - 7);
             Utils.finishDate = new Date(project.finish.getTime());
             Utils.finishDate.setDate(Utils.finishDate.getDate() + 7);
-            $("#timeLineWrapper").animate({
-                scrollLeft: 7 * Utils.dayWidth
-            }, 1);
+            //$("#timeLineWrapper").animate({
+            //    scrollLeft: 7 * Utils.dayWidth
+            //}, 1);
             this.handleScroll();
             this.handleAddDates();
-            this.handleZoom();
         }
         ProjectDrawer.prototype.draw = function () {
             this.generateTaskDrawers();
-            var taskStage = new Kinetic.Stage({
+            var taskStage = new Konva.Stage({
                 container: 'tasks',
                 width: 400,
                 height: 100
             });
             taskStage.clear();
             TaskDrawer.actualPosition = { x: 0, y: Utils.taskLineHeight * 1.5 };
-            var taskLayer = new Kinetic.Layer();
-            var timeLineLayer = new Kinetic.Layer();
+            this.taskLayer = new Konva.Layer();
+            this.timeLineLayer = new Konva.Layer();
             for (var i = 0; i < this.taskDrawers.length; i++) {
-                this.taskDrawers[i].draw(taskLayer, timeLineLayer);
+                this.taskDrawers[i].draw(this.taskLayer, this.timeLineLayer);
             }
-            taskStage.add(taskLayer);
+            taskStage.add(this.taskLayer);
             taskStage.height(TaskDrawer.actualPosition.y);
-            var timeLineStage = new Kinetic.Stage({
+            var timeLineStage = new Konva.Stage({
                 container: 'timeLine',
                 width: Utils.getCanvasWidth(),
                 height: 100
             });
             var timelineDrawer = new TimeLineDrawer();
-            timelineDrawer.draw(timeLineLayer);
-            timeLineStage.add(timeLineLayer);
+            timelineDrawer.draw(this.timeLineLayer);
+            timeLineStage.add(this.timeLineLayer);
             timeLineStage.height(Utils.getCanvasHeight());
         };
         ProjectDrawer.refresh = function () {
             if (ProjectDrawer._instance != null) {
-                ProjectDrawer._instance.project.schedule();
-                ProjectDrawer._instance.draw();
+                ProjectDrawer._instance.update();
             }
+        };
+        ProjectDrawer.prototype.update = function () {
+            this.project.schedule();
+            console.log(this.project);
+            for (var i = 0; i < this.taskDrawers.length; i++) {
+                this.taskDrawers[i].update(this.timeLineLayer);
+            }
+            //ProjectDrawer._instance.draw();
         };
         ProjectDrawer.prototype.generateTaskDrawers = function () {
             this.taskDrawers = [];
@@ -74,12 +80,9 @@ var View;
                 that.draw();
             });
         };
-        ProjectDrawer.prototype.handleZoom = function () {
-            var that = this;
-            $("#slider").on("slidechange", function (evt, ui) {
-                Utils.dayWidth = ui.value;
-                that.draw();
-            });
+        ProjectDrawer.prototype.changeZoom = function (zoomLevel) {
+            Utils.dayWidth = zoomLevel;
+            this.draw();
         };
         ProjectDrawer._instance = null;
         return ProjectDrawer;

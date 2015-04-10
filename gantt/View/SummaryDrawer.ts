@@ -4,7 +4,7 @@ module View {
     import Summary = Model.Summary;
     import TaskDrawer = View.TaskDrawer;
     export class SummaryDrawer extends TaskDrawer {
-        private static summarySample: Kinetic.IGroup;
+        private static summarySample: Konva.IGroup;
 
         subDrawers: TaskDrawer[];
 
@@ -13,29 +13,26 @@ module View {
             this.subDrawers = [];
         }
 
-        draw(layer: Kinetic.ILayer, timeLineLayer: Kinetic.ILayer) {
-            if(SummaryDrawer.summarySample == null) this.createSummarySample();
+        draw(layer: Konva.ILayer, timeLineLayer: Konva.ILayer) {
+            if (SummaryDrawer.summarySample == null) this.createSummarySample();
 
-            var node: Kinetic.IGroup = <Kinetic.IGroup>SummaryDrawer.summarySample.clone({});
-            node.setPosition({
+            this.taskGroup = <Konva.IGroup>SummaryDrawer.summarySample.clone({});
+            this.taskGroup.position({
                 x: Utils.dateToPosition(this.getTask().start),
                 y: TaskDrawer.actualPosition.y
             });
 
-            var durationRect = <Kinetic.IText>node.find('.durationRect')[0];
-            durationRect.setWidth(Utils.dateToPosition(this.getTask().finish) - Utils.dateToPosition(this.getTask().start));
-			var that = this;
-			durationRect.on("dragend", function(evt) {
-				that.dragged(evt);
-			})
+            var durationRect = <Konva.IText>this.taskGroup.find('.durationRect')[0];
+            durationRect.width(Utils.dateToPosition(this.getTask().finish) - Utils.dateToPosition(this.getTask().start));
+            var that = this;
+            timeLineLayer.add(this.taskGroup);
 
-            timeLineLayer.add(node);
 
             super.draw(layer, timeLineLayer);
 
             var sumTask = this.getTask();
             TaskDrawer.actualPosition.x += Utils.taskLineHeight;
-            for(var i: number = 0; i < this.subDrawers.length; i++) {
+            for (var i: number = 0; i < this.subDrawers.length; i++) {
                 this.subDrawers[i].draw(layer, timeLineLayer);
             }
             TaskDrawer.actualPosition.x -= Utils.taskLineHeight;
@@ -43,19 +40,11 @@ module View {
         }
 
         private createSummarySample() {
-            SummaryDrawer.summarySample = new Kinetic.Group({x: 0, y: 0});
-
-            var rect = new Kinetic.Rect({
-                name: "durationRect",
-                cornerRadius: 1,
+            SummaryDrawer.summarySample = new Konva.Group({
                 x: 0,
-                y: Utils.taskLineHeight*0.33,
-                height: Utils.taskLineHeight*0.33,
-                fill: '#99C2FF',
-                stroke: 'black',
-                strokeWidth: 1,
+                y: 0,
                 draggable: true,
-                dragBoundFunc: function(pos: Kinetic.Vector2d) {
+                dragBoundFunc: function (pos: Konva.Vector2d) {
                     var y: number = this.getAbsolutePosition().y;
                     return {
                         x: pos.x > 0 ? pos.x : 0,
@@ -64,14 +53,33 @@ module View {
                 }
             });
 
+            var rect = new Konva.Rect({
+                name: "durationRect",
+                x: 0,
+                y: Utils.taskLineHeight * 0.33,
+                height: Utils.taskLineHeight * 0.33,
+                fill: '#99C2FF',
+                shadowColor: '#999',
+                shadowBlur: 5,
+                shadowOffsetX: 0,
+                shadowOffsetY: 2
+
+            });
+
             SummaryDrawer.summarySample.add(rect);
         }
 
 
-        getTask():Summary {
+        getTask(): Summary {
             return <Summary>this.task;
         }
 
 
+        update(layer: Konva.ILayer): void {
+            super.update(layer);
+            for (var i: number = 0; i < this.subDrawers.length; i++) {
+                this.subDrawers[i].update(layer);
+            }
+        }
     }
 }

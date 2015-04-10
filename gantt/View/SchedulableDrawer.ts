@@ -8,58 +8,42 @@ module View {
 
     export class SchedulableDrawer extends TaskDrawer {
 
-        private static schedulableSample: Kinetic.IGroup;
+        private static schedulableSample: Konva.IGroup;
 
         getTask(): Schedulable {
             return <Schedulable>this.task;
         }
 
-        draw(layer: Kinetic.ILayer, timeLineLayer: Kinetic.ILayer) {
+        draw(layer: Konva.ILayer, timeLineLayer: Konva.ILayer) {
 
-            if(SchedulableDrawer.schedulableSample == null)
+            if (SchedulableDrawer.schedulableSample == null)
                 this.createSample();
 
-            var node: Kinetic.IGroup = <Kinetic.IGroup>SchedulableDrawer.schedulableSample.clone({});
-            node.setPosition({
+            this.taskGroup = <Konva.IGroup>SchedulableDrawer.schedulableSample.clone({});
+            this.taskGroup.position({
                 x: Utils.dateToPosition(this.getTask().start),
-                y: TaskDrawer.actualPosition.y
+                y: TaskDrawer.actualPosition.y + Utils.taskLineHeight * 0.15
             });
 
 
-            var durationRect = <Kinetic.IRect>node.find('.durationRect')[0];
-			durationRect.setWidth(Utils.dateToPosition(this.getTask().finish) - Utils.dateToPosition(this.getTask().start));
-			if(this.getTask().earliestFinish.getTime() == this.getTask().latestFinish.getTime()) {
-				durationRect.setStroke("red");
-			}
+            var durationRect = <Konva.IRect>this.taskGroup.find('.durationRect')[0];
+            durationRect.width(Utils.dateToPosition(this.getTask().finish) - Utils.dateToPosition(this.getTask().start));
+            if (this.getTask().earliestFinish.getTime() == this.getTask().latestFinish.getTime()) {
+                durationRect.fill("#FFFF85");
+            }
 
-			var that = this;
-			durationRect.on("dragend", function(evt) {
-				that.dragged(evt);
-			});
-
-            timeLineLayer.add(node);
+            timeLineLayer.add(this.taskGroup);
 
             super.draw(layer, timeLineLayer);
 
         }
 
         createSample() {
-            SchedulableDrawer.schedulableSample = new Kinetic.Group({
-                x: 0,
-                y: 0
-            });
-
-            var rect = new Kinetic.Rect({
-                name: "durationRect",
-                cornerRadius: 5,
+            SchedulableDrawer.schedulableSample = new Konva.Group({
                 x: 0,
                 y: 0,
-                height: Utils.taskLineHeight,
-                fill: '#ADFF85',
-                stroke: 'black',
-                strokeWidth: 2,
                 draggable: true,
-                dragBoundFunc: function(pos: Kinetic.Vector2d) {
+                dragBoundFunc: function (pos: Konva.Vector2d) {
                     var y: number = this.getAbsolutePosition().y;
                     return {
                         x: pos.x > 0 ? pos.x : 0,
@@ -67,6 +51,23 @@ module View {
                     };
                 }
             });
+
+            var rect = new Konva.Rect({
+                name: "durationRect",
+                //cornerRadius: 5,
+                x: 0,
+                y: 0,
+                height: Utils.taskLineHeight * 0.7,
+                fill: '#ADFF85',
+                //stroke: 'black',
+                //strokeWidth: 2,
+                shadowColor: '#999',
+                shadowBlur: 5,
+                shadowOffsetX: 0,
+                shadowOffsetY: 2
+
+            });
+
 
             SchedulableDrawer.schedulableSample.add(rect);
         }

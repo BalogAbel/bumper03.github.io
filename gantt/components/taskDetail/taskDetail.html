@@ -22,29 +22,31 @@
         <div class="form-group row">
             <label for="description" class="control-label col-md-2">Description:</label>
             <span class="col-md-6">
-                <input class="form-control col-md-6" id="description" type="text"
+                <input class="form-control" id="description" type="text"
                        ng-model="taskDetail.task.description"/>
             </span>
         </div>
         <div class="form-group row">
             <label for="has-earliest-constraint" class="control-label col-md-2">Earliest constraint:</label>
-            <div class="col-md-6">
+            <div class="col-md-6 middle">
                 <input class="col-md-6" id="has-earliest-constraint" type="checkbox"
                        ng-model="taskDetail.hasEarliestConstraint"/>
             </div>
         </div>
         <div class="form-group row">
+            <div class="col-md-2"></div>
             <span class="col-md-6">
                 <p class="input-group">
-                    <input type="text" class="form-control" datepicker-popup="yyyy. MM. dd." ng-model="taskDetail.task.earliestStartConstraint" is-open="opened" datepicker-options="dateOptions"
-                           date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"/>
+                    <input type="text" class="form-control" datepicker-popup="yyyy. MM. dd." ng-model="taskDetail.task.earliestStartConstraint"  is-open="taskDetail.opened"
+                            ng-required="true" close-text="Close"/>
                       <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="open($event)"><i
+                        <button type="button" class="btn btn-default" ng-click="taskDetail.openEarliestConstraintDatePicker($event)"><i
                                 class="glyphicon glyphicon-calendar"></i></button>
                       </span>
                 </p>
             </span>
         </div>
+        {{taskDetail.task.earliestStartConstraint}}
     </form>
 </div>
 <div class="modal-footer">

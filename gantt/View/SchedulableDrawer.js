@@ -20,37 +20,23 @@ var View;
         SchedulableDrawer.prototype.draw = function (layer, timeLineLayer) {
             if (SchedulableDrawer.schedulableSample == null)
                 this.createSample();
-            var node = SchedulableDrawer.schedulableSample.clone({});
-            node.setPosition({
+            this.taskGroup = SchedulableDrawer.schedulableSample.clone({});
+            this.taskGroup.position({
                 x: Utils.dateToPosition(this.getTask().start),
-                y: TaskDrawer.actualPosition.y
+                y: TaskDrawer.actualPosition.y + Utils.taskLineHeight * 0.15
             });
-            var durationRect = node.find('.durationRect')[0];
-            durationRect.setWidth(Utils.dateToPosition(this.getTask().finish) - Utils.dateToPosition(this.getTask().start));
+            var durationRect = this.taskGroup.find('.durationRect')[0];
+            durationRect.width(Utils.dateToPosition(this.getTask().finish) - Utils.dateToPosition(this.getTask().start));
             if (this.getTask().earliestFinish.getTime() == this.getTask().latestFinish.getTime()) {
-                durationRect.setStroke("red");
+                durationRect.fill("#FFFF85");
             }
-            var that = this;
-            durationRect.on("dragend", function (evt) {
-                that.dragged(evt);
-            });
-            timeLineLayer.add(node);
+            timeLineLayer.add(this.taskGroup);
             _super.prototype.draw.call(this, layer, timeLineLayer);
         };
         SchedulableDrawer.prototype.createSample = function () {
-            SchedulableDrawer.schedulableSample = new Kinetic.Group({
-                x: 0,
-                y: 0
-            });
-            var rect = new Kinetic.Rect({
-                name: "durationRect",
-                cornerRadius: 5,
+            SchedulableDrawer.schedulableSample = new Konva.Group({
                 x: 0,
                 y: 0,
-                height: Utils.taskLineHeight,
-                fill: '#ADFF85',
-                stroke: 'black',
-                strokeWidth: 2,
                 draggable: true,
                 dragBoundFunc: function (pos) {
                     var y = this.getAbsolutePosition().y;
@@ -59,6 +45,20 @@ var View;
                         y: y
                     };
                 }
+            });
+            var rect = new Konva.Rect({
+                name: "durationRect",
+                //cornerRadius: 5,
+                x: 0,
+                y: 0,
+                height: Utils.taskLineHeight * 0.7,
+                fill: '#ADFF85',
+                //stroke: 'black',
+                //strokeWidth: 2,
+                shadowColor: '#999',
+                shadowBlur: 5,
+                shadowOffsetX: 0,
+                shadowOffsetY: 2
             });
             SchedulableDrawer.schedulableSample.add(rect);
         };

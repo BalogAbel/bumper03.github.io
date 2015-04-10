@@ -17,18 +17,15 @@ var View;
         SummaryDrawer.prototype.draw = function (layer, timeLineLayer) {
             if (SummaryDrawer.summarySample == null)
                 this.createSummarySample();
-            var node = SummaryDrawer.summarySample.clone({});
-            node.setPosition({
+            this.taskGroup = SummaryDrawer.summarySample.clone({});
+            this.taskGroup.position({
                 x: View.Utils.dateToPosition(this.getTask().start),
                 y: TaskDrawer.actualPosition.y
             });
-            var durationRect = node.find('.durationRect')[0];
-            durationRect.setWidth(View.Utils.dateToPosition(this.getTask().finish) - View.Utils.dateToPosition(this.getTask().start));
+            var durationRect = this.taskGroup.find('.durationRect')[0];
+            durationRect.width(View.Utils.dateToPosition(this.getTask().finish) - View.Utils.dateToPosition(this.getTask().start));
             var that = this;
-            durationRect.on("dragend", function (evt) {
-                that.dragged(evt);
-            });
-            timeLineLayer.add(node);
+            timeLineLayer.add(this.taskGroup);
             _super.prototype.draw.call(this, layer, timeLineLayer);
             var sumTask = this.getTask();
             TaskDrawer.actualPosition.x += View.Utils.taskLineHeight;
@@ -38,16 +35,9 @@ var View;
             TaskDrawer.actualPosition.x -= View.Utils.taskLineHeight;
         };
         SummaryDrawer.prototype.createSummarySample = function () {
-            SummaryDrawer.summarySample = new Kinetic.Group({ x: 0, y: 0 });
-            var rect = new Kinetic.Rect({
-                name: "durationRect",
-                cornerRadius: 1,
+            SummaryDrawer.summarySample = new Konva.Group({
                 x: 0,
-                y: View.Utils.taskLineHeight * 0.33,
-                height: View.Utils.taskLineHeight * 0.33,
-                fill: '#99C2FF',
-                stroke: 'black',
-                strokeWidth: 1,
+                y: 0,
                 draggable: true,
                 dragBoundFunc: function (pos) {
                     var y = this.getAbsolutePosition().y;
@@ -57,10 +47,27 @@ var View;
                     };
                 }
             });
+            var rect = new Konva.Rect({
+                name: "durationRect",
+                x: 0,
+                y: View.Utils.taskLineHeight * 0.33,
+                height: View.Utils.taskLineHeight * 0.33,
+                fill: '#99C2FF',
+                shadowColor: '#999',
+                shadowBlur: 5,
+                shadowOffsetX: 0,
+                shadowOffsetY: 2
+            });
             SummaryDrawer.summarySample.add(rect);
         };
         SummaryDrawer.prototype.getTask = function () {
             return this.task;
+        };
+        SummaryDrawer.prototype.update = function (layer) {
+            _super.prototype.update.call(this, layer);
+            for (var i = 0; i < this.subDrawers.length; i++) {
+                this.subDrawers[i].update(layer);
+            }
         };
         return SummaryDrawer;
     })(TaskDrawer);

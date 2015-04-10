@@ -2,18 +2,35 @@
 
 <html lang="en" ng-app="ganttApp">
 <head>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
+    <link rel="stylesheet" href="css/angular-material.css"/>
+
+
+    <link rel="stylesheet" href="app.css"/>
+    <link rel="stylesheet" href="gantt/gantt.css"/>
+    <link rel="stylesheet" href="welcome/welcome.css"/>
+    <link rel="stylesheet"
+          href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css"/>
+
+
     <title>TypeScript HTML App</title>
 
     <script src="lib/jquery.js"></script>
-    <script src="lib/kineticjs.js"></script>
+    <script src="lib/konva.js"></script>
     <script src="lib/jquery-resize.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js"></script>
+    <script src="lib/angular/angular.min.js"></script>
     <script src="lib/angular/angular-route.min.js"></script>
-    <script src="lib/angular/angular-ui-bootstrap.min.js"></script>
     <script src="lib/angular/angular-local-storage.min.js"></script>
+    <script src="lib/angular/angular-animate.min.js"></script>
+    <script src="lib/angular/angular-aria.min.js"></script>
+    <script src="lib/angular/angular-material.min.js"></script>
     <script src="lib/cycle.js"></script>
 
 
@@ -58,39 +75,47 @@
     <script src="gantt/View/TaskDrawerFactory.js"></script>
     <script src="gantt/View/ProjectDrawer.js"></script>
 
+    <script src="components/LayoutController.js"></script>
+    <script src="components/SidenavController.js"></script>
     <script src="components/ProjectService.js"></script>
-    <script src="menu/MenuController.js"></script>
     <script src="gantt/components/taskDetail/TaskDetailController.js"></script>
     <script src="gantt/GanttController.js"></script>
 
+
     <script src="app.js"></script>
-
-
-    <link rel="stylesheet" href="app.css"/>
-    <link rel="stylesheet" href="gantt/gantt.css"/>
-    <link rel="stylesheet" href="menu/menu.css"/>
-    <link rel="stylesheet"
-          href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css"/>
-    <link rel="stylesheet" href="css/bootstrap-theme.css"/>
-    <link rel="stylesheet" href="css/bootstrap.css"/>
-
 </head>
-<body>
+<body layout="column" ng-controller="LayoutController as layout">
 
-<div id="site">
-    <header>
-        <h1>TypeScript HTML App</h1>
-    </header>
+<md-toolbar layout="row">
+    <md-button class="menu" hide-gt-md ng-click="layout.toggleList()" aria-label="Show User List">
+        <md-icon md-svg-src="menu"></md-icon>
+    </md-button>
+    <h1>Gantt-Diagram Application</h1>
+</md-toolbar>
 
-    <!--<nav>-->
-    <!--<div class="nav_item">Menu 1</div>-->
-    <!--<div class="nav_item">Menu 2</div>-->
-    <!--<div class="nav_item">Menu 3</div>-->
-    <!--</nav>-->
+<div flex layout="row">
 
-    <article>
-        <ng-view></ng-view>
-    </article>
+    <md-sidenav md-is-locked-open="$mdMedia('gt-md')" class="md-whiteframe-z2" md-component-id="left">
+        <md-list ng-controller="SidenavController as sidenavCtrl">
+            <md-item>
+                <md-button ng-click="sidenavCtrl.new()">
+                    <h3>New</h3>
+                </md-button>
+            </md-item>
+            <md-item>
+                <md-button>
+                    <h3>Open</h3>
+                </md-button>
+            </md-item>
+            <md-item>
+                <md-button>
+                    <h3>Save</h3>
+                </md-button>
+            </md-item>
+        </md-list>
+    </md-sidenav>
+
+    <md-content flex id="content" ng-view></md-content>
 </div>
 
 

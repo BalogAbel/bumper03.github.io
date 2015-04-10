@@ -1,10 +1,9 @@
 ///<reference path='lib/types/jquery.d.ts'/>
-///<reference path='lib/types/jqueryui.d.ts'/>
-///<reference path='lib/types/kineticjs.d.ts'/>
+///<reference path='lib/types/konva.d.ts'/>
 ///<reference path='lib/types/angular/angular.d.ts'/>
 ///<reference path='lib/types/angular/angular-route.d.ts'/>
-///<reference path='lib/types/angular/angular-ui-bootstrap.d.ts'/>
 ///<reference path='lib/types/angular/angular-local-storage.d.ts'/>'/>
+///<reference path='lib/types/angular/angular-material.d.ts'/>'/>
 ///<reference path='lib/types/cycle.d.ts'/>
 ///<reference path='gantt/Util/Serializer.ts'/>
 ///<reference path='gantt/Util/Hashable.ts'/>
@@ -38,8 +37,9 @@
 ///<reference path='gantt/View/SummaryDrawer.ts'/>
 ///<reference path='gantt/View/TaskDrawerFactory.ts'/>
 ///<reference path='gantt/View/ProjectDrawer.ts'/>
+///<reference path='components/LayoutController.ts'/>
+///<reference path='components/SidenavController.ts'/>
 ///<reference path='components/ProjectService.ts'/>
-///<reference path='menu/MenuController.ts'/>
 ///<reference path='gantt/components/taskDetail/TaskDetailController.ts'/>
 ///<reference path='gantt/GanttController.ts'/> 
 //# sourceMappingURL=references.js.map

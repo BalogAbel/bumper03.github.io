@@ -844,7 +844,7 @@ declare module angular {
 
         /**
          * Change path when called with parameter and return $location.
-         * Note: Path should always begin with forward slash (/), this method will add the forward slash if it is missing.
+         * Note: IPath should always begin with forward slash (/), this method will add the forward slash if it is missing.
          *
          * @param path New path
          */

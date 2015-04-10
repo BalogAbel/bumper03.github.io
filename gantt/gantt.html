@@ -1,31 +1,23 @@
-<h2>Hello</h2>
 <div id="add-task-btn-group">
-    <div class="btn-group" dropdown>
-        <!--<button type="button" class="btn-block btn-lg btn-primary" ng-click="menu.new()">New</button>-->
-        <div id="add-task-btn" dropdown-toggle ng-disabled="disabled">+</div>
-        <!--<button type="button" class="btn-block btn-lg btn-primary" dropdown-toggle ng-disabled="disabled">-->
-        <!--Open <span class="caret"></span>-->
-        <!--</button>-->
-        <ul class="dropdown-menu drop" role="menu">
-            <li><a ng-click="gantt.newSchedulable()">Task</a></li>
-            <li><a ng-click="gantt.newSummary()">Wrapper</a></li>
-        </ul>
+    <div class="btn-group">
     </div>
 </div>
 
 <div id="zoom">
-    <span id="slider"></span>
-    <span id="zoomValue"></span>
+    <md-slider id="slider" ng-model="gantt.zoomLevel" min="10" max="500" ng-mouseup="gantt.handleZoom()" ng-keyup="gantt.handleZoom()" ></md-slider>
+    <span id="zoomValue">{{gantt.zoomLevel}}</span>
 </div>
 
-<div id="gantt">
-    <div id="taskWrapper">
-        <span id="tasks"></span>
-    </div>
-    <div id="timeLineWrapper">
-        <span id="timeLine"></span>
-    </div>
-</div>
+<md-card id="gantt">
+    <md-card-content layout="row">
+        <div id="taskWrapper">
+            <span id="tasks"></span>
+        </div>
+        <div id="timeLineWrapper">
+            <span id="timeLine"></span>
+        </div>
+    </md-card-content>
+</md-card>
 <span id="arrows">
     <span id="addBefore"><<</span>
     <span id="addAfter">>></span>
