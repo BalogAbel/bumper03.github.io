@@ -1,20 +1,24 @@
-/**
- * Created by Balog �bel P�ter on 2015.03.30..
- */
 ///<reference path='../../../references.ts' />
 var app;
 (function (app) {
+    var Schedulable = Model.Schedulable;
+    var Dependency = Model.Dependency;
     var TaskDetailController = (function () {
-        function TaskDetailController(task) {
-            this.task = task;
-            this.isSummary = task instanceof Model.Summary;
-            this.hasEarliestConstraint = task.earliestStartConstraint != null;
+        function TaskDetailController(project) {
+            this.project = project;
+            this.newDependency = new Dependency();
+            this.task = new Schedulable();
+            this.isSummary = this.task instanceof Model.Summary;
+            this.hasEarliestConstraint = this.task.earliestStartConstraint != null;
             this.opened = false;
         }
-        TaskDetailController.prototype.openEarliestConstraintDatePicker = function ($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
-            this.opened = true;
+        TaskDetailController.prototype.addDependency = function () {
+            this.task.predecessors.push(this.newDependency);
+            var successor = new Dependency();
+            successor.task = this.task;
+            successor.lag = this.newDependency.lag;
+            this.newDependency.task.successors.push(successor);
+            this.newDependency = new Dependency();
         };
         return TaskDetailController;
     })();

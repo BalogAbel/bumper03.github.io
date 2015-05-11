@@ -141,6 +141,21 @@ module Model {
             return this;
         }
 
+        public getAllSummaries(): Summary[] {
+            var result: Summary[] = [];
+            for (var i:number = 0; i < this.tasks.length; i++) {
+                result = result.concat(this.tasks[i].getAllSummaries());
+            }
+            return result;
+        }
+        public getAllTasks(): Task[] {
+            var result: Task[] = [];
+            for (var i:number = 0; i < this.tasks.length; i++) {
+                result = result.concat(this.tasks[i].getAllTasks());
+            }
+            return result;
+        }
+
     }
 
 }

@@ -74,6 +74,9 @@ var Model;
             this.latestFinish = new Date(input.latestFinish);
             return this;
         };
+        Schedulable.prototype.getAllTasks = function () {
+            return [this];
+        };
         return Schedulable;
     })(Task);
     Model.Schedulable = Schedulable;

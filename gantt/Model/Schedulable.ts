@@ -81,5 +81,10 @@ module Model {
 
 			return this;
 		}
+
+
+		getAllTasks(): Task[] {
+			return [this];
+		}
 	}
 }

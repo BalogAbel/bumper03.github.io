@@ -1,29 +1,34 @@
-/**
- * Created by Balog Ábel Péter on 2015.03.30..
- */
 ///<reference path='../../../references.ts' />
 
 module app {
     import Task = Model.Task;
+    import Summary = Model.Summary;
+    import Schedulable = Model.Schedulable;
+    import Project = Model.Project;
+    import Dependency = Model.Dependency;
 
     export class TaskDetailController {
         private task: Task;
         private isSummary: boolean;
-        private hasEarliestConstraint;
+        private hasEarliestConstraint: boolean;
         private opened: boolean;
+        private newDependency: Dependency = new Dependency();
 
-        constructor(task: Task) {
-            this.task = task;
-            this.isSummary = task instanceof Model.Summary;
-            this.hasEarliestConstraint = task.earliestStartConstraint != null;
+        constructor(private project: Project) {
+            this.task = new Schedulable();
+            this.isSummary = this.task instanceof Model.Summary;
+            this.hasEarliestConstraint = this.task.earliestStartConstraint != null;
             this.opened = false;
         }
 
-        openEarliestConstraintDatePicker($event: ng.IAngularEvent) {
-            $event.preventDefault();
-            $event.stopPropagation();
-
-            this.opened = true;
+        addDependency(): void {
+            this.task.predecessors.push(this.newDependency);
+            var successor = new Dependency();
+            successor.task = this.task;
+            successor.lag = this.newDependency.lag;
+            this.newDependency.task.successors.push(successor);
+            this.newDependency = new Dependency();
         }
+
     }
 }

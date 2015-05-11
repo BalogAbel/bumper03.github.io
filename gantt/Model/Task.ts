@@ -40,6 +40,11 @@ module Model {
             return new HashSet<Schedulable>();
         }
 
+
+        getAllTasks(): Task[] {
+            return [];
+        }
+
         /**
          * Returns the task's predecessors, not including transitive predecessors
          * @returns {Dependency[]}
@@ -151,6 +156,10 @@ module Model {
                 return new Model.Schedulable().deserialize(task);
             return task;
             //throw "Not a task: " + task;
+        }
+
+        public getAllSummaries(): Summary[] {
+            return [];
         }
 
     }

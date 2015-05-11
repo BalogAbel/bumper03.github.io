@@ -19,6 +19,9 @@ var Model;
         Task.prototype.getSubTasks = function () {
             return new HashSet();
         };
+        Task.prototype.getAllTasks = function () {
+            return [];
+        };
         /**
          * Returns the task's predecessors, not including transitive predecessors
          * @returns {Dependency[]}
@@ -120,6 +123,9 @@ var Model;
                 return new Model.Schedulable().deserialize(task);
             return task;
             //throw "Not a task: " + task;
+        };
+        Task.prototype.getAllSummaries = function () {
+            return [];
         };
         return Task;
     })();

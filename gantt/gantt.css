@@ -6,34 +6,6 @@ md-content {
     overflow: scroll;
 }
 
-#add-task-btn {
-    cursor: pointer;
-    display: inline-block;
-    height: 50px;
-    width: 50px;
-    border-radius: 25px;
-    background: limegreen;
-    text-align: center;
-    vertical-align: middle;
-    font-size: 35px;
-    color: white;
-    line-height: 50px;
-}
-#add-task-btn-group {
-    margin-left: 1000px;
-}
-
-#add-task-btn-group .dropdown-menu{
-    position: absolute;
-    left: -50px;
-}
-
-
-#add-task-btn:hover {
-    background-color: green;
-    color: limegreen;
-}
-
 #taskWrapper {
     display: inline-block;
     margin: 0;
@@ -42,7 +14,7 @@ md-content {
     width: 200px;
     max-width: 400px;
     /*border: 3px solid lightgray;*/
-    /*border-right: none;*/
+    border-right: 0;
     resize: horizontal;
     vertical-align: top;
 }
@@ -51,10 +23,10 @@ md-content {
     display: inline-block;
     margin: 0;
     padding: 0;
-    /*width: 800px;*/
+    width: 800px;
     overflow-x: scroll;
     /*border: 3px solid lightgray;*/
-    /*border-left: 0;*/
+    border-left: 0;
     border-bottom: 0;
 }
 
@@ -90,4 +62,10 @@ md-content {
     margin-top: 10px;
     margin-bottom: auto;
     height: 100%;
+}
+
+#add-button {
+    margin-top: 20px;
+    margin-left: 90%;
+    font-size: 35px;
 }

@@ -121,6 +121,20 @@ var Model;
             this.scheduler = Scheduler.deserializeHelper(input.scheduler);
             return this;
         };
+        Project.prototype.getAllSummaries = function () {
+            var result = [];
+            for (var i = 0; i < this.tasks.length; i++) {
+                result = result.concat(this.tasks[i].getAllSummaries());
+            }
+            return result;
+        };
+        Project.prototype.getAllTasks = function () {
+            var result = [];
+            for (var i = 0; i < this.tasks.length; i++) {
+                result = result.concat(this.tasks[i].getAllTasks());
+            }
+            return result;
+        };
         return Project;
     })();
     Model.Project = Project;

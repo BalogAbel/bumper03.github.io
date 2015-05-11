@@ -4,20 +4,25 @@
 </div>
 
 <div id="zoom">
-    <md-slider id="slider" ng-model="gantt.zoomLevel" min="10" max="500" ng-mouseup="gantt.handleZoom()" ng-keyup="gantt.handleZoom()" ></md-slider>
+    <md-slider id="slider" ng-model="gantt.zoomLevel" min="10" max="500" ng-mouseup="gantt.handleZoom()"
+               ng-keyup="gantt.handleZoom()"></md-slider>
     <span id="zoomValue">{{gantt.zoomLevel}}</span>
 </div>
 
 <md-card id="gantt">
+
     <md-card-content layout="row">
-        <div id="taskWrapper">
+        <div id="taskWrapper" flex="15" flex-sm="30">
             <span id="tasks"></span>
         </div>
-        <div id="timeLineWrapper">
+        <div id="timeLineWrapper" flex>
             <span id="timeLine"></span>
         </div>
     </md-card-content>
 </md-card>
+<md-button class="md-fab" id="add-button" ng-click="gantt.newSchedulable()">
+    +
+</md-button>
 <span id="arrows">
     <span id="addBefore"><<</span>
     <span id="addAfter">>></span>

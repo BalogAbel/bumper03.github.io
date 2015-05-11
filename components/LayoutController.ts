@@ -1,5 +1,5 @@
 /**
- * Created by Balog Ábel Péter on 2015.04.08..
+ * Created by Balog ï¿½bel Pï¿½ter on 2015.04.08..
  */
 
 ///<reference path='../references.ts' />

@@ -21,6 +21,14 @@ var Model;
             }
             return result;
         };
+        Summary.prototype.getAllTasks = function () {
+            var result = _super.prototype.getAllTasks.call(this);
+            for (var i = 0; i < this.tasks.length; i++) {
+                result = result.concat(this.tasks[i].getAllTasks());
+            }
+            result.push(this);
+            return result;
+        };
         Summary.prototype.notifyScheduled = function (task) {
             if (this.finish == null || this.finish.getTime() < task.finish.getTime()) {
                 this.finish = new Date(task.finish.getTime());
@@ -40,6 +48,13 @@ var Model;
                 }
             }
             return this;
+        };
+        Summary.prototype.getAllSummaries = function () {
+            var result = [this];
+            for (var i = 0; i < this.tasks.length; i++) {
+                result = result.concat(this.tasks[i].getAllSummaries());
+            }
+            return result;
         };
         return Summary;
     })(Model.Task);

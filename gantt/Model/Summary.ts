@@ -22,6 +22,15 @@ module Model {
 			return result;
 		}
 
+        getAllTasks(): Task[] {
+            var result = super.getAllTasks();
+            for(var i: number = 0; i < this.tasks.length; i++) {
+                result = result.concat(this.tasks[i].getAllTasks());
+            }
+            result.push(this);
+            return result;
+        }
+
 		notifyScheduled(task: Task) {
 			if(this.finish == null || this.finish.getTime() < task.finish.getTime()) {
 				this.finish = new Date(task.finish.getTime());
@@ -45,6 +54,14 @@ module Model {
 			return this;
 		}
 
+
+        public getAllSummaries(): Summary[] {
+            var result: Summary[] = [this];
+            for(var i: number = 0; i < this.tasks.length; i++) {
+                result = result.concat(this.tasks[i].getAllSummaries());
+            }
+            return result;
+        }
 
 
 

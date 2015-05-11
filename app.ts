@@ -6,6 +6,7 @@ module app {
     var ganttapp:ng.IModule = angular.module('ganttApp', ['ngRoute', 'ngMaterial', 'LocalStorageModule'])
 
         .service('projectService', app.ProjectService)
+
         .controller('LayoutController', ['$mdBottomSheet', '$q', '$mdSidenav', LayoutController])
         .controller('SidenavController', ['$location', 'projectService', SidenavController])
 
