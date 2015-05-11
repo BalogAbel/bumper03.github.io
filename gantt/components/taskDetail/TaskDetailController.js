@@ -3,10 +3,12 @@ var app;
 (function (app) {
     var Schedulable = Model.Schedulable;
     var Dependency = Model.Dependency;
+    var ResourceUsage = Model.Resources.ResourceUsage;
     var TaskDetailController = (function () {
         function TaskDetailController(project) {
             this.project = project;
             this.newDependency = new Dependency();
+            this.newResourceUsage = new ResourceUsage();
             this.task = new Schedulable();
             this.isSummary = this.task instanceof Model.Summary;
             this.hasEarliestConstraint = this.task.earliestStartConstraint != null;
@@ -19,6 +21,11 @@ var app;
             successor.lag = this.newDependency.lag;
             this.newDependency.task.successors.push(successor);
             this.newDependency = new Dependency();
+            this.newResourceUsage = new ResourceUsage();
+        };
+        TaskDetailController.prototype.addResourceUsage = function () {
+            this.task.resourceUsages.push(this.newResourceUsage);
+            this.newResourceUsage = new ResourceUsage();
         };
         return TaskDetailController;
     })();

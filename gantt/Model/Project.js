@@ -6,6 +6,7 @@ var Model;
     var LeastSlackTimeScheduler = Model.Schedulers.LeastSlackTimeScheduler;
     var WorkingCalendar = Model.WorkingCalendar.WorkingCalendar;
     var HashSet = Util.HashSet;
+    var ResourceType = Model.Resources.ResourceType;
     /**
      *
      */
@@ -16,6 +17,7 @@ var Model;
             this.start.setHours(0, 0, 0, 0);
             this.scheduler = new LeastSlackTimeScheduler();
             this.workingCalendar = WorkingCalendar.getWorkingCalendar();
+            this.resourceTypes = [];
         }
         /**
          *
@@ -116,6 +118,9 @@ var Model;
             this.earliestFinish = input.earlearliestFinish;
             for (var i = 0; i < input.tasks.length; i++) {
                 this.tasks.push(Task.deserializeHelper(input.tasks[i]));
+            }
+            for (var i = 0; i < input.resourceTypes.length; i++) {
+                this.resourceTypes.push(new ResourceType().deserialize(input.resourceTypes[i]));
             }
             this.workingCalendar = new WorkingCalendar().deserialize(input.workingCalendar);
             this.scheduler = Scheduler.deserializeHelper(input.scheduler);

@@ -8,6 +8,7 @@ module Model {
     import LeastSlackTimeScheduler = Model.Schedulers.LeastSlackTimeScheduler;
     import WorkingCalendar = Model.WorkingCalendar.WorkingCalendar;
     import HashSet = Util.HashSet;
+    import ResourceType = Model.Resources.ResourceType;
 
     /**
      *
@@ -20,6 +21,7 @@ module Model {
         tasks:Task[];
         workingCalendar:WorkingCalendar;
         scheduler:Scheduler;
+        resourceTypes: ResourceType[];
 
         constructor() {
             this.tasks = [];
@@ -27,6 +29,7 @@ module Model {
             this.start.setHours(0, 0, 0, 0);
             this.scheduler = new LeastSlackTimeScheduler();
             this.workingCalendar = WorkingCalendar.getWorkingCalendar();
+            this.resourceTypes = [];
         }
         /**
          *
@@ -135,6 +138,9 @@ module Model {
             this.earliestFinish = input.earlearliestFinish;
             for(var i = 0; i < input.tasks.length; i++) {
                 this.tasks.push(Task.deserializeHelper(input.tasks[i]))
+            }
+            for(var i = 0; i < input.resourceTypes.length; i++) {
+                this.resourceTypes.push(new ResourceType().deserialize(input.resourceTypes[i]));
             }
             this.workingCalendar = new WorkingCalendar().deserialize(input.workingCalendar)
             this.scheduler = Scheduler.deserializeHelper(input.scheduler);

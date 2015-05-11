@@ -148,6 +148,7 @@ module Util {
 			normalWorkingDay.workingHours.push(new WorkingHour(12, 30, 16, 30));
 			workingCalendar.normalWorkingDay = normalWorkingDay;
 			project.workingCalendar = workingCalendar;
+            project.resourceTypes.push(resourceType);
 
 			return project;
 

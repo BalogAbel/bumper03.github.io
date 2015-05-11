@@ -97,7 +97,32 @@
             </md-tab>
             <md-tab>
                 <md-tab-label>Resources</md-tab-label>
-                <md-tab-body>Resources</md-tab-body>
+                <md-tab-body>
+                    <h4>New resource usage</h4>
+                    <select ng-options="resource as resource.name for resource in taskDetailController.project.resourceTypes"
+                            ng-model="taskDetailController.newResourceUsage.resource">
+                    </select>
+                    <div layout layout-sm="column">
+                        <md-input-container flex>
+                            <label>Required quantity</label>
+                            <input type="number" step="1" required min="0"
+                                   ng-model="taskDetailController.newResourceUsage.need">
+                        </md-input-container>
+                    </div>
+
+                    <md-button class="md-raised" ng-click="taskDetailController.addResourceUsage()">Add</md-button>
+
+                    <h4>Current dependencies</h4>
+                    <md-list>
+                        <md-list-item ng-repeat="resourceUsage in taskDetailController.task.resourceUsages">
+                            <div>
+                                {{resourceUsage.resource.name}}&nbsp;
+                                <span class="lag">({{resourceUsage.need}})</span>
+                                <img class="remove-icon" ng-src="gantt/components/taskDetail/remove.png" />
+                            </div>
+                        </md-list-item>
+
+                </md-tab-body>
             </md-tab>
         </md-tabs>
 
