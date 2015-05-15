@@ -1,11 +1,13 @@
 #task-editor {
-    width: 80%;
-    max-width: 500px;
+    overflow-y: auto;
     padding: 20px;
     height: auto;
+    max-height: 90%;
+
 }
 
 #task-editor .remove-icon {
     height: 20px;
     float: right;
+    cursor: pointer;
 }

@@ -1,31 +1,41 @@
 ///<reference path='../../../references.ts' />
 var app;
 (function (app) {
-    var Schedulable = Model.Schedulable;
     var Dependency = Model.Dependency;
     var ResourceUsage = Model.Resources.ResourceUsage;
     var TaskDetailController = (function () {
-        function TaskDetailController(project) {
+        function TaskDetailController($mdDialog, project, task) {
+            this.$mdDialog = $mdDialog;
             this.project = project;
-            this.newDependency = new Dependency();
+            this.task = task;
             this.newResourceUsage = new ResourceUsage();
-            this.task = new Schedulable();
-            this.isSummary = this.task instanceof Model.Summary;
-            this.hasEarliestConstraint = this.task.earliestStartConstraint != null;
-            this.opened = false;
+            this.newDependency = new Dependency();
         }
         TaskDetailController.prototype.addDependency = function () {
-            this.task.predecessors.push(this.newDependency);
-            var successor = new Dependency();
-            successor.task = this.task;
-            successor.lag = this.newDependency.lag;
-            this.newDependency.task.successors.push(successor);
+            this.task.dependencies.push(this.newDependency);
             this.newDependency = new Dependency();
-            this.newResourceUsage = new ResourceUsage();
+        };
+        TaskDetailController.prototype.removeDependency = function (dependency) {
+            var idx = this.task.dependencies.indexOf(dependency);
+            if (idx == -1)
+                return;
+            this.task.dependencies.splice(idx, 1);
         };
         TaskDetailController.prototype.addResourceUsage = function () {
             this.task.resourceUsages.push(this.newResourceUsage);
             this.newResourceUsage = new ResourceUsage();
+        };
+        TaskDetailController.prototype.removeResourceUsage = function (resourceUsage) {
+            var idx = this.task.resourceUsages.indexOf(resourceUsage);
+            if (idx == -1)
+                return;
+            this.task.resourceUsages.splice(idx, 1);
+        };
+        TaskDetailController.prototype.save = function () {
+            this.$mdDialog.hide(this.task);
+        };
+        TaskDetailController.prototype.cancel = function () {
+            this.$mdDialog.hide();
         };
         return TaskDetailController;
     })();

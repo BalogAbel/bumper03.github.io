@@ -7,6 +7,7 @@ module Model.Resources {
 		name: string;
 
 		deserialize(input: any): ResourceType {
+			if(!input.hasOwnProperty('available')) return input;
 			this.id = input.id;
 			this.available = input.available;
 			this.name = input.name;

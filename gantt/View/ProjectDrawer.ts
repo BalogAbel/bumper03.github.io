@@ -72,7 +72,6 @@ module View {
 
         update(): void {
             this.project.schedule();
-            console.log(this.project);
             for (var i = 0; i < this.taskDrawers.length; i++) {
                 this.taskDrawers[i].update(this.timeLineLayer);
             }

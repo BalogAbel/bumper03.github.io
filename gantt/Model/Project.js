@@ -113,12 +113,13 @@ var Model;
             return result.toArray().filter(function (s) { return s != undefined; });
         };
         Project.prototype.deserialize = function (input) {
+            if (!input.hasOwnProperty('start'))
+                return input;
             this.start = input.start != null ? new Date(input.start) : null;
-            this.finish = input.finish != null ? new Date(input.finish) : null;
-            this.earliestFinish = input.earlearliestFinish;
             for (var i = 0; i < input.tasks.length; i++) {
                 this.tasks.push(Task.deserializeHelper(input.tasks[i]));
             }
+            console.log(input.resourceTypes);
             for (var i = 0; i < input.resourceTypes.length; i++) {
                 this.resourceTypes.push(new ResourceType().deserialize(input.resourceTypes[i]));
             }

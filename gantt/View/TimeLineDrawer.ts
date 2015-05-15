@@ -5,7 +5,6 @@ module View {
     import WorkingCalendar =  Model.WorkingCalendar.WorkingCalendar;
 
     export class TimeLineDrawer {
-        $
         private static sampleDay: Konva.IGroup = null;
         private static sampleHour: Konva.IGroup = null;
 

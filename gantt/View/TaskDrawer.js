@@ -8,12 +8,11 @@ var View;
         TaskDrawer.prototype.draw = function (layer, timeLineLayer) {
             if (TaskDrawer.taskNameSample == null || TaskDrawer.taskTimeLineSample == null)
                 this.createSamples();
-            var node = TaskDrawer.taskNameSample.clone({});
-            var taskName = node.find('.TaskName')[0];
-            taskName.name('TaskName' + this.task.id);
+            this.nameGroup = TaskDrawer.taskNameSample.clone({});
+            var taskName = this.nameGroup.find('.TaskName')[0];
             taskName.text(this.task.name);
-            node.position(TaskDrawer.actualPosition);
-            layer.add(node);
+            this.nameGroup.position(TaskDrawer.actualPosition);
+            layer.add(this.nameGroup);
             var line = TaskDrawer.taskTimeLineSample.clone({});
             var taskLine = line.find('.TaskLine')[0];
             taskLine.points([
@@ -28,6 +27,10 @@ var View;
             var that = this;
             this.taskGroup.on("dragend", function (evt) {
                 that.dragged(evt);
+            });
+            this.taskGroup.on("dblclick", function (evt) {
+                var scope = angular.element($("#gantt")).scope().gantt;
+                scope.editTask(that.task);
             });
             //this.taskGroup.on("dragstart", function (evt) {
             //    TaskDrawer.taskDragged(<Konva.INode>evt.target)
@@ -94,6 +97,8 @@ var View;
             View.ProjectDrawer.refresh();
         };
         TaskDrawer.prototype.update = function (layer) {
+            this.nameGroup.find('.TaskName')[0].text(this.task.name);
+            this.nameGroup.getLayer().draw();
             this.moveToDate(layer);
             this.animateWidth(layer);
         };
@@ -117,7 +122,6 @@ var View;
             var newWidth = Utils.dateToPosition(this.task.finish) - Utils.dateToPosition(this.task.start);
             var step = (newWidth - node.width()) / 100;
             var grow = node.getWidth() < newWidth;
-            console.log("Width anim for " + this.task.name + ": old width: " + node.width() + ", new width: " + newWidth);
             var anim = new Konva.Animation(function (frame) {
                 node.width(node.width() + frame.timeDiff * step);
                 if ((grow && node.width() > newWidth) || (!grow && node.width() < newWidth)) {

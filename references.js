@@ -41,5 +41,6 @@
 ///<reference path='components/SidenavController.ts'/>
 ///<reference path='components/ProjectService.ts'/>
 ///<reference path='gantt/components/taskDetail/TaskDetailController.ts'/>
+///<reference path='gantt/components/taskDetail/TaskVO.ts'/>
 ///<reference path='gantt/GanttController.ts'/> 
 //# sourceMappingURL=references.js.map

@@ -133,12 +133,12 @@ module Model {
 
 
         deserialize(input: any): Project {
+            if(!input.hasOwnProperty('start')) return input;
             this.start = input.start != null ? new Date(input.start) : null;
-            this.finish = input.finish != null ? new Date(input.finish) : null;
-            this.earliestFinish = input.earlearliestFinish;
             for(var i = 0; i < input.tasks.length; i++) {
                 this.tasks.push(Task.deserializeHelper(input.tasks[i]))
             }
+            console.log(input.resourceTypes);
             for(var i = 0; i < input.resourceTypes.length; i++) {
                 this.resourceTypes.push(new ResourceType().deserialize(input.resourceTypes[i]));
             }

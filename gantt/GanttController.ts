@@ -1,7 +1,6 @@
 /// <reference path="../references.ts" />
 
 module app {
-
     import ng = angular;
     import Project = Model.Project;
     import Summary = Model.Summary;
@@ -14,13 +13,13 @@ module app {
 
     export class GanttCtrl {
 
-        zoomLevel: number;
-        private project: Project;
-        private projectDrawer: ProjectDrawer;
+        zoomLevel:number;
+        private project:Project;
+        private projectDrawer:ProjectDrawer;
 
-        constructor(projectService: ProjectService,
-                    $location: ng.ILocationService,
-                    private $mdDialog: ng.material.MDDialogService) {
+        constructor(projectService:ProjectService,
+                    $location:ng.ILocationService,
+                    private $mdDialog:ng.material.MDDialogService) {
 
             this.project = projectService.get();
             this.project.schedule();
@@ -36,19 +35,62 @@ module app {
             //});
         }
 
-        public handleZoom(): void {
+        public handleZoom():void {
             console.log(this.zoomLevel);
             this.projectDrawer.changeZoom(this.zoomLevel);
         }
 
-        public newSchedulable() {
-        this.$mdDialog.show({
+        public newTask(): void {
+            var that = this;
+            this.$mdDialog.show({
                 controller: TaskDetailController,
                 controllerAs: "taskDetailController",
                 templateUrl: 'gantt/components/taskDetail/taskDetail.html',
-                locals : {
-                    project : this.project
+                locals: {
+                    project: this.project,
+                    task: new TaskVO()
                 }
+            }).then(function(taskVO: TaskVO) {
+                if(taskVO == null) return;
+                var task: Task = taskVO.isSummary ? new Summary() : new Schedulable();
+                taskVO.merge(task);
+                if(task.parent == null) {
+                    that.project.tasks.push(task);
+                } else {
+                    task.parent.tasks.push(task);
+                }
+                that.project.schedule();
+                that.projectDrawer.draw();
+
+            });
+        }
+
+        public editTask(task: Task): void {
+            var that = this;
+            this.$mdDialog.show({
+                controller: TaskDetailController,
+                controllerAs: "taskDetailController",
+                templateUrl: 'gantt/components/taskDetail/taskDetail.html',
+                locals: {
+                    project: this.project,
+                    task: TaskVO.fromTask(task)
+                }
+            }).then(function(taskVO: TaskVO) {
+                if(taskVO == null) return;
+
+                if(taskVO.parent != task.parent) {
+                    var parentIdx = task.parent == null ? -1 : task.parent.tasks.indexOf(task);
+                    if(parentIdx != -1) task.parent.tasks.splice(parentIdx, 1);
+                    task.parent = taskVO.parent;
+                    if(task.parent != null) {
+                        task.parent.tasks.push(task);
+                    } else {
+                        that.project.tasks.push(task);
+                    }
+                }
+                taskVO.merge(task);
+                that.project.schedule();
+                that.projectDrawer.draw();
             });
         }
     }
