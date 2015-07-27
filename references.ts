@@ -1,10 +1,10 @@
-///<reference path='lib/types/jquery.d.ts'/>
-///<reference path='lib/types/konva.d.ts'/>
-///<reference path='lib/types/angular/angular.d.ts'/>
-///<reference path='lib/types/angular/angular-route.d.ts'/>
-///<reference path='lib/types/angular/angular-local-storage.d.ts'/>'/>
-///<reference path='lib/types/angular/angular-material.d.ts'/>'/>
-///<reference path='lib/types/cycle.d.ts'/>
+///<reference path='typings/jquery/jquery.d.ts'/>
+///<reference path='lib/types/konva/konva.d.ts'/>
+///<reference path='typings/angularjs/angular.d.ts'/>
+///<reference path='typings/angularjs/angular-route.d.ts'/>
+///<reference path='typings/angularLocalStorage/angularLocalStorage.d.ts'/>
+///<reference path='typings/angular-material/angular-material.d.ts'/>
+///<reference path='lib/types/cycle/cycle.d.ts'/>
 
 ///<reference path='gantt/Util/Serializer.ts'/>
 ///<reference path='gantt/Util/Hashable.ts'/>
@@ -51,6 +51,7 @@
 ///<reference path='components/LayoutController.ts'/>
 ///<reference path='components/SidenavController.ts'/>
 ///<reference path='components/ProjectService.ts'/>
+///<reference path='components/Resizeable.ts'/>
 ///<reference path='gantt/components/taskDetail/TaskDetailController.ts'/>
 ///<reference path='gantt/components/taskDetail/TaskVO.ts'/>
 ///<reference path='gantt/GanttController.ts'/>

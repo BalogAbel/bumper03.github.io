@@ -1,0 +1,6 @@
+This d.ts file maintained by the lib developer.
+Source: https://github.com/konvajs/konva/blob/master/resources/konva.d.ts
+
+For TypeScript it has to be changed a bit, please look for differs.
+
+Last update check: 2015. 06. 02.

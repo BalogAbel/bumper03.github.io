@@ -3,7 +3,7 @@
 }
 
 md-content {
-    overflow: scroll;
+    overflow: auto;
 }
 
 #taskWrapper {
@@ -15,7 +15,7 @@ md-content {
     max-width: 400px;
     /*border: 3px solid lightgray;*/
     border-right: 0;
-    resize: horizontal;
+    /*resize: horizontal;*/
     vertical-align: top;
 }
 
@@ -31,8 +31,7 @@ md-content {
 }
 
 #arrows {
-    margin-left: 266px;
-    display: inline-block;
+    /*display: inline-block;*/
     /*width: 800px;*/
 }
 

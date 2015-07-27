@@ -8,7 +8,8 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no"/>
 
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
-    <link rel="stylesheet" href="css/angular-material.css"/>
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css"/>
+    <link rel="stylesheet" href="bower_components/jquery-ui/themes/base/jquery-ui.min.css"/>
 
 
     <link rel="stylesheet" href="app.css"/>
@@ -19,17 +20,17 @@
 
     <title>TypeScript HTML App</title>
 
-    <script src="lib/jquery.js"></script>
-    <script src="lib/konva.js"></script>
-    <script src="lib/jquery-resize.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+    <script src="bower_components/konva/konva.min.js"></script>
 
-    <script src="lib/angular/angular.min.js"></script>
-    <script src="lib/angular/angular-route.min.js"></script>
-    <script src="lib/angular/angular-local-storage.min.js"></script>
-    <script src="lib/angular/angular-animate.min.js"></script>
-    <script src="lib/angular/angular-aria.min.js"></script>
-    <script src="lib/angular/angular-material.min.js"></script>
-    <script src="lib/cycle.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <script src="bower_components/angular-local-storage/dist/angular-local-storage.min.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.min.js"></script>
+    <script src="bower_components/angular-material/angular-material.min.js"></script>
+    <script src="lib/cycle/cycle.js"></script>
 
 
     <script src="gantt/Util/Serializer.js"></script>
@@ -73,6 +74,7 @@
     <script src="gantt/View/TaskDrawerFactory.js"></script>
     <script src="gantt/View/ProjectDrawer.js"></script>
 
+    <script src="components/Resizeable.js"></script>
     <script src="components/LayoutController.js"></script>
     <script src="components/SidenavController.js"></script>
     <script src="components/ProjectService.js"></script>

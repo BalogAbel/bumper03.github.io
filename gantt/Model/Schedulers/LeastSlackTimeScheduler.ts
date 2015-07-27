@@ -9,7 +9,7 @@ module Model.Schedulers {
 
 	export class LeastSlackTimeScheduler extends Scheduler implements Util.ISerializable<LeastSlackTimeScheduler> {
 
-		private leastSlackTimeScheduler:string = 'DO_NOT_REMOVE!!'
+		private leastSlackTimeScheduler:string = 'DO_NOT_REMOVE!!';
 
 
 
@@ -65,8 +65,8 @@ module Model.Schedulers {
 				var resources = task.getResourceUsages();
 				var that = this;
 				resources.forEach(resource => {
-					for(var i: number = 0; i < resource.need; i++) {
-						var newStart = that.resourceManager.allocateResource(resource.resource, start, finish);
+					for(var i = 0; i < resource.need; i++) {
+						var newStart = that.resourceManager.allocateResource(resource.resource, start, task.duration);
 						if(newStart != null) {
 							allocationSucces = false;
 							start.setTime(newStart.getTime());

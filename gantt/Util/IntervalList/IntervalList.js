@@ -39,6 +39,9 @@ var Util;
                         break;
                 }
             };
+            IntervalList.prototype.get = function (i) {
+                return this.intervals[i];
+            };
             IntervalList.prototype.reverse = function (callback) {
                 for (var i = this.intervals.length - 1; i >= 0; i--) {
                     if (!callback(this.intervals[i]))
@@ -57,6 +60,9 @@ var Util;
                     return ret;
                 }
                 throw "Not an interval: " + interval;
+            };
+            IntervalList.prototype.length = function () {
+                return this.intervals.length;
             };
             return IntervalList;
         })();

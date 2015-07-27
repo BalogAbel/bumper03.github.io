@@ -3,7 +3,27 @@
 module app {
     import ng = angular;
 
-    var ganttapp:ng.IModule = angular.module('ganttApp', ['ngRoute', 'ngMaterial', 'LocalStorageModule'])
+    var ganttapp:ng.IModule = ng.module('ganttApp', ['ngRoute', 'ngMaterial', 'LocalStorageModule'])
+
+        .directive('resizable', function () {
+            return {
+                restrict: 'A',
+                scope: {
+                    callback: '&onResize'
+                },
+                link: function postLink(scope: any, elem, attrs) {
+                    elem.resizable({
+                        handles: 'e, w'
+                    });
+                    elem.on('resizestop', function (evt, ui) {
+                        if (scope.callback) {
+                            scope.callback();
+                        }
+                    });
+                }
+            };
+        })
+
 
         .service('projectService', app.ProjectService)
 

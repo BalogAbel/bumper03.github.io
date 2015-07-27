@@ -12,7 +12,7 @@ module Util.IntervalList {
 
 
 		push(t: T) {
-			this.intervals.forEach(function(element) {
+			this.intervals.forEach(element => {
 				if(element.doOverLapWith(t)) throw new IntervalOverlapError();
 			});
 
@@ -46,6 +46,10 @@ module Util.IntervalList {
 			}
 		}
 
+        get(i: number): T {
+            return <T>this.intervals[i];
+        }
+
 		reverse(callback: (t: T) => boolean) {
 			for(var i: number = this.intervals.length - 1; i >= 0; i--) {
 				if(!callback(<T>this.intervals[i])) break;
@@ -67,6 +71,10 @@ module Util.IntervalList {
 			}
 			throw "Not an interval: " + interval;
 		}
+
+        length(): number {
+            return this.intervals.length;
+        }
 
 	}
 }

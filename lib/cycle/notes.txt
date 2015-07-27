@@ -1,0 +1,4 @@
+Source: https://github.com/douglascrockford/JSON-js
+
+Minify with UgliflyJS2: https://github.com/mishoo/UglifyJS2
+Use the following command running from this library: uglifyjs cycle.js --compress --mangle --source-map cylcle.min.js.map --output cycle.min.js

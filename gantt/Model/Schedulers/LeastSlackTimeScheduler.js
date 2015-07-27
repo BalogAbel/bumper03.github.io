@@ -67,7 +67,7 @@ var Model;
                     var that = this;
                     resources.forEach(function (resource) {
                         for (var i = 0; i < resource.need; i++) {
-                            var newStart = that.resourceManager.allocateResource(resource.resource, start, finish);
+                            var newStart = that.resourceManager.allocateResource(resource.resource, start, task.duration);
                             if (newStart != null) {
                                 allocationSucces = false;
                                 start.setTime(newStart.getTime());
