@@ -28,11 +28,13 @@ var Model;
                 if (backward === void 0) { backward = false; }
                 if (!backward) {
                     var lastWHour = this.workingHours.last();
-                    return ((lastWHour.toHour == date.getHours() && lastWHour.toMinute <= date.getMinutes()) || lastWHour.toHour < date.getHours());
+                    return ((lastWHour.toHour == date.getHours() && lastWHour.toMinute <= date.getMinutes()) ||
+                        lastWHour.toHour < date.getHours());
                 }
                 else {
                     var firstWHour = this.workingHours.first();
-                    return ((firstWHour.fromHour == date.getHours() && firstWHour.fromMinute >= date.getMinutes()) || firstWHour.fromHour > date.getHours());
+                    return ((firstWHour.fromHour == date.getHours() && firstWHour.fromMinute >= date.getMinutes()) ||
+                        firstWHour.fromHour > date.getHours());
                 }
             };
             WorkingDay.prototype.setTimeToPeriod = function (date, backward) {
@@ -48,6 +50,7 @@ var Model;
                 this.workingHours.reverse(function (workingHour) {
                     var contains = workingHour.contains(date.getHours(), date.getMinutes(), true);
                     switch (contains) {
+                        //it's before the period
                         case -1:
                             //continue the iteration
                             return true;
@@ -56,6 +59,7 @@ var Model;
                             //break the iteration
                             return false;
                             break;
+                        //it's after the period
                         case 1:
                             //set to the end of the period, and break the iteration
                             date.setHours(workingHour.toHour, workingHour.toMinute);
@@ -70,15 +74,18 @@ var Model;
                 this.workingHours.each(function (workingHour) {
                     var contains = workingHour.contains(date.getHours(), date.getMinutes());
                     switch (contains) {
+                        //it's before the period
                         case -1:
                             //set to the beginning of the period, and break the iteration
                             date.setHours(workingHour.fromHour, workingHour.fromMinute);
                             return false;
                             break;
+                        //it's in the period
                         case 0:
                             //break the iteration
                             return false;
                             break;
+                        //it's after the period
                         case 1:
                             //continue the iteration
                             return true;

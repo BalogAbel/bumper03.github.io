@@ -19,7 +19,7 @@ module app {
 
         constructor(projectService:ProjectService,
                     $location:ng.ILocationService,
-                    private $mdDialog:ng.material.MDDialogService) {
+                    private $mdDialog:ng.material.IDialogService) {
 
             this.project = projectService.get();
             this.project.schedule();
@@ -66,7 +66,6 @@ module app {
         }
 
         public editTask(task: Task): void {
-            var that = this;
             this.$mdDialog.show({
                 controller: TaskDetailController,
                 controllerAs: "taskDetailController",
@@ -85,12 +84,23 @@ module app {
                     if(task.parent != null) {
                         task.parent.tasks.push(task);
                     } else {
-                        that.project.tasks.push(task);
+                        this.project.tasks.push(task);
                     }
                 }
                 taskVO.merge(task);
-                that.project.schedule();
-                that.projectDrawer.draw();
+                this.project.schedule();
+                this.projectDrawer.draw();
+            });
+        }
+
+        public editResources(): void {
+            this.$mdDialog.show({
+                controller: ResourcesController,
+                controllerAs: "resourcesController",
+                templateUrl: "gantt/components/resources/resources.html",
+                locals: {
+                    resources: this.project.resourceTypes
+                }
             });
         }
     }

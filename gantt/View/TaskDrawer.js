@@ -16,10 +16,8 @@ var View;
             var line = TaskDrawer.taskTimeLineSample.clone({});
             var taskLine = line.find('.TaskLine')[0];
             taskLine.points([
-                0,
-                0,
-                Utils.getCanvasWidth(),
-                0
+                0, 0,
+                Utils.getCanvasWidth(), 0
             ]);
             line.position({ x: 0, y: TaskDrawer.actualPosition.y });
             timeLineLayer.add(line);
@@ -63,10 +61,8 @@ var View;
                 x: 0,
                 y: 0,
                 points: [
-                    0,
-                    0,
-                    Utils.getCanvasWidth(),
-                    0
+                    0, 0,
+                    Utils.getCanvasWidth(), 0
                 ]
             });
             TaskDrawer.taskNameSample.add(line);
@@ -84,10 +80,8 @@ var View;
                 x: 0,
                 y: 0,
                 points: [
-                    0,
-                    0,
-                    Utils.getCanvasWidth(),
-                    0
+                    0, 0,
+                    Utils.getCanvasWidth(), 0
                 ]
             });
             TaskDrawer.taskTimeLineSample.add(line);

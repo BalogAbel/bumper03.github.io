@@ -10,7 +10,7 @@ module app {
         private newDependency: Dependency;
         private newResourceUsage: ResourceUsage;
 
-        constructor(private $mdDialog: ng.material.MDDialogService, private project: Project, private task: TaskVO) {
+        constructor(private $mdDialog: ng.material.IDialogService, private project: Project, private task: TaskVO) {
             this.newResourceUsage = new ResourceUsage();
             this.newDependency = new Dependency();
         }

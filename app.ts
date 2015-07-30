@@ -30,7 +30,7 @@ module app {
         .controller('LayoutController', ['$mdBottomSheet', '$q', '$mdSidenav', LayoutController])
         .controller('SidenavController', ['$location', 'projectService', SidenavController])
 
-        .config(($routeProvider:ng.route.IRouteProvider, $mdThemingProvider:ng.material.MDThemingProvider, $mdIconProvider:ng.material.MDIconProvider) => {
+        .config(($routeProvider:ng.route.IRouteProvider, $mdThemingProvider:ng.material.IThemingProvider, $mdIconProvider:ng.material.IIconProvider) => {
             $routeProvider
                 .when('/gantt', {
                     templateUrl: 'gantt/gantt.html',

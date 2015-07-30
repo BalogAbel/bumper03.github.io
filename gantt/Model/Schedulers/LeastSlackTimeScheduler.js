@@ -1,5 +1,5 @@
 ///<reference path='../../../references.ts'/>
-var __extends = this.__extends || function (d, b) {
+var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
@@ -61,24 +61,24 @@ var Model;
                 }
                 var finish = workingCalendar.add(start, task.duration);
                 var allocationSucces = false;
-                while (!allocationSucces) {
-                    allocationSucces = true;
-                    var resources = task.getResourceUsages();
-                    var that = this;
-                    resources.forEach(function (resource) {
-                        for (var i = 0; i < resource.need; i++) {
-                            var newStart = that.resourceManager.allocateResource(resource.resource, start, task.duration);
-                            if (newStart != null) {
-                                allocationSucces = false;
-                                start.setTime(newStart.getTime());
-                                finish = workingCalendar.add(newStart, task.duration);
-                                return;
-                            }
-                        }
-                    });
-                }
-                task.finish = new Date(finish.getTime());
-                task.start = new Date(start.getTime());
+                //while(!allocationSucces) {
+                //	allocationSucces = true;
+                //	var resources = task.getResourceUsages();
+                var newStart = this.resourceManager.allocateTask(task, start);
+                //resources.forEach(resource => {
+                //	for(var i = 0; i < resource.need; i++) {
+                //		var newStart = that.resourceManager.allocateResource(resource.resource, start, task.duration);
+                //		if(newStart != null) {
+                //			allocationSucces = false;
+                //			start.setTime(newStart.getTime());
+                //			finish = workingCalendar.add(newStart, task.duration);
+                //			return;
+                //		}
+                //	}
+                //});
+                //}
+                task.start = newStart;
+                task.finish = workingCalendar.add(newStart, task.duration);
                 if (task.parent != null) {
                     task.parent.notifyScheduled(task);
                 }

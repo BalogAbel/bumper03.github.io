@@ -2,7 +2,7 @@
 var Model;
 (function (Model) {
     var WorkingCalendar;
-    (function (_WorkingCalendar) {
+    (function (WorkingCalendar_1) {
         var WorkingDay = Model.WorkingCalendar.WorkingDay;
         var WorkingCalendar = (function () {
             function WorkingCalendar() {
@@ -29,7 +29,9 @@ var Model;
                 if (backward === void 0) { backward = false; }
                 while (remainingMinutes != 0) {
                     var workingDay = this.getActualWorkingDay(date, backward);
-                    remainingMinutes = backward ? workingDay.subtract(date, remainingMinutes) : workingDay.add(date, remainingMinutes);
+                    remainingMinutes = backward
+                        ? workingDay.subtract(date, remainingMinutes)
+                        : workingDay.add(date, remainingMinutes);
                     if (remainingMinutes != 0) {
                         this.setToNextDay(date, backward);
                     }
@@ -72,7 +74,7 @@ var Model;
             WorkingCalendar._instance = null;
             return WorkingCalendar;
         })();
-        _WorkingCalendar.WorkingCalendar = WorkingCalendar;
+        WorkingCalendar_1.WorkingCalendar = WorkingCalendar;
     })(WorkingCalendar = Model.WorkingCalendar || (Model.WorkingCalendar = {}));
 })(Model || (Model = {}));
 //# sourceMappingURL=WorkingCalendar.js.map

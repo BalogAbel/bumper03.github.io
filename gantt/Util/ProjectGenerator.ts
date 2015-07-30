@@ -16,7 +16,7 @@ module Util {
 
 
 	export class ProjectGenerator {
-		generateProject(): Project {
+		static generateProject(): Project {
 			var idCtr: number = 0;
 			var resourceType = new ResourceType();
 			resourceType.id = idCtr++;
@@ -59,7 +59,7 @@ module Util {
 			phase1.tasks.push(task12);
 			task11.parent = phase1;
 			task12.parent = phase1;
-			var res1 = new ResourceUsage()
+			var res1 = new ResourceUsage();
 			res1.id = idCtr++;
 			res1.resource = resourceType;
 			res1.need = 2;

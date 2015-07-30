@@ -49,7 +49,6 @@ var app;
             });
         };
         GanttCtrl.prototype.editTask = function (task) {
-            var that = this;
             this.$mdDialog.show({
                 controller: app.TaskDetailController,
                 controllerAs: "taskDetailController",
@@ -70,12 +69,22 @@ var app;
                         task.parent.tasks.push(task);
                     }
                     else {
-                        that.project.tasks.push(task);
+                        this.project.tasks.push(task);
                     }
                 }
                 taskVO.merge(task);
-                that.project.schedule();
-                that.projectDrawer.draw();
+                this.project.schedule();
+                this.projectDrawer.draw();
+            });
+        };
+        GanttCtrl.prototype.editResources = function () {
+            this.$mdDialog.show({
+                controller: app.ResourcesController,
+                controllerAs: "resourcesController",
+                templateUrl: "gantt/components/resources/resources.html",
+                locals: {
+                    resources: this.project.resourceTypes
+                }
             });
         };
         return GanttCtrl;

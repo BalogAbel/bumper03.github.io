@@ -102,10 +102,8 @@ var View;
             var line = new Konva.Line({
                 name: 'hourLine',
                 points: [
-                    hourWidth / 2,
-                    Utils.taskLineHeight / 2.5,
-                    hourWidth / 2,
-                    Utils.taskLineHeight / 1.5
+                    hourWidth / 2, Utils.taskLineHeight / 2.5,
+                    hourWidth / 2, Utils.taskLineHeight / 1.5
                 ],
                 stroke: 'grey',
                 strokeWidth: 1

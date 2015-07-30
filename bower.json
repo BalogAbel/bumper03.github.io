@@ -1,0 +1,19 @@
+{
+  "name": "gantt",
+  "version": "0.0.1",
+  "dependencies": {
+    "angular-material": "~0.10.0",
+    "angular-route": "~1.4.3",
+    "angular": "~1.4.3",
+    "angular-animate": "~1.4.3",
+    "angular-aria": "~1.4.3",
+    "angular-local-storage": "~0.2.2",
+    "jquery": "~2.1.4",
+    "jquery-ui": "~1.11.4",
+    "konva": "~0.9.5"
+  },
+  "homepage": "https://github.com/Bumper03/bumper03.github.io",
+  "authors": [
+    "Abel Balog <tibe0309@gmail.com>"
+  ]
+}

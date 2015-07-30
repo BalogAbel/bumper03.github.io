@@ -10,9 +10,9 @@ module app {
 
     export class LayoutController {
 
-        constructor(private $mdBottomSheet:ng.material.MDBottomSheetService,
+        constructor(private $mdBottomSheet:ng.material.IBottomSheetService,
                     private $q:ng.IQService,
-                    private $mdSidenav:ng.material.MDSidenavService) {
+                    private $mdSidenav:ng.material.ISidenavService) {
         }
 
         public toggleList() {

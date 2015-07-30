@@ -14,7 +14,7 @@ var Util;
     var ProjectGenerator = (function () {
         function ProjectGenerator() {
         }
-        ProjectGenerator.prototype.generateProject = function () {
+        ProjectGenerator.generateProject = function () {
             var idCtr = 0;
             var resourceType = new ResourceType();
             resourceType.id = idCtr++;

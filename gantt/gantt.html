@@ -9,7 +9,9 @@
     <span id="zoomValue">{{gantt.zoomLevel}}</span>
 </div>
 
+
 <md-card id="gantt">
+
 
     <md-card-content layout="row">
         <div id="taskWrapper" resizable>
@@ -20,10 +22,13 @@
         </div>
     </md-card-content>
 </md-card>
-<md-button class="md-fab" id="add-button" ng-click="gantt.newTask()">
-    +
-</md-button>
+
 <span id="arrows">
     <span id="addBefore"><<</span>
     <span id="addAfter">>></span>
 </span>
+<md-button class="md-fab" id="add-button" ng-click="gantt.newTask()">
+    +
+</md-button>
+
+<md-button class="md-raised md-primary" ng-click="gantt.editResources()">Edit available resources</md-button>

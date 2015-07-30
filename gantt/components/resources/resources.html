@@ -1,0 +1,38 @@
+<md-dialog aria-label="New task" id="task-editor" flex-gt-md="60" flex="90">
+    <form>
+        <md-dialog-content class="sticky-container" class="content">
+            <md-subheader class="md-sticky-no-effect">
+                <h2>
+                    Edit resources
+                </h2>
+            </md-subheader>
+            <md-list>
+                <h3>New resource</h3>
+                <md-input-container flex>
+                    <label>Name</label>
+                    <input type="text" ng-model="resourcesController.newResource.name">
+                </md-input-container>
+                <md-input-container flex>
+                    <label>Availability</label>
+                    <input type="number" step="1" required min="0"
+                           ng-model="resourcesController.newResource.available">
+                </md-input-container>
+                <h3>Added resources:</h3>
+                <md-list-item ng-repeat="resource in resourcesController.resources">
+                    <p>
+                        {{resource.name}}&nbsp;
+                        ({{resource.available}})
+                        <img class="remove-icon" ng-src="img/remove.png"
+                             ng-click=""/>
+                    </p>
+                </md-list-item>
+            </md-list>
+        </md-dialog-content>
+        <div class="md-actions" layout="row">
+            <span flex></span>
+            <!--<md-button class="md-primary" ng-click="taskDetailController.save()">Save</md-button>-->
+            <!--<md-button class="md-primary" ng-click="taskDetailController.cancel()">Cancel</md-button>-->
+        </div>
+    </form>
+</md-dialog>
+

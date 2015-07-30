@@ -24,7 +24,7 @@ module app {
 
         new(): void {
             //var project: Project = new Project();
-            var project = new Util.ProjectGenerator().generateProject();
+            var project = Util.ProjectGenerator.generateProject();
             this.showProject(project);
         }
 

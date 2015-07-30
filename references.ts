@@ -1,9 +1,6 @@
-///<reference path='typings/jquery/jquery.d.ts'/>
+///<reference path='typings/tsd.d.ts'/>
+
 ///<reference path='lib/types/konva/konva.d.ts'/>
-///<reference path='typings/angularjs/angular.d.ts'/>
-///<reference path='typings/angularjs/angular-route.d.ts'/>
-///<reference path='typings/angularLocalStorage/angularLocalStorage.d.ts'/>
-///<reference path='typings/angular-material/angular-material.d.ts'/>
 ///<reference path='lib/types/cycle/cycle.d.ts'/>
 
 ///<reference path='gantt/Util/Serializer.ts'/>
@@ -53,5 +50,6 @@
 ///<reference path='components/ProjectService.ts'/>
 ///<reference path='components/Resizeable.ts'/>
 ///<reference path='gantt/components/taskDetail/TaskDetailController.ts'/>
+///<reference path="gantt/components/resources/ResourcesController.ts"/>
 ///<reference path='gantt/components/taskDetail/TaskVO.ts'/>
 ///<reference path='gantt/GanttController.ts'/>

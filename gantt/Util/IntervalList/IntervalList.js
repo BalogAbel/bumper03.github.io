@@ -2,7 +2,7 @@
 var Util;
 (function (Util) {
     var IntervalList;
-    (function (_IntervalList) {
+    (function (IntervalList_1) {
         var IntervalOverlapError = Util.IntervalList.IntervalOverlapError;
         var IntervalList = (function () {
             function IntervalList() {
@@ -66,7 +66,7 @@ var Util;
             };
             return IntervalList;
         })();
-        _IntervalList.IntervalList = IntervalList;
+        IntervalList_1.IntervalList = IntervalList;
     })(IntervalList = Util.IntervalList || (Util.IntervalList = {}));
 })(Util || (Util = {}));
 //# sourceMappingURL=IntervalList.js.map
