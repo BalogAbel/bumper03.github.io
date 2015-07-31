@@ -8,9 +8,9 @@ module app {
 
     export class ResourcesController {
         private newResource: ResourceType;
+        private show = -1;
 
         constructor(private $mdDialog: ng.material.IDialogService, private resources: ResourceType[]) {
-            console.log("asd");
             this.newResource = new ResourceType();
             console.log(resources);
         }

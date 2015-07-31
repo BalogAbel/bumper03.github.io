@@ -101,7 +101,10 @@ module app {
                 locals: {
                     resources: this.project.resourceTypes
                 }
-            });
+            }).then(() => {
+                this.project.schedule();
+                this.projectDrawer.draw();
+            })
         }
     }
 }

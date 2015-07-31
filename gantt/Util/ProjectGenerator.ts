@@ -18,14 +18,19 @@ module Util {
 	export class ProjectGenerator {
 		static generateProject(): Project {
 			var idCtr: number = 0;
-			var resourceType = new ResourceType();
-			resourceType.id = idCtr++;
-			resourceType.available = 2;
-			resourceType.name = "Senior developer";
+            var resourceType = new ResourceType();
+            resourceType.id = idCtr++;
+            resourceType.available = 5;
+            resourceType.name = "Senior developer";
+
+            var resourceType2 = new ResourceType();
+            resourceType2.id = idCtr++;
+            resourceType2.available = 2;
+            resourceType2.name = "Junior developer";
 
 
 
-			var project: Project = new Project();
+            var project: Project = new Project();
 			var task11: Schedulable = new Schedulable();
 			task11.name = 'Task1';
 			task11.description = 'First task of phase 1';
@@ -149,6 +154,7 @@ module Util {
 			workingCalendar.normalWorkingDay = normalWorkingDay;
 			project.workingCalendar = workingCalendar;
             project.resourceTypes.push(resourceType);
+            project.resourceTypes.push(resourceType2);
 
 			return project;
 

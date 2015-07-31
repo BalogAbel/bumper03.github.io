@@ -9,7 +9,7 @@ var app;
         function ResourcesController($mdDialog, resources) {
             this.$mdDialog = $mdDialog;
             this.resources = resources;
-            console.log("asd");
+            this.show = -1;
             this.newResource = new ResourceType();
             console.log(resources);
         }

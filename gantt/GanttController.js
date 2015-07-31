@@ -78,6 +78,7 @@ var app;
             });
         };
         GanttCtrl.prototype.editResources = function () {
+            var _this = this;
             this.$mdDialog.show({
                 controller: app.ResourcesController,
                 controllerAs: "resourcesController",
@@ -85,6 +86,9 @@ var app;
                 locals: {
                     resources: this.project.resourceTypes
                 }
+            }).then(function () {
+                _this.project.schedule();
+                _this.projectDrawer.draw();
             });
         };
         return GanttCtrl;
