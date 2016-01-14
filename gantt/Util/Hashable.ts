@@ -1,7 +1,3 @@
-///<reference path='../../references.ts'/>
-
-module Util {
-    export interface Hashable {
-        hash(): number;
-    }
+export interface Hashable {
+    hash(): number;
 }

@@ -1,102 +1,68 @@
 declare module Konva {
 
-    var pixelRatio:number;
-    var dragDistance:number;
-    var isDragging:() => boolean;
-    var isDragReady:() => boolean;
-    var DD:any;
+    var pixelRatio : number;
+    var dragDistance: number;
+    var isDragging : () => boolean;
+    var isDragReady : () => boolean;
+    var DD : any;
 
     export class Util {
-        static getRandomColor():string;
-
-        static getRGB(color:string):string;
+        static getRandomColor() : string;
+        static getRGB(color: string) : string;
     }
 
     export class Easings {
-        static BackEaseIn():any;
-
-        static BackEaseInOut():any;
-
-        static BackEaseOut():any;
-
-        static BounceEaseIn():any;
-
-        static BounceEaseInOut():any;
-
-        static BounceEaseOut():any;
-
-        static EaseIn():any;
-
-        static EaseInOut():any;
-
-        static EaseOut():any;
-
-        static ElasticEaseIn():any;
-
-        static ElasticEaseInOut():any;
-
-        static ElasticEaseOut():any;
-
-        static Linear():any;
-
-        static StrongEaseIn():any;
-
-        static StrongEaseInOut():any;
-
-        static StrongEaseOut():any;
+        static BackEaseIn() : any;
+        static BackEaseInOut() : any;
+        static BackEaseOut() : any;
+        static BounceEaseIn() : any;
+        static BounceEaseInOut() : any;
+        static BounceEaseOut() : any;
+        static EaseIn() : any;
+        static EaseInOut() : any;
+        static EaseOut() : any;
+        static ElasticEaseIn() : any;
+        static ElasticEaseInOut() : any;
+        static ElasticEaseOut() : any;
+        static Linear() : any;
+        static StrongEaseIn() : any;
+        static StrongEaseInOut() : any;
+        static StrongEaseOut() : any;
     }
 
     class Filter {
     }
 
     export class Filters {
-        static Blur(imageData:any):Filter;
-
-        static Brighten(imageData:any):Filter;
-
-        static Emboss(imageData:any):Filter;
-
-        static Enhance(imageData:any):Filter;
-
-        static Grayscale(imageData:any):Filter;
-
-        static HSV(imageData:any):Filter;
-
-        static Invert(imageData:any):Filter;
-
-        static Mask(imageData:any):Filter;
-
-        static Noise(imageData:any):Filter;
-
-        static Pixelate(imageData:any):Filter;
-
-        static Posterize(imageData:any):Filter;
-
-        static RGB(imageData:any):Filter;
-
-        static Sepia(imageData:any):Filter;
-
-        static Solarize(imageData:any):Filter;
-
-        static Threshold(imageData:any):Filter;
+        static Blur(imageData : any): Filter;
+        static Brighten(imageData : any): Filter;
+        static Emboss(imageData : any): Filter;
+        static Enhance(imageData : any): Filter;
+        static Grayscale(imageData : any): Filter;
+        static HSV(imageData : any): Filter;
+        static Invert(imageData : any): Filter;
+        static Mask(imageData : any): Filter;
+        static Noise(imageData : any): Filter;
+        static Pixelate(imageData : any): Filter;
+        static Posterize(imageData : any): Filter;
+        static RGB(imageData : any): Filter;
+        static RGA(imageData : any): Filter;
+        static Sepia(imageData : any): Filter;
+        static Solarize(imageData : any): Filter;
+        static Threshold(imageData : any): Filter;
     }
 
     export class Animation {
-        constructor(func:Function, layers?:Konva.ILayer[]);
-        constructor(func:Function, layer?:Konva.ILayer);
+        constructor(func: Function, layers?: Konva.Layer[]);
+        constructor(func: Function, layer?: Konva.Layer);
 
-        addLayer(layer:Konva.ILayer):boolean;
-
-        getLayers():Konva.ILayer[];
-
-        isRunning():boolean;
-
-        setLayers(layers:Konva.ILayer[]):Animation;
-        setLayers(layer:Konva.ILayer):Animation;
-
-        start():Animation;
-
-        stop():Animation;
+        addLayer(layer: Konva.Layer) : boolean;
+        getLayers() : Konva.Layer[];
+        isRunning() : boolean;
+        setLayers(layers : Konva.Layer[]) : Animation;
+        setLayers(layer : Konva.Layer) : Animation;
+        start() : Animation;
+        stop() : Animation;
     }
 
     interface NodeConfig {
@@ -112,6 +78,7 @@ declare module Konva {
         scale?: Vector2d;
         scaleX? : number;
         scaleY? : number;
+        rotation?: number;
         rotationDeg?: number;
         offset?: Vector2d;
         offsetX? : number;
@@ -133,55 +100,53 @@ declare module Konva {
         quality? : number;
     }
 
-    interface CacheConfig extends SizeConfig {
+    interface CacheConfig extends SizeConfig{
         drawBorder? : boolean;
     }
 
-    interface ClearConfig extends SizeConfig {
+    interface ClearConfig extends SizeConfig{
     }
 
-    var Node:{
-        new  (config:NodeConfig): INode;
-        create<T>(JSON:any, container?:HTMLElement) : T;
-    };
+    class Node {
+        constructor (config: NodeConfig);
+        static create<T>(data: any, container?: HTMLElement) : T;
 
-    interface INode {
         blue() : number;
-        blue(blue:number) : INode;
+        blue(blue: number) : Node;
         brightness() : number;
-        brightness(brightness:number) : INode;
+        brightness(brightness: number) : Node;
         blurRadius() : number;
-        blurRadius(radius:number) : INode;
-        cache(config?:CacheConfig) : INode;
-        clearCache() : INode;
-        clear(bounds?:ClearConfig) : INode;
-        clone(attrs?:NodeConfig): INode;
+        blurRadius(radius: number) : Node;
+        cache(config?: CacheConfig) : Node;
+        clearCache() : Node;
+        clear(bounds?: ClearConfig) : Node;
+        clone(attrs? : NodeConfig): Node;
         destroy() : void;
 
         dragBoundFunc() : Function;
-        dragBoundFunc(dragBoundFunc:Function) : INode;
+        dragBoundFunc(dragBoundFunc: Function) : Node;
         draggable() : boolean;
-        draggable(draggable:boolean) : INode;
-        draw() : INode;
+        draggable(draggable: boolean) : Node;
+        draw() : Node;
         embossBlend() : boolean;
-        embossBlend(embossBlend:boolean) : INode;
+        embossBlend(embossBlend: boolean) : Node;
         embossDirection() : string;
-        embossDirection(embossDirection:string) : INode;
+        embossDirection(embossDirection: string) : Node;
         embossStrength() : number;
-        embossStrength(level:number) : INode;
+        embossStrength(level: number) : Node;
         embossWhiteLevel() : number;
-        embossWhiteLevel(embossWhiteLevel:number) : INode;
+        embossWhiteLevel(embossWhiteLevel: number) : Node;
         enhance() : number;
-        enhance(enhance:number) : INode;
+        enhance(enhance: number) : Node;
         filters() : Filter[];
-        filters(filters:Filter) : INode;
-        fire(eventType:string, evt?:any, bubble?:boolean) : INode;
+        filters(filters : Filter) : Node;
+        fire(eventType: string, evt?: any, bubble?: boolean) : Node;
         getAbsoluteOpacity(): number;
         getAbsolutePosition(): Vector2d;
         getAbsoluteTransform(): Transform;
         getAbsoluteZIndex(): number;
         getAncestors() : Collection;
-        getAttr(attr:string): any;
+        getAttr(attr: string): any;
         getAttrs(): NodeConfig;
         // CHECK
         getCanvas() : Canvas;
@@ -190,112 +155,112 @@ declare module Konva {
         getDepth() : number;
         getHeight() : number;
         getHitCanvas() : Canvas;
-        getLayer() : ILayer;
-        getParent() : IContainer;
+        getLayer() : Layer;
+        getParent() : Container;
         // CHECK
         getSize() : {
             width : number;
             height : number;
         };
-        getStage() : IStage;
+        getStage() : Stage;
         getTransform() : Transform;
         getType() : String;
         getWidth() : number;
         getZIndex(): number;
         green() : number;
-        green(green:number) : INode;
+        green(green: number) : Node;
         height() : number;
-        height(height:number) : INode;
+        height(height: number) : Node;
         hide(): void;
         hue() : number;
-        hue(hue:number) : INode;
+        hue(hue: number) : Node;
         id() : string;
-        id(id:string) : INode;
+        id(id: string) : Node;
         isDragging(): boolean;
         isListening(): boolean;
         isVisible(): boolean;
         kaleidoscopeAngle() : number;
-        kaleidoscopeAngle(kaleidoscopeAngle:number) : INode;
+        kaleidoscopeAngle(kaleidoscopeAngle: number) : Node;
         kaleidoscopePower() : number;
-        kaleidoscopePower(kaleidoscopePower:number) : INode;
+        kaleidoscopePower(kaleidoscopePower: number) : Node;
         levels() : number;
-        levels(levels:number) : INode;
+        levels(levels: number) : Node;
         listening() : any;
-        listening(listening:boolean) : INode;
-        listening(listening:string) : INode;
-        move(move:Vector2d) : INode;
+        listening(listening: boolean) : Node;
+        listening(listening : string) : Node;
+        move(move : Vector2d) : Node;
         moveDown() : boolean;
-        moveTo(newContainer:IContainer): INode;
+        moveTo(newContainer: Container): Node;
         moveToBottom(): boolean;
         moveToTop(): boolean;
         moveUp(): boolean;
         name() : string;
-        name(name:string) : INode;
+        name(name: string) : Node;
         noise() : number;
-        noise(noise:number) : INode;
-        off(evtStr:string) : INode;
+        noise(noise: number) : Node;
+        off(evtStr : string) : Node;
         offset() : Vector2d;
-        offset(offset:Vector2d) : INode;
+        offset(offset: Vector2d) : Node;
         offsetX() : number;
-        offsetX(offsetX:number) : INode;
+        offsetX(offsetX: number) : Node;
         offsetY() : number;
-        offsetY(offsetY:number) : INode;
-        on(evtStr:string, handler:Function) : INode;
+        offsetY(offsetY: number) : Node;
+        on(evtStr : string, handler: Function) : Node;
         opacity() : number;
-        opacity(opacity:number) : INode;
+        opacity(opacity: number) : Node;
         pixelSize() : number;
-        pixelSize(pixelSize:number) : INode;
+        pixelSize(pixelSize: number) : Node;
         position() : Vector2d;
-        position(position:Vector2d) : INode;
+        position(position: Vector2d) : Node;
         red() : number;
-        red(red:number) : INode;
-        remove() : INode;
-        rotate(theta:number) : INode;
+        red(red: number) : Node;
+        remove() : Node;
+        rotate(theta : number) : Node;
         rotation() : number;
-        rotation(rotation:number) : INode;
+        rotation(rotation: number) : Node;
         saturation() : number;
-        saturation(saturation:number) : INode;
+        saturation(saturation: number) : Node;
         scale() : Vector2d;
-        scale(scale:Vector2d) : INode;
+        scale(scale: Vector2d) : Node;
         scaleX() : number;
-        scaleX(scaleX:number) : INode;
+        scaleX(scaleX: number) : Node;
         scaleY() : number;
-        scaleY(scaleY:number) : INode;
-        setAbsolutePosition(pos:Vector2d) : INode;
-        setAttr(attr:string, val:any): INode;
-        setAttrs(attrs:NodeConfig) : void;
-        setId(id:string) : INode;
-        setSize(size:any, width:number, height:number) : INode;
-        setZIndex(zIndex:number): void;
+        scaleY(scaleY: number) : Node;
+        setAbsolutePosition(pos : Vector2d) : Node;
+        setAttr(attr: string, val : any): Node;
+        setAttrs(attrs: NodeConfig) : void;
+        setId(id: string) : Node;
+        setSize(size: any, width: number, height: number) : Node;
+        setZIndex(zIndex: number): void;
         shouldDrawHit() : boolean;
-        show() : INode;
+        show() : Node;
         skew() : Vector2d;
-        skew(skew:Vector2d) : INode;
+        skew(skew: Vector2d) : Node;
         skewX() : number;
-        skewX(skewX:number) : INode;
+        skewX(skewX: number) : Node;
         skewY() : number;
-        skewY(skewY:number) : INode;
+        skewY(skewY: number) : Node;
         startDrag() : void;
         stopDrag() : void;
         threshold() : number;
-        threshold(threshold:number) : INode;
-        toDataURL(config:ToDataURLConfig) : string;
-        toImage(config:ToDataURLConfig) : HTMLImageElement;
+        threshold(threshold: number) : Node;
+        toDataURL(config: ToDataURLConfig) : string;
+        toImage(config: ToDataURLConfig) : HTMLImageElement;
         toJSON() : string;
         toObject() : any;
         transformsEnabled() : string;
-        transformsEnabled(transformsEnabled:string) : INode;
+        transformsEnabled(transformsEnabled: string) : Node;
         value() : number;
-        value(value:number) : INode;
+        value(value: number) : Node;
         visible() : any;
-        visible(visible:boolean) : INode;
-        visible(visible:string) : INode;
+        visible(visible: boolean) : Node;
+        visible(visible: string) : Node;
         width() : number;
-        width(width:number) : INode;
+        width(width: number) : Node;
         x() : number;
-        x(x:number) : INode;
+        x(x: number) : Node;
         y() : number;
-        y(y:number) : INode;
+        y(y: number) : Node;
     }
 
     interface ContainerConfig extends NodeConfig {
@@ -303,26 +268,23 @@ declare module Konva {
         clipFunc?: Function;
     }
 
-    var Container:{
-        new (params?:ContainerConfig): IContainer;
-    };
-
-    interface IContainer extends INode {
-        add(child:INode): IContainer;
-        getChildren(filterfunc?:Function) : Collection;
+    class Container extends Node {
+        constructor(params?: ContainerConfig);
+        add(child : Node): Container;
+        getChildren(filterfunc?: Function) : Collection;
         clip(): SizeConfig;
-        clip(clip:SizeConfig) : IContainer;
+        clip(clip: SizeConfig) : Container;
         clipHeight(): number;
-        clipHeight(clipHeight:number) : IContainer;
+        clipHeight(clipHeight: number) : Container;
         clipWidth(): number;
-        clipWidth(clipWidth:number) : IContainer;
+        clipWidth(clipWidth: number) : Container;
         clipX(): number;
-        clipX(clipX:number) : IContainer;
+        clipX(clipX: number) : Container;
         clipY(): number;
-        clipY(clipY:number) : IContainer;
+        clipY(clipY: number) : Container;
         destroyChildren() : void;
-        find(selector?:string): Collection;
-        getAllIntersections(pos:Vector2d): INode[];
+        find(selector? : string): Collection;
+        getAllIntersections(pos: Vector2d): Node[];
         hasChildren() : boolean;
         removeChildren() : void;
     }
@@ -370,9 +332,9 @@ declare module Konva {
         strokeEnabled?: boolean;
         lineJoin?: string;
         lineCap?: string;
-        sceneFunc? : (con:Context) => void;
-        hitFunc? : (con:Context) => void;
-        drawFunc? : (con:Context) => void;
+        sceneFunc? : (con : Context) => void;
+        hitFunc? : (con : Context) => void;
+        drawFunc? : (con : Context) => void;
         shadowColor?: string;
         shadowColorRed?: number;
         shadowColorGreen?: number;
@@ -387,256 +349,164 @@ declare module Konva {
         dashEnabled?: boolean;
     }
 
-    var Shape:{
-        new (ShapeConfig:ShapeConfig): IShape;
-    };
-
-    interface IShape extends INode {
-        dash():number[];
-        dash(dash:number[]):IShape;
-
-        dashEnabled():boolean;
-        dashEnabled(dashEnabled:boolean):IShape;
-
-        drawHitFromCache(alphaThreshold:number):IShape;
-
-        fill():string;
-        fill(fill:string):IShape;
-
-        fillBlue():number;
-        fillBlue(fillBlue:number):IShape;
-
-        fillEnabled():boolean;
-        fillEnabled(fillEnabled:boolean):IShape;
-
-        fillGreen():number;
-        fillGreen(fillGreen:number):IShape;
-
-        fillLinearGradientColorStops():string[];
-        fillLinearGradientColorStops(colors:string[]):IShape;
-
-        fillLinearGradientStartPoint():Vector2d;
-        fillLinearGradientStartPoint(point:Vector2d):Vector2d;
-
-        fillLinearGradientStartPointX():number;
-        fillLinearGradientStartPointX(x:number):IShape;
-
-        fillLinearGradientStartPointY():number;
-        fillLinearGradientStartPointY(y:number):IShape;
-
-        fillLinearGradientEndPoint():Vector2d;
-        fillLinearGradientEndPoint(point:Vector2d):IShape;
-
-        fillLinearGradientEndPointX():number;
-        fillLinearGradientEndPointX(x:number):IShape;
-
-        fillLinearGradientEndPointY():number;
-        fillLinearGradientEndPointY(y:number):IShape;
-
-        fillLinearRadialStartPoint():Vector2d;
-        fillLinearRadialStartPoint(point:Vector2d):IShape;
-
-        fillLinearRadialStartPointX():number;
-        fillLinearRadialStartPointX(x:number):IShape;
-
-        fillLinearRadialStartPointY():number;
-        fillLinearRadialStartPointY(y:number):IShape;
-
-        fillLinearRadialEndPoint():Vector2d;
-        fillLinearRadialEndPoint(point:Vector2d):Vector2d;
-
-        fillLinearRadialEndPointX():number;
-        fillLinearRadialEndPointX(x:number):IShape;
-
-        fillLinearRadialEndPointY():number;
-        fillLinearRadialEndPointY(y:number):IShape;
-
-        fillPatternImage():HTMLImageElement;
-        fillPatternImage(image:HTMLImageElement):IShape;
-
-        fillRadialGradientStartRadius():number;
-        fillRadialGradientStartRadius(radius:number):IShape;
-
-        fillRadialGradientEndRadius():number;
-        fillRadialGradientEndRadius(radius:number):IShape;
-
-        fillRadialGradientColorStops():string[];
-        fillRadialGradientColorStops(color:string[]):IShape;
-
-        fillPatternOffset():Vector2d;
-        fillPatternOffset(offset:Vector2d):IShape;
-
-        fillPatternOffsetX():number;
-        fillPatternOffsetX(x:number):IShape;
-
-        fillPatternOffsetY():number;
-        fillPatternOffsetY(y:number):IShape;
-
-        fillPatternRepeat():string;
-        fillPatternRepeat(repeat:string):IShape;
-
-        fillPatternRotation():number;
-        fillPatternRotation(rotation:number):IShape;
-
-        fillPatternScale():Vector2d;
-        fillPatternScale(scale:Vector2d):IShape;
-
-        fillPatternScaleX():number;
-        fillPatternScaleX(x:number):IShape;
-
-        fillPatternScaleY():number;
-        fillPatternScaleY(y:number):IShape;
-
-        fillPatternX():number;
-        fillPatternX(x:number):number;
-
-        fillPatternY():number;
-        fillPatternY(y:number):IShape;
-
-        fillPriority():string;
-        fillPriority(priority:string):IShape;
-
-        fillRed():number;
-        fillRed(fillRed:number):IShape;
-
-        hasFill():boolean;
-
-        hasShadow():boolean;
-
-        hasStroke():boolean;
-
-        hitFunc():Function;
-        hitFunc(func:Function):IShape;
-
-        intersects(point:Vector2d):boolean;
-
-        lineCap():string;
-        lineCap(lineCap:string):IShape;
-
-        lineJoin():string;
-        lineJoin(lineJoin:string):IShape;
-
-        sceneFunc():Function;
-        sceneFunc(func:(con:Context) => {}):IShape;
-
-        shadowBlue():number;
-        shadowBlue(shadowBlue:number):IShape;
-
-        shadowColor():string;
-        shadowColor(shadowColor:string):IShape;
-
-        shadowEnabled():boolean;
-        shadowEnabled(shadowEnabled:boolean):IShape;
-
-        shadowGreen():number;
-        shadowGreen(shadowGreen:number):IShape;
-
-        shadowOffset():Vector2d;
-        shadowOffset(shadowOffset:Vector2d):IShape;
-
-        shadowOffsetX():number;
-        shadowOffsetX(shadowOffsetX:number):IShape;
-
-        shadowOffsetY():number;
-        shadowOffsetY(shadowOffsetY:number):IShape;
-
-        shadowOpacity():number;
-        shadowOpacity(shadowOpacity:number):IShape;
-
-        shadowRed():number;
-        shadowRed(shadowRed:number):IShape;
-
-        stroke():string;
-        stroke(stroke:string):IShape;
-
-        strokeBlue():number;
-        strokeBlue(strokeBlue:number):IShape;
-
-        strokeRed():number;
-        strokeRed(strokeRed:number):IShape;
-
-        strokeGreen():number;
-        strokeGreen(strokeGreen:number):IShape;
-
-        strokeEnabled():boolean;
-        strokeEnabled(strokeEnabled:boolean):IShape;
-
-        strokeScaleEnabled():boolean;
-        strokeScaleEnabled(strokeScaleEnabled:boolean):IShape;
-
-        strokeHitEnabled():boolean;
-        strokeHitEnabled(strokeHitEnabled:boolean):IShape;
-
-        strokeWidth():number;
-        strokeWidth(strokeWidth:number):IShape;
+    class Shape extends Node {
+        constructor(ShapeConfig : ShapeConfig);
+        dash() : number[];
+        dash(dash: number[]): Shape;
+        dashEnabled() : boolean;
+        dashEnabled(dashEnabled: boolean): Shape;
+        drawHitFromCache(alphaThreshold: number): Shape;
+        fill() : string;
+        fill(fill: string): Shape;
+        fillBlue() : number;
+        fillBlue(fillBlue: number): Shape;
+        fillEnabled() : boolean;
+        fillEnabled(fillEnabled: boolean): Shape;
+        fillGreen() : number;
+        fillGreen(fillGreen: number): Shape;
+        fillLinearGradientColorStops() : string[];
+        fillLinearGradientColorStops(colors: string[]): Shape;
+        fillLinearGradientStartPoint(): Vector2d;
+        fillLinearGradientStartPoint(point: Vector2d): Vector2d;
+        fillLinearGradientStartPointX(): number;
+        fillLinearGradientStartPointX(x: number): Shape;
+        fillLinearGradientStartPointY(): number;
+        fillLinearGradientStartPointY(y: number): Shape;
+        fillLinearGradientEndPoint() : Vector2d;
+        fillLinearGradientEndPoint(point: Vector2d) : Shape;
+        fillLinearGradientEndPointX(): number;
+        fillLinearGradientEndPointX(x: number): Shape;
+        fillLinearGradientEndPointY(): number;
+        fillLinearGradientEndPointY(y: number): Shape;
+        fillLinearRadialStartPoint(): Vector2d;
+        fillLinearRadialStartPoint(point: Vector2d): Shape;
+        fillLinearRadialStartPointX(): number;
+        fillLinearRadialStartPointX(x: number): Shape;
+        fillLinearRadialStartPointY(): number;
+        fillLinearRadialStartPointY(y: number): Shape;
+        fillLinearRadialEndPoint() : Vector2d;
+        fillLinearRadialEndPoint(point: Vector2d) : Vector2d;
+        fillLinearRadialEndPointX(): number;
+        fillLinearRadialEndPointX(x: number): Shape;
+        fillLinearRadialEndPointY(): number;
+        fillLinearRadialEndPointY(y: number): Shape;
+        fillPatternImage(): HTMLImageElement;
+        fillPatternImage(image: HTMLImageElement): Shape;
+        fillRadialGradientStartRadius(): number;
+        fillRadialGradientStartRadius(radius: number): Shape;
+        fillRadialGradientEndRadius(): number;
+        fillRadialGradientEndRadius(radius: number): Shape;
+        fillRadialGradientColorStops(): string[];
+        fillRadialGradientColorStops(color: string[]): Shape;
+        fillPatternOffset(): Vector2d;
+        fillPatternOffset(offset: Vector2d) : Shape;
+        fillPatternOffsetX(): number;
+        fillPatternOffsetX(x: number): Shape;
+        fillPatternOffsetY(): number;
+        fillPatternOffsetY(y: number): Shape;
+        fillPatternRepeat() : string;
+        fillPatternRepeat(repeat: string): Shape;
+        fillPatternRotation(): number;
+        fillPatternRotation(rotation: number): Shape;
+        fillPatternScale(): Vector2d;
+        fillPatternScale(scale: Vector2d) : Shape;
+        fillPatternScaleX(): number;
+        fillPatternScaleX(x: number): Shape;
+        fillPatternScaleY(): number;
+        fillPatternScaleY(y: number): Shape;
+        fillPatternX(): number;
+        fillPatternX(x: number): number;
+        fillPatternY(): number;
+        fillPatternY(y: number): Shape;
+        fillPriority(): string;
+        fillPriority(priority: string): Shape;
+        fillRed() : number;
+        fillRed(fillRed: number): Shape;
+        hasFill(): boolean;
+        hasShadow(): boolean;
+        hasStroke(): boolean;
+        hitFunc(): Function;
+        hitFunc(func: Function): Shape;
+        intersects(point: Vector2d): boolean;
+        lineCap() : string;
+        lineCap(lineCap: string): Shape;
+        lineJoin() : string;
+        lineJoin(lineJoin: string): Shape;
+        sceneFunc(): Function;
+        sceneFunc(func: (con : Context) => {}): Shape;
+        shadowBlue() : number;
+        shadowBlue(shadowBlue: number): Shape;
+        shadowColor() : string;
+        shadowColor(shadowColor: string): Shape;
+        shadowEnabled() : boolean;
+        shadowEnabled(shadowEnabled: boolean): Shape;
+        shadowGreen() : number;
+        shadowGreen(shadowGreen: number): Shape;
+        shadowOffset() : Vector2d;
+        shadowOffset(shadowOffset: Vector2d): Shape;
+        shadowOffsetX() : number;
+        shadowOffsetX(shadowOffsetX: number): Shape;
+        shadowOffsetY() : number;
+        shadowOffsetY(shadowOffsetY: number): Shape;
+        shadowOpacity() : number;
+        shadowOpacity(shadowOpacity: number): Shape;
+        shadowRed() : number;
+        shadowRed(shadowRed: number): Shape;
+        stroke() : string;
+        stroke(stroke: string): Shape;
+        strokeBlue() : number;
+        strokeBlue(strokeBlue: number): Shape;
+        strokeRed() : number;
+        strokeRed(strokeRed: number): Shape;
+        strokeGreen() : number;
+        strokeGreen(strokeGreen: number): Shape;
+        strokeEnabled() : boolean;
+        strokeEnabled(strokeEnabled: boolean): Shape;
+        strokeScaleEnabled() : boolean;
+        strokeScaleEnabled(strokeScaleEnabled: boolean): Shape;
+        strokeHitEnabled() : boolean;
+        strokeHitEnabled(strokeHitEnabled: boolean): Shape;
+        strokeWidth() : number;
+        strokeWidth(strokeWidth: number): Shape;
     }
 
     interface StageConfig extends ContainerConfig {
         container: any;
     }
 
-    var Stage:{
-        new (StageConfig:StageConfig): IStage;
-    };
-
-
-    interface IStage extends IContainer {
-        addLayer(layer:ILayer):IStage;
-
-        batchDraw():void;
-
-        container():HTMLElement;
-
-        destroy():void;
-
-        drawHit():void;
-
-        getIntersection(pos:Vector2d):IShape;
-
-        getLayers():ILayer[];
-
-        getPointerPosition():Vector2d;
-
-        setContainer(con:HTMLElement):void;
-
-        setHeight(height:number):void;
-
-        setWidth(width:number):void;
+    class Stage extends Container {
+        constructor(StageConfig : StageConfig);
+        add(layer: Layer): Stage;
+        batchDraw(): void;
+        container(): HTMLElement;
+        destroy() : void;
+        drawHit(): void;
+        getIntersection(pos: Vector2d) : Shape;
+        getLayers(): Layer[];
+        getPointerPosition(): Vector2d;
+        setContainer(con: HTMLElement): void;
+        setHeight(height: number) : void;
+        setWidth(width: number) : void;
     }
 
     interface LayerConfig extends ContainerConfig {
         clearBeforeDraw?: boolean;
     }
 
-    var Layer:{
-        new (config?:LayerConfig): ILayer;
-
-    };
-
-    interface ILayer extends IContainer {
-        getIntersection(pos:Vector2d):IShape;
-
-        enableHitGraph():ILayer;
-
-        disableHitGraph():ILayer;
-
-        clearBeforeDraw():boolean;
-        clearBeforeDraw(val:boolean):ILayer;
-
-        hitGraphEnabled():boolean;
-        hitGraphEnabled(val:boolean):ILayer;
-
-        batchDraw():void;
-
-        drawScene():void;
+    class Layer extends Container {
+        constructor (config?: LayerConfig);
+        getIntersection(pos: Vector2d): Shape;
+        enableHitGraph(): Layer;
+        disableHitGraph(): Layer;
+        clearBeforeDraw() : boolean;
+        clearBeforeDraw(val: boolean): Layer;
+        hitGraphEnabled(): boolean;
+        hitGraphEnabled(val: boolean): Layer;
+        batchDraw(): void;
+        drawScene() : void;
     }
 
-
-    var Group:{
-        new (ContainerConfig:ContainerConfig): IGroup;
-    };
-
-    interface IGroup extends IContainer {
+    class Group extends Container {
 
     }
 
@@ -647,73 +517,44 @@ declare module Konva {
     }
 
     class Canvas {
-        constructor(CanvasConfig:CanvasConfig);
-
-        getContext():CanvasRenderingContext2D;
-
-        getHeight():number;
-
-        getWidth():number;
-
-        getPixelRation():number;
-
-        setHeight(val:number):void;
-
-        setWidth(val:number):void ;
-
-        setPixelRation(val:number):void;
-
-        setSize(size:{width:number; height: number}):void;
-
-        toDataURL(mimeType:string, quality:number):string;
-
-        public _canvas:HTMLElement;
+        constructor(CanvasConfig : CanvasConfig);
+        getContext(): CanvasRenderingContext2D;
+        getHeight(): number;
+        getWidth(): number;
+        getPixelRation(): number;
+        setHeight(val: number) : void;
+        setWidth(val: number) : void ;
+        setPixelRation(val: number) : void;
+        setSize(size: {width:number; height: number}) : void;
+        toDataURL(mimeType: string, quality: number) : string;
+        public _canvas : HTMLElement;
     }
 
     class Context {
-        clear(bounds?:ClearConfig):Context;
-
-        clearTrace():void;
-
-        fillShape(shape:IShape):void;
-
-        fillStrokeShape(shape:IShape):void;
-
-        getCanvas():Konva.Canvas;
-
-        getTrace(relaxed:boolean):string;
-
-        reset():void;
-
-        moveTo(x:number, y:number):void;
-
-        lineTo(x:number, y:number):void;
-
-        beginPath():void;
-
-        setAttr(attr:string, value:any):void;
-
-        closePath():void;
-
-        strokeShape(shape:IShape):void;
+        clear(bounds?: ClearConfig) : Context;
+        clearTrace(): void;
+        fillShape(shape: Shape): void;
+        fillStrokeShape(shape: Shape): void;
+        getCanvas() : Konva.Canvas;
+        getTrace(relaxed: boolean): string;
+        reset(): void;
+        moveTo(x : number, y : number) : void;
+        lineTo(x : number, y : number) : void;
+        beginPath() : void;
+        setAttr(attr : string, value : any) : void;
+        closePath() : void;
+        strokeShape(shape: Shape): void;
     }
 
     class Tween {
-        constructor(params:any);
-
-        destroy():void;
-
-        finish():Tween;
-
-        pause():Tween;
-
-        play():Tween;
-
-        reset():Tween;
-
-        reverse():Tween;
-
-        seek(t:number):Tween;
+        constructor(params: any);
+        destroy(): void;
+        finish(): Tween;
+        pause(): Tween;
+        play(): Tween;
+        reset(): Tween;
+        reverse(): Tween;
+        seek(t: number): Tween;
     }
 
     // Shapes
@@ -724,65 +565,48 @@ declare module Konva {
         clockwise?: boolean;
     }
 
-    var Ring:{
-        new (RingConfig:RingConfig): IRing;
-    };
-
-    interface IRing extends IShape {
-        angle():number;
-        angle(angle:number):IRing;
-
-        innerRadius():number;
-        innerRadius(innerRadius:number):IRing;
-
-        outerRadius():number;
-        outerRadius(outerRadius:number):IRing;
+    class Ring extends Shape {
+        constructor(RingConfig : RingConfig);
+        angle(): number;
+        angle(angle: number): Ring;
+        innerRadius(): number;
+        innerRadius(innerRadius: number): Ring;
+        outerRadius(): number;
+        outerRadius(outerRadius: number): Ring;
     }
 
     interface ArcConfig extends RingConfig {
         angle: number;
     }
 
-    var Arc:{
-        new (ArcConfig:ArcConfig): IArc;
-    };
-
-    interface IArc extends IShape {
-        clockwise():boolean;
-        clockwise(clockwise:boolean):IArc;
+    class Arc extends Shape {
+        constructor(ArcConfig : ArcConfig);
+        clockwise(): boolean;
+        clockwise(clockwise: boolean): Arc;
     }
 
     interface CircleConfig extends ShapeConfig {
         radius: number;
     }
 
-    var Circle:{
-        new (CircleConfig:CircleConfig): ICircle;
-    };
-
-    interface ICircle extends IShape {
-        radius():number;
-        radius(radius:number):ICircle;
+    class Circle extends Shape {
+        constructor(CircleConfig : CircleConfig);
+        radius(): number;
+        radius(radius: number): Circle;
     }
 
     interface EllipseConfig extends ShapeConfig {
         radius: any;
     }
 
-    var Ellipse:{
-        new (CircleConfig:CircleConfig): ICircle;
-    };
-
-    interface IEllipse extends IShape {
-
-        radius():any;
-        radius(radius:any):IEllipse;
-
-        radiusX():number;
-        radiusX(radiusX:number):IEllipse;
-
-        radiusY():number;
-        radiusY(radiusY:number):IEllipse;
+    class Ellipse extends Shape {
+        constructor(EllipseConfig : EllipseConfig);
+        radius(): any;
+        radius(radius: any): Ellipse;
+        radiusX(): number;
+        radiusX(radiusX: number): Ellipse;
+        radiusY(): number;
+        radiusY(radiusY: number): Ellipse;
     }
 
     interface ImageConfig extends ShapeConfig {
@@ -790,29 +614,20 @@ declare module Konva {
         crop?: SizeConfig;
     }
 
-    var Image:{
-        new (ImageConfig:ImageConfig): IImage;
-    };
-
-    interface IImage extends IShape {
-
-        image():HTMLImageElement;
-        image(image:HTMLImageElement):IImage;
-
-        crop():SizeConfig;
-        crop(crop:SizeConfig):IImage;
-
-        cropX():number;
-        cropX(cropX:number):IImage;
-
-        cropY():number;
-        cropY(cropY:number):IImage;
-
-        cropWidth():number;
-        cropWidth(cropWidth:number):IImage;
-
-        cropHeight():number;
-        cropHeight(cropHeight:number):IImage;
+    class Image extends Shape {
+        constructor(ImageConfig : ImageConfig);
+        image(): HTMLImageElement;
+        image(image: HTMLImageElement): Image;
+        crop(): SizeConfig;
+        crop(crop: SizeConfig): Image;
+        cropX(): number;
+        cropX(cropX: number): Image;
+        cropY(): number;
+        cropY(cropY: number): Image;
+        cropWidth(): number;
+        cropWidth(cropWidth: number): Image;
+        cropHeight(): number;
+        cropHeight(cropHeight: number): Image;
     }
 
     interface LineConfig extends ShapeConfig {
@@ -821,33 +636,24 @@ declare module Konva {
         closed?: boolean;
     }
 
-    var Line:{
-        new (LineConfig:LineConfig): ILine;
-    };
-
-
-    interface ILine extends IShape {
-        closed():boolean;
-        closed(closed:boolean):ILine;
-
-        tension():number;
-        tension(tension:number):ILine;
-
-        points():number[];
-        points(points:number[]):ILine;
+    class Line extends Shape {
+        constructor(LineConfig : LineConfig);
+        closed(): boolean;
+        closed(closed: boolean): Line;
+        tension(): number;
+        tension(tension: number): Line;
+        points(): number[];
+        points(points: number[]): Line;
     }
 
     interface RectConfig extends ShapeConfig {
         cornerRadius?: number;
     }
 
-    var Rect:{
-        new (RectConfig:RectConfig): IRect;
-    };
-
-    interface IRect extends IShape {
-        cornerRadius():number;
-        cornerRadius(cornerRadius:number):IRect;
+    class Rect extends Shape {
+        constructor(RectConfig : RectConfig);
+        cornerRadius(): number;
+        cornerRadius(cornerRadius: number): Rect;
     }
 
     interface SpriteConfig extends ShapeConfig {
@@ -857,29 +663,20 @@ declare module Konva {
         image: HTMLImageElement;
     }
 
-    var Sprite:{
-        new (SpriteConfig:SpriteConfig): ISprite;
-    };
-
-    interface ISprite extends IShape {
-        start():void;
-
-        stop():void;
-
-        animation():string;
-        animation(val:string):ISprite;
-
-        animations():any;
-        animations(val:any):ISprite;
-
-        frameIndex():number;
-        frameIndex(val:number):ISprite;
-
-        image():HTMLImageElement;
-        image(image:HTMLImageElement):ISprite;
-
-        frameRate():number;
-        frameRate(frameRate:number):ISprite;
+    class Sprite extends Shape {
+        constructor(SpriteConfig : SpriteConfig);
+        start(): void;
+        stop(): void;
+        animation(): string;
+        animation(val: string): Sprite;
+        animations(): any;
+        animations(val: any): Sprite;
+        frameIndex(): number;
+        frameIndex(val: number): Sprite;
+        image(): HTMLImageElement;
+        image(image: HTMLImageElement): Sprite;
+        frameRate(): number;
+        frameRate(frameRate: number): Sprite;
     }
 
     interface TextConfig extends ShapeConfig {
@@ -893,38 +690,26 @@ declare module Konva {
         wrap?: string;
     }
 
-    var Text:{
-        new (TextConfig:TextConfig): IText;
-    };
-
-    interface IText extends IShape {
-        getTextWidth():number;
-
-        getTextHeight():number;
-
-        text():string;
-        text(text:string):IText;
-
-        fontFamily():string;
-        fontFamily(fontFamily:string):IText;
-
-        fontSize():number;
-        fontSize(fontSize:number):IText;
-
-        fontStyle():string;
-        fontStyle(fontStyle:string):IText;
-
-        align():string;
-        align(align:string):IText;
-
-        padding():number;
-        padding(padding:number):IText;
-
-        lineHeight():number;
-        lineHeight(lineHeight:number):IText;
-
-        wrap():string;
-        wrap(wrap:string):IText;
+    class Text extends Shape {
+        constructor(TextConfig : TextConfig);
+        getTextWidth(): number;
+        getTextHeight(): number;
+        text(): string;
+        text(text: string): Text;
+        fontFamily(): string;
+        fontFamily(fontFamily: string): Text;
+        fontSize(): number;
+        fontSize(fontSize: number): Text;
+        fontStyle(): string;
+        fontStyle(fontStyle: string): Text;
+        align(): string;
+        align(align: string): Text;
+        padding(): number;
+        padding(padding: number): Text;
+        lineHeight(): number;
+        lineHeight(lineHeight: number): Text;
+        wrap(): string;
+        wrap(wrap: string): Text;
     }
 
     interface WedgeConfig extends ShapeConfig {
@@ -933,19 +718,14 @@ declare module Konva {
         clockwise?: boolean;
     }
 
-    var Wedge:{
-        new (WedgeConfig:WedgeConfig): IWedge;
-    };
-
-    interface IWedge extends IShape {
-        angle():number;
-        angle(angle:number):IWedge;
-
-        radius():number;
-        radius(radius:number):IWedge;
-
-        clockwise():boolean;
-        clockwise(clockwise:boolean):IWedge;
+    class Wedge extends Shape {
+        constructor(WedgeConfig : WedgeConfig);
+        angle(): number;
+        angle(angle: number): Wedge;
+        radius(): number;
+        radius(radius: number): Wedge;
+        clockwise(): boolean;
+        clockwise(clockwise: boolean): Wedge;
     }
 
     // Plugins
@@ -956,49 +736,36 @@ declare module Konva {
         cornerRadius?:number;
     }
 
-    var Tag:{
-        new (config:TagConfig): ITag;
-    };
-
-    interface ITag extends IShape {
-        pointerDirection():string;
-        pointerDirection(pointerDirection:string):ITag;
-
-        pointerWidth():number;
-        pointerWidth(pointerWidth:number):ITag;
-
-        pointerHeight():number;
-        pointerHeight(pointerHeight:number):ITag;
-
-        cornerRadius():number;
-        cornerRadius(cornerRadius:number):ITag;
+    class Tag extends Shape {
+        constructor(config : TagConfig);
+        pointerDirection(): string;
+        pointerDirection(pointerDirection: string): Tag;
+        pointerWidth(): number;
+        pointerWidth(pointerWidth: number): Tag;
+        pointerHeight(): number;
+        pointerHeight(pointerHeight: number): Tag;
+        cornerRadius(): number;
+        cornerRadius(cornerRadius: number): Tag;
     }
 
 
     interface LabelInterface extends ContainerConfig {
     }
 
-    var Label:{
-        new (LabelInterface:LabelInterface): ILabel;
-    };
-
-    interface ILabel extends IGroup {
-        getText():IText;
-
-        getTag():IRect;
+    class Label extends Group {
+        constructor(LabelInterface : LabelInterface);
+        getText(): Text;
+        getTag(): Rect;
     }
 
     interface PathConfig extends ShapeConfig {
         data: string;
     }
 
-    var Path:{
-        new (PathConfig:PathConfig): IPath;
-    };
-
-    interface IPath extends IShape {
-        data():string;
-        data(data:string):IPath;
+    class Path extends Shape {
+        constructor(PathConfig : PathConfig);
+        data(): string;
+        data(data: string): Path;
     }
 
     interface RegularPolygonConfig extends ShapeConfig {
@@ -1006,16 +773,12 @@ declare module Konva {
         radius: number;
     }
 
-    var RegularPolygon:{
-        new (RegularPolygonConfig:RegularPolygonConfig): IRegularPolygon;
-    };
-
-    interface IRegularPolygon extends IShape {
-        sides():number;
-        sides(sides:number):IRegularPolygon;
-
-        radius():number;
-        radius(radius:number):IRegularPolygon;
+    class RegularPolygon extends Shape {
+        constructor(RegularPolygonConfig : RegularPolygonConfig);
+        sides(): number;
+        sides(sides: number): RegularPolygon;
+        radius(): number;
+        radius(radius: number): RegularPolygon;
     }
 
     interface StarConfig extends ShapeConfig {
@@ -1024,19 +787,14 @@ declare module Konva {
         outerRadius: number;
     }
 
-    var Star:{
-        new (StarConfig:StarConfig): IStar;
-    };
-
-    interface IStar extends IShape {
-        numPoints():number;
-        numPoints(numPoints:number):IStar;
-
-        innerRadius():number;
-        innerRadius(innerRadius:number):IStar;
-
-        outerRadius():number;
-        outerRadius(outerRadius:number):IStar;
+    class Star extends Shape {
+        constructor(StarConfig : StarConfig);
+        numPoints(): number;
+        numPoints(numPoints: number): Star;
+        innerRadius(): number;
+        innerRadius(innerRadius: number): Star;
+        outerRadius(): number;
+        outerRadius(outerRadius: number): Star;
     }
 
     interface TextPathConfig extends ShapeConfig {
@@ -1047,60 +805,40 @@ declare module Konva {
         fontStyle?: string;
     }
 
-    var TextPath:{
-        new (TextPathConfig:TextPathConfig): ITextPath;
-    };
-
-    interface ITextPath extends IShape {
-        getTextWidth():number;
-
-        getTextHeight():number;
-
-        setText(text:string):void;
-
-        text():string;
-        text(text:string):IPath;
-
-        fontFamily():string;
-        fontFamily(fontFamily:string):IPath;
-
-        fontSize():number;
-        fontSize(fontSize:number):IPath;
-
-        fontStyle():string;
-        fontStyle(fontStyle:string):IPath;
+    class TextPath extends Shape {
+        constructor(TextPathConfig : TextPathConfig);
+        getTextWidth(): number;
+        getTextHeight(): number;
+        setText(text: string): void;
+        text(): string;
+        text(text: string): Path;
+        fontFamily(): string;
+        fontFamily(fontFamily: string): Path;
+        fontSize(): number;
+        fontSize(fontSize: number): Path;
+        fontStyle(): string;
+        fontStyle(fontStyle: string): Path;
     }
 
 
     class Collection {
-    [i : number] : any;
-        static toCollection(arr:any[]):Collection;
-
-        each(f:(el:Konva.INode) => void):void;
-
-        toArray():any[];
-
-        length:number;
+        [i : number] : any;
+        static toCollection(arr: any[]): Collection;
+        each(f: (el : Konva.Node) => void): void;
+        toArray() : any[];
+        length: number;
     }
 
     class Transform {
-        getMatrix():any[];
-
-        getTranslation():Vector2d;
-
-        invert():void;
-
-        multiply(matrix:any[]):void;
-
-        rotate(deg:number):void;
-
-        scale(x:number, y:Number):void;
-
-        setAbsolutePosition():void;
-
-        skew(x:number, y:Number):void;
-
-        translate(x:number, y:Number):void;
+        getMatrix(): any[];
+        getTranslation() : Vector2d;
+        invert() : void;
+        multiply(matrix: any[]) : void;
+        rotate(deg: number) : void;
+        scale(x: number, y: Number) : void;
+        setAbsolutePosition() : void;
+        skew(x: number, y: Number) : void;
+        translate(x: number, y: Number) : void;
     }
 
 

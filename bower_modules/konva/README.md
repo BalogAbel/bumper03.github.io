@@ -19,14 +19,14 @@ This repository began as a GitHub fork of [ericdrowell/KineticJS](https://github
 
 * `bower install konva`
 * `npm install konva` - for Browserify. For nodejs you have to install some [dependencies](#nodejs)
-* CDN: [https://rawgit.com/konvajs/konva/0.9.0/konva.min.js](https://rawgit.com/konvajs/konva/0.9.0/konva.min.js)
+* CDN: [https://cdn.rawgit.com/konvajs/konva/0.9.5/konva.min.js](https://cdn.rawgit.com/konvajs/konva/0.9.5/konva.min.js)
 
 ###NodeJS
 
 We are using [node-canvas](https://github.com/LearnBoost/node-canvas) to create canvas element.
 
 1. Install node-canvas [https://github.com/LearnBoost/node-canvas/wiki/_pages](https://github.com/LearnBoost/node-canvas/wiki/_pages)
-2. `npm install jsdom`
+2. `npm install jsdom@3.x` (jsdom v4 require iojs)
 3. `npm install konva`
 
 See file `resources/nodejs-demo.js` for example.

@@ -1,18 +1,15 @@
-///<reference path='../../../references.ts'/>
+import {ResourceType} from "./ResourceType";
+import {ISerializable} from "../../Util/Serializer";
 
-module Model.Resources {
-	import ResourceType = Model.Resources.ResourceType;
+export class ResourceUsage implements ISerializable<ResourceUsage> {
+    id:number;
+    resource:ResourceType;
+    need:number;
 
-	export class ResourceUsage implements Util.ISerializable<ResourceUsage>{
-		id: number;
-		resource: ResourceType;
-		need: number;
-
-		deserialize(input: any): ResourceUsage {
-			this.id = input.id;
-			this.resource = new ResourceType().deserialize(input.resource);
-			this.need = input.need;
-			return this;
-		}
-	}
+    deserialize(input:any):ResourceUsage {
+        this.id = input.id;
+        this.resource = new ResourceType().deserialize(input.resource);
+        this.need = input.need;
+        return this;
+    }
 }

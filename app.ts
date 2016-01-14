@@ -1,56 +1,58 @@
-///<reference path='references.ts'/>
-'use strict';
-module app {
-    import ng = angular;
-
-    var ganttapp:ng.IModule = ng.module('ganttApp', ['ngRoute', 'ngMaterial', 'LocalStorageModule'])
-
-        .directive('resizable', function () {
-            return {
-                restrict: 'A',
-                scope: {
-                    callback: '&onResize'
-                },
-                link: function postLink(scope: any, elem, attrs) {
-                    elem.resizable({
-                        handles: 'e, w'
-                    });
-                    elem.on('resizestop', function (evt, ui) {
-                        if (scope.callback) {
-                            scope.callback();
-                        }
-                    });
-                }
-            };
-        })
+import {LayoutController} from './components/LayoutController'
+import {ProjectService} from './components/ProjectService'
+import {SidenavController} from './components/SidenavController'
+import {GanttCtrl} from "./gantt/GanttController";
 
 
-        .service('projectService', app.ProjectService)
+var ganttApp = angular.module('ganttApp', ['ngRoute', 'ngMaterial'])
 
-        .controller('LayoutController', ['$mdBottomSheet', '$q', '$mdSidenav', LayoutController])
-        .controller('SidenavController', ['$location', 'projectService', SidenavController])
-
-        .config(($routeProvider:ng.route.IRouteProvider, $mdThemingProvider:ng.material.IThemingProvider, $mdIconProvider:ng.material.IIconProvider) => {
-            $routeProvider
-                .when('/gantt', {
-                    templateUrl: 'gantt/gantt.html',
-                    controller: app.GanttCtrl,
-                    controllerAs: "gantt"
-                })
-                .otherwise({
-                    templateUrl: 'welcome/welcome.html'
+    .directive('resizable', function () {
+        return {
+            restrict: 'A',
+            scope: {
+                callback: '&onResize'
+            },
+            link: function postLink(scope:any, elem:any, attrs:any) {
+                elem.resizable({
+                    handles: 'e, w'
                 });
+                elem.on('resizestop', function (evt:any, ui:any) {
+                    if (scope.callback) {
+                        scope.callback();
+                    }
+                });
+            }
+        };
+    })
 
-            $mdIconProvider
-                .icon("menu", "css/icons/menu.svg");
 
-            $mdThemingProvider
-                .theme("default")
-                .primaryPalette("teal")
-                .accentPalette("blue-grey");
-        });
+    .service('projectService', ProjectService)
 
-}
+    .controller('LayoutController', ['$mdBottomSheet', '$q', '$mdSidenav', LayoutController])
+    .controller('SidenavController', ['$location', 'projectService', SidenavController])
+
+    .config(($routeProvider:ng.route.IRouteProvider, $mdThemingProvider:ng.material.IThemingProvider, $mdIconProvider:ng.material.IIconProvider) => {
+        $routeProvider
+            .when('/gantt', {
+                templateUrl: 'gantt/gantt.html',
+                controller: GanttCtrl,
+                controllerAs: "gantt"
+            })
+            .otherwise({
+                templateUrl: 'welcome/welcome.html'
+            });
+
+        $mdIconProvider
+            .icon("menu", "css/icons/menu.svg");
+
+        $mdThemingProvider
+            .theme("default")
+            .primaryPalette("teal")
+            .accentPalette("blue-grey");
+    });
+angular.element(document).ready(function() {
+    angular.bootstrap(document, ['ganttApp']);
+});
 
 
 

@@ -1,14 +1,7 @@
-///<reference path='../../../references.ts'/>
-var Util;
-(function (Util) {
-    var IntervalList;
-    (function (IntervalList) {
-        var IntervalBoundariesError = (function () {
-            function IntervalBoundariesError() {
-            }
-            return IntervalBoundariesError;
-        })();
-        IntervalList.IntervalBoundariesError = IntervalBoundariesError;
-    })(IntervalList = Util.IntervalList || (Util.IntervalList = {}));
-})(Util || (Util = {}));
+var IntervalBoundariesError = (function () {
+    function IntervalBoundariesError() {
+    }
+    return IntervalBoundariesError;
+})();
+exports.IntervalBoundariesError = IntervalBoundariesError;
 //# sourceMappingURL=IntervalBoundariesError.js.map

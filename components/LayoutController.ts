@@ -1,22 +1,11 @@
-/**
- * Created by Balog �bel P�ter on 2015.04.08..
- */
+export class LayoutController {
 
-///<reference path='../references.ts' />
+    constructor(private $mdBottomSheet:ng.material.IBottomSheetService,
+                private $q:ng.IQService,
+                private $mdSidenav:ng.material.ISidenavService) {
+    }
 
-module app {
-    import ng = angular;
-
-
-    export class LayoutController {
-
-        constructor(private $mdBottomSheet:ng.material.IBottomSheetService,
-                    private $q:ng.IQService,
-                    private $mdSidenav:ng.material.ISidenavService) {
-        }
-
-        public toggleList() {
-            this.$mdSidenav('left').toggle();
-        }
+    public toggleList() {
+        this.$mdSidenav('left').toggle();
     }
 }

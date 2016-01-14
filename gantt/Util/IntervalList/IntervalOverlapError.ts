@@ -1,9 +1,5 @@
-///<reference path='../../../references.ts'/>
+export class IntervalOverlapError implements Error {
+    name:string;
+    message:string;
 
-module Util.IntervalList {
-    export class IntervalOverlapError implements Error{
-        name: string;
-        message: string;
-
-    }
 }

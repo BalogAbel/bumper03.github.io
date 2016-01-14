@@ -3,54 +3,51 @@
         <md-dialog-content class="sticky-container" class="content">
             <md-subheader class="md-sticky-no-effect">
                 <h2>
-                    <ng-switch on="taskDetailController.isNew">
-                        <span ng-switch-when="true">
-                            New {{taskDetailController.isSummary ? "Wrapper" : "Task"}}
-                            <span ng-show="taskDetailController.task.name.length != 0">({{taskDetailController.task.name}})</span>
-                        </span>
-                        <span ng-switch-default>
-                            Edit {{taskDetailController.isSummary ? "wrapper" : "task"}}
-                            <span ng-show="taskDetailController.task.name.length != 0">({{taskDetailController.task.name}})</span>
-                        </span>
-                    </ng-switch>
+                    {{taskDetailController.task.isNew ? "New" : "Edit"}}
+                    {{taskDetailController.isSummary ? "Wrapper" : "Task"}}
+                    <span ng-show="taskDetailController.task.name.length != 0">({{taskDetailController.task.name}})</span>
                 </h2>
             </md-subheader>
             <md-tabs md-dynamic-height="true">
                 <md-tab>
                     <md-tab-label>Details</md-tab-label>
                     <md-tab-body>
-                        <md-checkbox ng-model="taskDetailController.task.isSummary"
-                                     aria-label="Task is summary" ng-disabled="!taskDetailController.isNew">
-                            Task is summary
-                        </md-checkbox>
+                        <div layout="column" >
+                            <h5></h5>
+                            <md-checkbox ng-model="taskDetailController.task.isSummary"
+                                         aria-label="Task is summary" ng-disabled="!taskDetailController.task.isNew">
+                                Task is summary
+                            </md-checkbox>
 
-                        <md-input-container flex>
-                            <label>Name</label>
-                            <input type="text" ng-model="taskDetailController.task.name"/>
-                        </md-input-container>
+                            <md-input-container flex>
+                                <label>Name</label>
+                                <input type="text" ng-model="taskDetailController.task.name"/>
+                            </md-input-container>
 
-                        <md-input-container flex>
-                            <label>Description</label>
-                            <input type="text" ng-model="taskDetailController.task.description"/>
-                        </md-input-container>
-
-
-                        <label>Select parent</label>
-                        <select ng-options="summary as summary.name for summary in taskDetailController.project.getAllSummaries()"
-                                ng-model="taskDetailController.task.parent">
-                            <option></option>
-                        </select>
+                            <md-input-container flex>
+                                <label>Description</label>
+                                <input type="text" ng-model="taskDetailController.task.description"/>
+                            </md-input-container>
 
 
-                        <md-checkbox ng-model="taskDetailController.task.hasEarliestConstraint"
-                                     aria-label="Has earliest constraint checkbox">
-                            Has earliest constraint
-                        </md-checkbox>
-                        <md-input-container flex ng-show="taskDetailController.task.hasEarliestConstraint">
-                            <label>Earliest constraint ({{taskDetailController.task.earliestStartConstraint}})</label>
-                            <input type="datetime-local" ng-model="taskDetailController.task.earliestStartConstraint"/>
-                        </md-input-container>
+                            <label>Select parent</label>
+                            <select ng-options="summary as summary.name for summary in taskDetailController.project.getAllSummaries()"
+                                    ng-model="taskDetailController.task.parent">
+                                <option></option>
+                            </select>
 
+
+                            <md-checkbox ng-model="taskDetailController.task.hasEarliestConstraint"
+                                         aria-label="Has earliest constraint checkbox">
+                                Has earliest constraint
+                            </md-checkbox>
+                            <md-input-container flex ng-show="taskDetailController.task.hasEarliestConstraint">
+                                <label>Earliest constraint
+                                    ({{taskDetailController.task.earliestStartConstraint}})</label>
+                                <input type="datetime-local"
+                                       ng-model="taskDetailController.task.earliestStartConstraint"/>
+                            </md-input-container>
+                        </div>
                     </md-tab-body>
                 </md-tab>
                 <md-tab ng-show="!taskDetailController.task.isSummary">

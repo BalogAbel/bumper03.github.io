@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-
-<html lang="en" ng-app="ganttApp">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,81 +10,34 @@
     <link rel="stylesheet" href="bower_modules/angular-material/angular-material.min.css" />
     <link rel="stylesheet" href="bower_modules/jquery-ui/themes/base/jquery-ui.min.css" />
 
-
     <link rel="stylesheet" href="app.css" />
     <link rel="stylesheet" href="gantt/gantt.css" />
     <link rel="stylesheet" href="welcome/welcome.css" />
     <link rel="stylesheet" href="gantt/components/taskDetail/taskDetail.css" />
 
-
     <title>TypeScript HTML App</title>
+
 
     <script src="bower_modules/jquery/dist/jquery.min.js"></script>
     <script src="bower_modules/jquery-ui/jquery-ui.min.js"></script>
     <script src="bower_modules/konva/konva.min.js"></script>
 
     <script src="bower_modules/angular/angular.min.js"></script>
-    <script src="bower_modules/angular-route/angular-route.min.js"></script>
-    <script src="bower_modules/angular-local-storage/dist/angular-local-storage.min.js"></script>
-    <script src="bower_modules/angular-animate/angular-animate.min.js"></script>
     <script src="bower_modules/angular-aria/angular-aria.min.js"></script>
+    <script src="bower_modules/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_modules/angular-messages/angular-messages.min.js"></script>
     <script src="bower_modules/angular-material/angular-material.min.js"></script>
+    <script src="bower_modules/angular-route/angular-route.min.js"></script>
     <script src="lib/cycle/cycle.js"></script>
 
+    <script src="bower_modules/systemjs/build/system.min.js"></script>
+    <script>
+        System.defaultJSExtensions = true;
+        System.import('app');
+    </script>
 
-    <script src="gantt/Util/Serializer.js"></script>
-    <script src="gantt/Util/Hashable.js"></script>
-    <script src="gantt/Util/HashSet.js"></script>
-    <script src="gantt/Util/IComparable.js"></script>
-    <script src="gantt/Util/IntervalList/IInterval.js"></script>
-    <script src="gantt/Util/IntervalList/IntervalOverlapError.js"></script>
-    <script src="gantt/Util/IntervalList/IntervalBoundariesError.js"></script>
-    <script src="gantt/Util/IntervalList/IntervalList.js"></script>
-    <script src="gantt/Util/IntervalList/IntervalDate.js"></script>
-
-    <script src="gantt/Model/WorkingCalendar/Duration.js"></script>
-    <script src="gantt/Model/WorkingCalendar/WorkingHour.js"></script>
-    <script src="gantt/Model/WorkingCalendar/WorkingDay.js"></script>
-    <script src="gantt/Model/WorkingCalendar/Exclusion.js"></script>
-    <script src="gantt/Model/WorkingCalendar/WorkingCalendar.js"></script>
-
-
-    <script src="gantt/Model/Schedulers/ResourceManager.js"></script>
-    <script src="gantt/Model/Schedulers/Scheduler.js"></script>
-    <script src="gantt/Model/Schedulers/LeastSlackTimeScheduler.js"></script>
-
-    <script src="gantt/Model/Resources/ResourceType.js"></script>
-    <script src="gantt/Model/Resources/ResourceUsage.js"></script>
-
-
-    <script src="gantt/Model/Task.js"></script>
-    <script src="gantt/Model/Dependency.js"></script>
-    <script src="gantt/Model/Summary.js"></script>
-    <script src="gantt/Model/Schedulable.js"></script>
-    <script src="gantt/Model/Project.js"></script>
-
-    <script src="gantt/Util/ProjectGenerator.js"></script>
-
-    <script src="gantt/View/Utils.js"></script>
-    <script src="gantt/View/TimeLineDrawer.js"></script>
-    <script src="gantt/View/TaskDrawer.js"></script>
-    <script src="gantt/View/SchedulableDrawer.js"></script>
-    <script src="gantt/View/SummaryDrawer.js"></script>
-    <script src="gantt/View/TaskDrawerFactory.js"></script>
-    <script src="gantt/View/ProjectDrawer.js"></script>
-
-    <script src="components/Resizeable.js"></script>
-    <script src="components/LayoutController.js"></script>
-    <script src="components/SidenavController.js"></script>
-    <script src="components/ProjectService.js"></script>
-    <script src="gantt/components/taskDetail/TaskDetailController.js"></script>
-    <script src="gantt/components/resources/ResourcesController.js"></script>
-    <script src="gantt/components/taskDetail/TaskVO.js"></script>
-    <script src="gantt/GanttController.js"></script>
-
-
-    <script src="app.js"></script>
 </head>
+
 <body layout="column" ng-controller="LayoutController as layout">
 <md-toolbar layout="row">
     <md-button class="menu" hide-gt-md ng-click="layout.toggleList()" aria-label="Show User List">

@@ -1,9 +1,5 @@
-///<reference path='../../../references.ts'/>
+export class IntervalBoundariesError implements Error {
+    name:string;
+    message:string;
 
-module Util.IntervalList {
-    export class IntervalBoundariesError implements Error{
-        name:string;
-        message:string;
-
-    }
 }

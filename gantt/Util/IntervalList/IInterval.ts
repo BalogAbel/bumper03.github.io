@@ -1,8 +1,5 @@
-///<reference path='../../../references.ts'/>
+import {IComparable} from "../IComparable";
 
-module Util.IntervalList {
-	import IComparable = Util.IComparable;
-	export interface IInterval extends IComparable {
-		doOverLapWith(t: any): boolean;
-	}
+export interface IInterval extends IComparable {
+    doOverLapWith(t:any): boolean;
 }

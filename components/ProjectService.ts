@@ -1,36 +1,24 @@
-/**
- * Created by Abel on 2015.03.22..
- */
+import {Project} from "../gantt/Model/Project";
 
-///<reference path='../references.ts' />
+export class ProjectService {
+    project:Project = null;
 
-module app {
-    import Project = Model.Project;
-    export class ProjectService {
-        project: Project = null;
-
-        constructor(private localStorageService: ng.localStorage.ILocalStorageService) {
-        }
-
-        get(): Project {
-            if (this.project == null) {
-                var projectObj = JSON.parse(localStorage.getItem("project"));
-                this.project = new Project();
-                if (projectObj != null) {
-                    this.project.deserialize(projectObj);
-                    JSON.retrocycle(this.project);
-                }
-                console.log(this.project)
+    get():Project {
+        if (this.project == null) {
+            var projectObj = JSON.parse(localStorage.getItem("project"));
+            this.project = new Project();
+            if (projectObj != null) {
+                this.project.deserialize(projectObj);
+                JSON.retrocycle(this.project);
             }
-            return this.project;
         }
-
-        set(project: Project): void {
-            localStorage.setItem("project", JSON.stringify(JSON.decycle(project)));
-            //console.log(localStorage.getItem("project"));
-            this.project = project;
-        }
-
-
+        return this.project;
     }
+
+    set(project:Project):void {
+        localStorage.setItem("project", JSON.stringify(JSON.decycle(project)));
+        this.project = project;
+    }
+
+
 }
