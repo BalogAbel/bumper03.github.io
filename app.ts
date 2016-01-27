@@ -2,9 +2,10 @@ import {LayoutController} from './components/LayoutController'
 import {ProjectService} from './components/ProjectService'
 import {SidenavController} from './components/SidenavController'
 import {GanttCtrl} from "./gantt/GanttController";
+import {GDriveService} from "./components/GDriveService";
 
 
-var ganttApp = angular.module('ganttApp', ['ngRoute', 'ngMaterial'])
+var ganttApp = angular.module('ganttApp', ['ngRoute', 'ngMaterial', 'angular-google-gapi', 'angular-filepicker'])
 
     .directive('resizable', function () {
         return {
@@ -25,11 +26,16 @@ var ganttApp = angular.module('ganttApp', ['ngRoute', 'ngMaterial'])
         };
     })
 
+    .config(function (filepickerProvider: any) {
+        filepickerProvider.setKey('AlMMWkdhRP6iRArvFb0qbz');
+    })
 
-    .service('projectService', ProjectService)
+    .service('GDriveService', ['GAuth', 'GApi', 'GData', '$q', '$window', '$http', GDriveService])
+    .service('ProjectService', ['GDriveService', '$mdDialog', '$window', ProjectService])
 
     .controller('LayoutController', ['$mdBottomSheet', '$q', '$mdSidenav', LayoutController])
-    .controller('SidenavController', ['$location', 'projectService', SidenavController])
+    .controller('SidenavController', ['$location', 'ProjectService', SidenavController])
+
 
     .config(($routeProvider:ng.route.IRouteProvider, $mdThemingProvider:ng.material.IThemingProvider, $mdIconProvider:ng.material.IIconProvider) => {
         $routeProvider
@@ -50,7 +56,7 @@ var ganttApp = angular.module('ganttApp', ['ngRoute', 'ngMaterial'])
             .primaryPalette("teal")
             .accentPalette("blue-grey");
     });
-angular.element(document).ready(function() {
+angular.element(document).ready(function () {
     angular.bootstrap(document, ['ganttApp']);
 });
 

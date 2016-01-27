@@ -6,9 +6,10 @@ var Summary_1 = require("./Model/Summary");
 var ProjectDrawer_1 = require("./View/ProjectDrawer");
 var Utils_1 = require("./View/Utils");
 var GanttCtrl = (function () {
-    function GanttCtrl(projectService, $location, $mdDialog) {
+    function GanttCtrl(ProjectService, $mdDialog) {
         this.$mdDialog = $mdDialog;
-        this.project = projectService.get();
+        console.log(this);
+        this.project = ProjectService.get();
         this.project.schedule();
         this.projectDrawer = new ProjectDrawer_1.ProjectDrawer(this.project);
         this.projectDrawer.draw();

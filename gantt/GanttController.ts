@@ -14,11 +14,11 @@ export class GanttCtrl {
     private project:Project;
     private projectDrawer:ProjectDrawer;
 
-    constructor(projectService:ProjectService,
-                $location:ng.ILocationService,
+    constructor(ProjectService:ProjectService,
                 private $mdDialog:ng.material.IDialogService) {
+        console.log(this);
 
-        this.project = projectService.get();
+        this.project = ProjectService.get();
         this.project.schedule();
         this.projectDrawer = new ProjectDrawer(this.project);
         this.projectDrawer.draw();

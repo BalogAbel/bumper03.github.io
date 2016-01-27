@@ -150,6 +150,7 @@ export class ProjectGenerator {
         project.resourceTypes.push(resourceType);
         project.resourceTypes.push(resourceType2);
 
+        project.name = "Test project";
         return project;
 
     }

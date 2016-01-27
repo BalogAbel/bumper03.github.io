@@ -118,6 +118,7 @@ var Project = (function () {
         }
         this.workingCalendar = new WorkingCalendar_1.WorkingCalendar().deserialize(input.workingCalendar);
         this.scheduler = Scheduler_1.Scheduler.deserializeHelper(input.scheduler);
+        this.name = input.name;
         return this;
     };
     Project.prototype.getAllSummaries = function () {

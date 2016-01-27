@@ -136,6 +136,7 @@ var ProjectGenerator = (function () {
         project.workingCalendar = workingCalendar;
         project.resourceTypes.push(resourceType);
         project.resourceTypes.push(resourceType2);
+        project.name = "Test project";
         return project;
     };
     return ProjectGenerator;

@@ -1,0 +1,18 @@
+<md-dialog aria-label="New task" id="" flex-gt-md="20" flex="90" id="select-item">
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Select {{selectItemCtrl.title}}</h2>
+            </div>
+        </md-toolbar>
+        <md-dialog-content class="sticky-container content">
+            <md-list>
+                <md-list-item ng-repeat="item in selectItemCtrl.items" ng-click="selectItemCtrl.selectItem(item)">
+                    {{item.name}}
+                </md-list-item>
+            </md-list>
+        </md-dialog-content>
+
+    </form>
+</md-dialog>
+

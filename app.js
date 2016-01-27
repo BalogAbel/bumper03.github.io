@@ -2,7 +2,8 @@ var LayoutController_1 = require('./components/LayoutController');
 var ProjectService_1 = require('./components/ProjectService');
 var SidenavController_1 = require('./components/SidenavController');
 var GanttController_1 = require("./gantt/GanttController");
-var ganttApp = angular.module('ganttApp', ['ngRoute', 'ngMaterial'])
+var GDriveService_1 = require("./components/GDriveService");
+var ganttApp = angular.module('ganttApp', ['ngRoute', 'ngMaterial', 'angular-google-gapi', 'angular-filepicker'])
     .directive('resizable', function () {
     return {
         restrict: 'A',
@@ -21,9 +22,13 @@ var ganttApp = angular.module('ganttApp', ['ngRoute', 'ngMaterial'])
         }
     };
 })
-    .service('projectService', ProjectService_1.ProjectService)
+    .config(function (filepickerProvider) {
+    filepickerProvider.setKey('AlMMWkdhRP6iRArvFb0qbz');
+})
+    .service('GDriveService', ['GAuth', 'GApi', 'GData', '$q', '$window', '$http', GDriveService_1.GDriveService])
+    .service('ProjectService', ['GDriveService', '$mdDialog', '$window', ProjectService_1.ProjectService])
     .controller('LayoutController', ['$mdBottomSheet', '$q', '$mdSidenav', LayoutController_1.LayoutController])
-    .controller('SidenavController', ['$location', 'projectService', SidenavController_1.SidenavController])
+    .controller('SidenavController', ['$location', 'ProjectService', SidenavController_1.SidenavController])
     .config(function ($routeProvider, $mdThemingProvider, $mdIconProvider) {
     $routeProvider
         .when('/gantt', {

@@ -18,6 +18,7 @@ export class Project implements ISerializable<Project> {
     workingCalendar:WorkingCalendar;
     scheduler:Scheduler;
     resourceTypes:ResourceType[];
+    name: String;
 
     constructor() {
         this.tasks = [];
@@ -43,7 +44,6 @@ export class Project implements ISerializable<Project> {
 
 
         this.scheduler.schedule(tasks);
-
         this.finish = new Date(this.start.getTime());
         this.tasks.forEach(task => {
             if (that.finish.getTime() < task.finish.getTime())
@@ -140,6 +140,7 @@ export class Project implements ISerializable<Project> {
         }
         this.workingCalendar = new WorkingCalendar().deserialize(input.workingCalendar)
         this.scheduler = Scheduler.deserializeHelper(input.scheduler);
+        this.name = input.name;
         return this;
     }
 
