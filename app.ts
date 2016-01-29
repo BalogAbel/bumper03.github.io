@@ -3,9 +3,10 @@ import {ProjectService} from './components/ProjectService'
 import {SidenavController} from './components/SidenavController'
 import {GanttCtrl} from "./gantt/GanttController";
 import {GDriveService} from "./components/GDriveService";
+import {WelcomeController} from "./welcome/WelcomeController";
 
 
-var ganttApp = angular.module('ganttApp', ['ngRoute', 'ngMaterial', 'angular-google-gapi', 'angular-filepicker'])
+var ganttApp = angular.module('ganttApp', ['ngRoute', 'ngMaterial', 'angular-google-gapi', 'ngFileUpload', 'ngFitText'])
 
     .directive('resizable', function () {
         return {
@@ -26,9 +27,6 @@ var ganttApp = angular.module('ganttApp', ['ngRoute', 'ngMaterial', 'angular-goo
         };
     })
 
-    .config(function (filepickerProvider: any) {
-        filepickerProvider.setKey('AlMMWkdhRP6iRArvFb0qbz');
-    })
 
     .service('GDriveService', ['GAuth', 'GApi', 'GData', '$q', '$window', '$http', GDriveService])
     .service('ProjectService', ['GDriveService', '$mdDialog', '$window', ProjectService])
@@ -45,7 +43,9 @@ var ganttApp = angular.module('ganttApp', ['ngRoute', 'ngMaterial', 'angular-goo
                 controllerAs: "gantt"
             })
             .otherwise({
-                templateUrl: 'welcome/welcome.html'
+                templateUrl: 'welcome/welcome.html',
+                controller: WelcomeController,
+                controllerAs: "welcomeCtrl"
             });
 
         $mdIconProvider

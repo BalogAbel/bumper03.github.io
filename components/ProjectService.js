@@ -24,7 +24,7 @@ var ProjectService = (function () {
     };
     ProjectService.prototype.loadFromGDrive = function () {
         var _this = this;
-        this.gDriveService.list().then(function (files) {
+        return this.gDriveService.list().then(function (files) {
             return _this.$mdDialog.show({
                 controller: SelectItemController_1.SelectItemController,
                 controllerAs: "selectItemCtrl",
@@ -36,8 +36,6 @@ var ProjectService = (function () {
             });
         }).then(function (item) {
             return _this.gDriveService.open(item.downloadUrl);
-        }).then(function (project) {
-            _this.set(project);
         });
     };
     ProjectService.prototype.saveToGoogleDrive = function () {

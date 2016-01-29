@@ -1,47 +1,63 @@
-<p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. In luctus tellus et augue viverra, ac laoreet augue mattis.
-    Vestibulum ut vulputate nulla. Curabitur at ultricies velit, vitae facilisis quam. Nam eleifend condimentum tortor,
-    et elementum lacus. Nulla a turpis eget ex tempus porttitor. Phasellus imperdiet eros quis tincidunt aliquet.
-    Vestibulum dignissim orci
-    vitae diam consequat consectetur. Integer eget nunc quis justo eleifend molestie vitae hendrerit libero. Integer
-    commodo tincidunt commodo. Nullam dapibus quam in mattis iaculis. Maecenas maximus sed nibh ut auctor. Maecenas
-    scelerisque, purus blandit ultricies rutrum, dolor diam sagittis ligula, sed efficitur neque nibh ut magna. Proin ac
-    auctor lacus, eu ornare nisi. Nam viverra nibh ut lacus efficitur, nec maximus metus ultricies.
-</p>
+<link rel="stylesheet" href="welcome/welcome.css">
 
-<p>
-    Phasellus eget consectetur eros. Praesent at molestie risus. Pellentesque et nibh porttitor risus ultricies
-    condimentum non id mi. Pellentesque euismod felis vitae elit laoreet, ut sodales ex venenatis. Donec varius mi quam,
-    sed pharetra sapien dapibus eu. Donec ac augue a mauris tempor blandit. Integer odio tellus, dictum fringilla sapien
-    a, placerat luctus sapien. Sed interdum neque quam, at viverra neque congue sit amet. Phasellus ut ante volutpat mi
-    egestas laoreet quis ut elit. In dolor odio, interdum ac nulla quis, tempor ultrices metus. Suspendisse non tellus
-    fermentum, elementum est vel, convallis sem. Praesent tristique egestas finibus. Integer eleifend, ipsum quis
-    convallis porttitor, tortor lacus ullamcorper turpis, sed sodales est lectus eget dolor. Nunc mollis, nunc eu
-    tincidunt venenatis, diam ante sagittis nunc, sit amet dictum libero velit in tellus.
-</p>
+<div flex layout-align="center center" ngf-drop ng-model="files" class="drop-box" layout="row"
+     ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true"
+     accept="image/*,application/pdf"
+     ngf-pattern="'image/*,application/pdf'" id="welcome">
 
-<p>
-    Morbi eu pharetra eros, id malesuada ante. Quisque eu tellus diam. Pellentesque habitant morbi tristique senectus et
-    netus et malesuada fames ac turpis egestas. Donec fermentum nunc id dapibus commodo. Curabitur ultrices maximus
-    risus et sollicitudin. Ut rutrum enim et risus egestas, ac faucibus nisi molestie. Morbi venenatis pharetra velit,
-    eget commodo leo aliquam ac. Phasellus ac dictum justo, vitae ultricies justo. Phasellus dictum ultrices risus, id
-    maximus nibh suscipit nec. Vivamus efficitur dolor at feugiat lobortis. Nulla facilisi. Vestibulum fermentum libero
-    cursus enim sagittis sodales. Nullam non laoreet diam.
-</p>
+    <div flex layout-align="center stretch" layout="column" id="welcome-content">
 
-<p>
-    Morbi in facilisis nisi. Praesent volutpat tristique arcu, et convallis nunc faucibus eu. Curabitur ac accumsan
-    diam. Donec euismod varius leo, eget mattis nisl ornare vitae. Cras ornare urna sed orci mattis, a laoreet erat
-    consequat. Pellentesque a sem quis augue tincidunt lobortis. Nunc lacinia nisl id ipsum condimentum, eu vehicula
-    nulla rutrum. In eget consectetur diam. In consectetur diam quis mollis bibendum. Donec feugiat aliquet nisi sed
-    sollicitudin. Nam molestie vehicula tellus. Fusce quis turpis metus. Phasellus feugiat sapien ut est porttitor, ac
-    congue diam molestie.
-</p>
+        <div ng-cloak>
 
-<p>
-    Vivamus sed arcu est. Ut ac finibus nisl. Suspendisse arcu urna, dictum ac quam eu, ullamcorper accumsan lectus.
-    Pellentesque accumsan velit ut blandit consectetur. Integer ipsum augue, bibendum at efficitur sit amet, feugiat a
-    erat. Mauris fringilla risus suscipit orci vestibulum ultrices et eget purus. Nulla et neque aliquet, interdum purus
-    eget, ullamcorper ante. Nulla facilisi. Aliquam tristique vestibulum eros, imperdiet commodo tortor fringilla sed.
-    Vivamus sed eros id augue luctus blandit.
-</p>
+            <div data-fittext data-fittext-min="10" data-fittext-max="60">
+                Welcome to GanttApp
+                <div data-fittext data-fittext-min="10" data-fittext-max="20"><br/> a full client side <br/> project
+                    management application</div>
+            </div>
+            <h2>Click here to start new project</h2>
+
+            <md-fab-speed-dial md-direction="up" class="md-fling fab"">
+                <md-fab-trigger>
+                    <!--data-fittext data-fittext-min="10" data-fittext-max="40" id="open"-->
+                    <md-button aria-label="New" class="md-raised md-primary">
+                        New
+                    </md-button>
+                </md-fab-trigger>
+                <md-fab-actions>
+                    <md-button aria-label="Empty" class="md-raised md-primary" ng-click="welcomeCtrl.newEmpty()">
+                        Empty
+                    </md-button>
+                    <md-button aria-label="Example" class="md-raised md-primary" ng-click="welcomeCtrl.newExample()">
+                        Example
+                    </md-button>
+                </md-fab-actions>
+            </md-fab-speed-dial>
+
+            <h2 data-fittext data-fittext-min="10" data-fittext-max="40">
+                Drag&Drop any file to open
+            </h2>
+            <h2>Or click here to open</h2>
+            {{welcomeCtrl.open}}sad
+            <md-fab-speed-dial md-direction="up" class="md-fling fab">
+                <md-fab-trigger>
+                    <!--data-fittext data-fittext-min="10" data-fittext-max="40" id="open"-->
+                    <md-button aria-label="Open" class="md-raised md-primary">
+                        Open
+                    </md-button>
+                </md-fab-trigger>
+                <md-fab-actions>
+                    <md-button aria-label="GDrive" class="md-raised md-primary" ng-click="welcomeCtrl.openFromGoogleDrive()">
+                        Google drive
+                    </md-button>
+                    <md-button aria-label="Local" class="md-raised md-primary">
+                        Locally
+                    </md-button>
+                </md-fab-actions>
+            </md-fab-speed-dial>
+        </divng-cloak>
+
+
+
+    </div>
+
+</div>

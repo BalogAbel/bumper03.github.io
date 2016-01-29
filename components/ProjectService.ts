@@ -1,6 +1,7 @@
 import {Project} from "../gantt/Model/Project";
 import {GDriveService, ProjectFile} from "./GDriveService";
 import {SelectItemController} from "./SelectItemDialog/SelectItemController";
+import IPromise = angular.IPromise;
 
 export class ProjectService {
     project:Project = null;
@@ -27,8 +28,8 @@ export class ProjectService {
         this.project = project;
     }
 
-    loadFromGDrive() {
-        this.gDriveService.list().then((files) => {
+    loadFromGDrive(): IPromise<Project> {
+        return this.gDriveService.list().then((files) => {
             return this.$mdDialog.show({
                 controller: SelectItemController,
                 controllerAs: "selectItemCtrl",
@@ -40,9 +41,7 @@ export class ProjectService {
             })
         }).then((item:ProjectFile) => {
             return this.gDriveService.open(item.downloadUrl);
-        }).then((project: Project) => {
-            this.set(project);
-        }) ;
+        });
     }
 
     saveToGoogleDrive():void {

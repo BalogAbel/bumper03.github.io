@@ -42,7 +42,6 @@ export class GDriveService {
 
     private authenticate():angular.IPromise<void> {
         var result = this.$q.defer<void>();
-        console.log(this);
         this.GApi.load('drive', 'v2');
         this.GAuth.setClient(this.clientID);
         this.GAuth.setScope(this.scopes);

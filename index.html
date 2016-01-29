@@ -11,7 +11,6 @@
 
     <link rel="stylesheet" href="app.css"/>
     <link rel="stylesheet" href="gantt/gantt.css"/>
-    <link rel="stylesheet" href="welcome/welcome.css"/>
     <link rel="stylesheet" href="gantt/components/taskDetail/taskDetail.css"/>
     <link rel="stylesheet" href="components/SelectItemDialog/selectItem.css"/>
 
@@ -30,6 +29,8 @@
     <script src="bower_modules/angular-google-gapi/angular-google-gapi.min.js"></script>
     <script src="bower_modules/filepicker-js/filepicker.js"></script>
     <script src="bower_modules/angular-filepicker/dist/angular_filepicker.js"></script>
+    <script src="bower_modules/ng-file-upload/ng-file-upload.min.js"></script>
+    <script src="bower_modules/ngFitText/dist/ng-FitText.min.js"></script>
     <script src="lib/cycle/cycle.js"></script>
 
     <script src="bower_modules/systemjs/build/system.min.js"></script>
@@ -41,24 +42,23 @@
 </head>
 
 <body layout="column" ng-controller="LayoutController as layout">
-<md-toolbar layout="row">
+<!--md-toolbar layout="row">
     <md-button class="menu" hide-gt-md ng-click="layout.toggleList()" aria-label="Show User List">
         <md-icon md-svg-src="menu"></md-icon>
     </md-button>
     <h1>Gantt-Diagram Application</h1>
-</md-toolbar>
+</md-toolbar-->
 
 <div flex layout="row">
 
-    <md-sidenav md-is-locked-open="$mdMedia('gt-md')" class="md-whiteframe-z2" md-component-id="left">
+    <!--md-sidenav class="md-whiteframe-z2" md-component-id="left">
         <md-list ng-controller="SidenavController as sidenavCtrl">
             <md-item>
                 <md-button ng-click="sidenavCtrl.new()">
                     <h3>New</h3>
                 </md-button>
             </md-item>
-            <md-item
-                    ,>
+            <md-item>
                 <md-button ng-click="sidenavCtrl.toggleMenu('open')">
                     <h3>Open</h3>
                 </md-button>
@@ -68,6 +68,7 @@
                             <md-button ng-click="sidenavCtrl.openFromGoogleDrive()">Google drive</md-button>
                         </md-item>
                         <md-item>
+                            <input filepicker type="filepicker" data-fp-services="computer" on-success="onSuccess(event.fpfile)" />;
                             <md-button ng-click="sidenavCtrl.openFromLocal()">Local</md-button>
                         </md-item>
                     </md-list>
@@ -90,9 +91,9 @@
             </md-item>
         </md-list>
 
-    </md-sidenav>
+    </md-sidenav-->
 
-    <md-content flex id="content" ng-view></md-content>
+    <md-content flex layout="column" layout-align="center stretch" id="content" ng-view></md-content>
 </div>
 
 </body>

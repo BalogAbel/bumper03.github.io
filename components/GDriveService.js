@@ -42,7 +42,6 @@ var GDriveService = (function () {
     GDriveService.prototype.authenticate = function () {
         var _this = this;
         var result = this.$q.defer();
-        console.log(this);
         this.GApi.load('drive', 'v2');
         this.GAuth.setClient(this.clientID);
         this.GAuth.setScope(this.scopes);
