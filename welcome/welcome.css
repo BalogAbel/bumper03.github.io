@@ -16,8 +16,10 @@
     padding: 10px;
 }
 
-#welcome .fab {
+#welcome .fab {    
     height: 50px;
+    position: relative;
+    top: -90px;
 }
 
 #welcome md-fab-trigger button {
