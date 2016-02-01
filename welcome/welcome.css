@@ -19,7 +19,7 @@
 #welcome .fab {    
     height: 50px;
     position: relative;
-    top: -90px;
+    top: -100px;
 }
 
 #welcome md-fab-trigger button {
