@@ -8,7 +8,6 @@ var Utils_1 = require("./View/Utils");
 var GanttCtrl = (function () {
     function GanttCtrl(ProjectService, $mdDialog) {
         this.$mdDialog = $mdDialog;
-        console.log(this);
         this.project = ProjectService.get();
         this.project.schedule();
         this.projectDrawer = new ProjectDrawer_1.ProjectDrawer(this.project);
@@ -21,7 +20,6 @@ var GanttCtrl = (function () {
         //});
     }
     GanttCtrl.prototype.handleZoom = function () {
-        console.log(this.zoomLevel);
         this.projectDrawer.changeZoom(this.zoomLevel);
     };
     GanttCtrl.prototype.newTask = function () {

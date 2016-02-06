@@ -55,6 +55,11 @@ md-content {
     /*display: inline-block;*/
 }
 
+#project-name {
+    max-width: 250px;
+    font-size: 20px;
+}
+
 /******************************************/
 .middle {
     vertical-align: middle;

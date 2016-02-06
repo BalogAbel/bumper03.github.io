@@ -3,10 +3,13 @@
     </div>
 </div>
 
+<md-input-container id="project-name">
+    <label>Name of the project</label>
+    <input ng-model="gantt.project.name" size="20"/>
+</md-input-container>
 <div id="zoom">
-    <md-slider id="slider" ng-model="gantt.zoomLevel" min="10" max="500" ng-mouseup="gantt.handleZoom()"
+    Zoom: <md-slider id="slider" ng-model="gantt.zoomLevel" min="10" max="500" ng-mouseup="gantt.handleZoom()"
                ng-keyup="gantt.handleZoom()"></md-slider>
-    <span id="zoomValue">{{gantt.zoomLevel}}</span>
 </div>
 
 

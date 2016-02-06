@@ -14,11 +14,11 @@ export class ProjectDrawer {
         ProjectDrawer._instance = this;
         this.project = project;
 
-        Utils.startDate = new Date(project.start.getTime());
-        Utils.startDate.setDate(Utils.startDate.getDate() - 7);
+        Utils.startDate = new Date(this.project.start.getTime());
+        Utils.finishDate = new Date(this.project.finish.getTime());
 
-        Utils.finishDate = new Date(project.finish.getTime());
-        Utils.finishDate.setDate(Utils.finishDate.getDate() + 7);
+        Utils.startDate.setDate(Utils.startDate.getDate() - 14);
+        Utils.finishDate.setDate(Utils.finishDate.getDate() + 14);
 
         //$("#timeLineWrapper").animate({
         //    scrollLeft: 7 * Utils.dayWidth
@@ -58,6 +58,10 @@ export class ProjectDrawer {
 
         timeLineStage.add(this.timeLineLayer);
         timeLineStage.height(Utils.getCanvasHeight());
+
+        var that = this;
+        that.scrollToDate(this.project.start);
+
     }
 
     static refresh() {
@@ -85,24 +89,73 @@ export class ProjectDrawer {
         var that = this;
     }
 
-    private getCenterDate() {
-
-    }
 
     private handleAddDates() {
         var that = this;
         $("#addBefore").click(function () {
+            var centerDate = that.getCenterDate();
             Utils.startDate.setDate(Utils.startDate.getDate() - 7);
             that.draw();
+            that.centerDate(centerDate);
         });
         $("#addAfter").click(function () {
+            var centerDate = that.getCenterDate();
             Utils.finishDate.setDate(Utils.finishDate.getDate() + 7);
             that.draw();
+            that.centerDate(centerDate);
         });
     }
 
     public changeZoom(zoomLevel:number):void {
+        var centerDate = this.getCenterDate();
         Utils.dayWidth = zoomLevel;
+        var visibleDays = $('#timeLineWrapper').width() / Utils.dayWidth;
+        var diff = this.dateToDays(Utils.finishDate) - this.dateToDays(Utils.startDate) - visibleDays;
+        if(diff < 0) {
+            Utils.startDate = this.addDays(Utils.startDate, (diff / 2) - 1);
+            Utils.finishDate = this.addDays(Utils.finishDate, (-diff / 2) + 1);
+        } else if(diff > 30) {
+            var newStartDate =  this.addDays(Utils.startDate,  (diff / 2));
+            if(newStartDate.getTime() > this.project.start.getTime()) {
+                Utils.startDate = new Date(this.project.start.getTime())
+            } else {
+                Utils.startDate = newStartDate;
+            }
+            var newEndDate =  this.addDays(Utils.finishDate, -(diff / 2));
+            if(newEndDate.getTime() < this.project.finish.getTime()) {
+                Utils.finishDate = new Date(this.project.finish.getTime())
+            } else {
+                Utils.finishDate = newEndDate;
+            }
+
+        }
         this.draw();
+        this.centerDate(centerDate);
     }
+
+    public centerDate(date: Date):void {
+        var div = $("#timeLineWrapper");
+        div.scrollLeft(Utils.dateToPosition(date) - div.width() / 2.0);
+    }
+
+    scrollToDate(date: Date): void {
+        $("#timeLineWrapper").scrollLeft(Utils.dateToPosition(date));
+    }
+
+    private getCenterDate():Date {
+        var div = $("#timeLineWrapper");
+        return Utils.positionToDate(div.scrollLeft() + div.width() / 2.0);
+    }
+
+    private dateToDays(date: Date) : number {
+        return date.getTime() / 1000 / 60 / 60 / 24;
+    }
+
+    private addDays(date: Date, days: number) {
+        var result = new Date(date.getTime());
+        result.setDate(result.getDate() + days);
+        //console.log(date.toLocaleString() + " + " + days +" days = " + result.toLocaleString());
+        return result;
+    }
+
 }

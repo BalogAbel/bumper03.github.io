@@ -16,7 +16,6 @@ export class GanttCtrl {
 
     constructor(ProjectService:ProjectService,
                 private $mdDialog:ng.material.IDialogService) {
-        console.log(this);
 
         this.project = ProjectService.get();
         this.project.schedule();
@@ -33,7 +32,6 @@ export class GanttCtrl {
     }
 
     public handleZoom():void {
-        console.log(this.zoomLevel);
         this.projectDrawer.changeZoom(this.zoomLevel);
     }
 

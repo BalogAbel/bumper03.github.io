@@ -1,3 +1,4 @@
+import {MyDate} from "../Util/MyDate";
 export class Utils {
     static taskLineHeight:number = 30;
     static dayWidth:number = 100;

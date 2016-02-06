@@ -12,52 +12,57 @@
             <div data-fittext data-fittext-min="10" data-fittext-max="60">
                 Welcome to GanttApp
                 <div data-fittext data-fittext-min="10" data-fittext-max="20"><br/> a full client side <br/> project
-                    management application</div>
+                    management application
+                </div>
             </div>
             <h2>Click here to start new project</h2>
 
-            <md-fab-speed-dial md-direction="up" class="md-fling fab"">
-                <md-fab-trigger>
-                    <!--data-fittext data-fittext-min="10" data-fittext-max="40" id="open"-->
-                    <md-button aria-label="New" class="md-raised md-primary">
-                        New
-                    </md-button>
-                </md-fab-trigger>
-                <md-fab-actions>
-                    <md-button aria-label="Empty" class="md-raised md-primary" ng-click="welcomeCtrl.newEmpty()">
-                        Empty
-                    </md-button>
-                    <md-button aria-label="Example" class="md-raised md-primary" ng-click="welcomeCtrl.newExample()">
-                        Example
-                    </md-button>
-                </md-fab-actions>
-            </md-fab-speed-dial>
+            <div>
+                <md-fab-speed-dial md-direction="up" class="md-fling fab">
+                    <md-fab-trigger>
+                        <!--data-fittext data-fittext-min="10" data-fittext-max="40" id="open"-->
+                        <md-button aria-label="New" class="md-raised md-primary">
+                            New
+                        </md-button>
+                    </md-fab-trigger>
+                    <md-fab-actions>
+                        <md-button aria-label="Empty" class="md-raised md-primary" ng-click="welcomeCtrl.newEmpty()">
+                            Empty
+                        </md-button>
+                        <md-button aria-label="Example" class="md-raised md-primary"
+                                   ng-click="welcomeCtrl.newExample()">
+                            Example
+                        </md-button>
+                    </md-fab-actions>
+                </md-fab-speed-dial>
+            </div>
 
             <h2 data-fittext data-fittext-min="10" data-fittext-max="40">
                 Drag&Drop any file to open
             </h2>
-            <h2>Or click here to open</h2>
-            {{welcomeCtrl.open}}sad
-            <md-fab-speed-dial md-direction="up" class="md-fling fab">
-                <md-fab-trigger>
-                    <!--data-fittext data-fittext-min="10" data-fittext-max="40" id="open"-->
-                    <md-button aria-label="Open" class="md-raised md-primary">
-                        Open
-                    </md-button>
-                </md-fab-trigger>
-                <md-fab-actions>
-                    <md-button aria-label="GDrive" class="md-raised md-primary" ng-click="welcomeCtrl.openFromGoogleDrive()">
-                        Google drive
-                    </md-button>
-                    <md-button aria-label="Local" class="md-raised md-primary">
-                        Locally
-                    </md-button>
-                </md-fab-actions>
-            </md-fab-speed-dial>
-        </divng-cloak>
+            <h2 data-fittext data-fittext-min="10" data-fittext-max="40">Or click here to open</h2>
+            <div>
+                <md-fab-speed-dial md-direction="up" class="md-fling fab">
+                    <md-fab-trigger>
+                        <!--data-fittext data-fittext-min="10" data-fittext-max="40" id="open"-->
+                        <md-button aria-label="Open" class="md-raised md-primary">
+                            Open
+                        </md-button>
+                    </md-fab-trigger>
+                    <md-fab-actions>
+                        <md-button aria-label="GDrive" class="md-raised md-primary"
+                                   ng-click="welcomeCtrl.openFromGoogleDrive()">
+                            Google drive
+                        </md-button>
+                        <md-button aria-label="Local" class="md-raised md-primary">
+                            Locally
+                        </md-button>
+                    </md-fab-actions>
+                </md-fab-speed-dial>
+            </div>
+            </divng-cloak>
 
 
+        </div>
 
     </div>
-
-</div>

@@ -25,7 +25,9 @@ export class GDriveService {
     }
 
     list():angular.IPromise<ProjectFile[]> {
-        return this.init().then(this.listFiles);
+        return this.init().then((id) => {
+            return this.listFiles(id)
+        });
     }
 
     open(id:string):angular.IPromise<Project> {

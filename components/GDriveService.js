@@ -25,7 +25,10 @@ var GDriveService = (function () {
         });
     };
     GDriveService.prototype.list = function () {
-        return this.init().then(this.listFiles);
+        var _this = this;
+        return this.init().then(function (id) {
+            return _this.listFiles(id);
+        });
     };
     GDriveService.prototype.open = function (id) {
         var _this = this;
