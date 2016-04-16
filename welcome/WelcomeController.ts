@@ -29,6 +29,21 @@ export class WelcomeController {
         );
     }
 
+    public upload(files: File[]):void {
+        var reader = new FileReader();
+        reader.onload = (e: any) => {
+            var projectObj = JSON.parse(e.srcElement.result);
+            var project = new Project();
+            if (projectObj != null) {
+                project.deserialize(projectObj);
+                JSON.retrocycle(project);
+                this.showProject(project);
+            }
+            console.log(project);
+        };
+        reader.readAsText(files[0])
+    }
+
     private showProject(project:Project):void {
         this.ProjectService.set(project);
         this.$location.path("/gantt");

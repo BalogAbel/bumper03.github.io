@@ -6,6 +6,7 @@ export class TimeLineDrawer {
     private static sampleHour:Konva.Group = null;
 
     draw(layer:Konva.Layer) {
+        TimeLineDrawer.createSampleDay();
         var date:Date = new Date(Utils.startDate.getTime());
         for (var i:number = 0; date.getTime() < Utils.finishDate.getTime(); i++) {
             var dayNode = this.getSingleDay(date);
@@ -22,7 +23,6 @@ export class TimeLineDrawer {
     }
 
     private getSingleDay(date:Date):Konva.Group {
-        if (TimeLineDrawer.sampleDay == null) TimeLineDrawer.createSampleDay();
         var node = <Konva.Group>TimeLineDrawer.sampleDay.clone({});
         var dateText = <Konva.Text>node.find('.Date')[0];
         dateText.width(Utils.dayWidth);

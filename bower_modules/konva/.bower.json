@@ -28,14 +28,14 @@
     "gulpfile.js"
   ],
   "main": "konva.min.js",
-  "version": "0.10.0",
-  "_release": "0.10.0",
+  "version": "0.12.3",
+  "_release": "0.12.3",
   "_resolution": {
     "type": "version",
-    "tag": "0.10.0",
-    "commit": "50b30b6cfdb253fe750314c026486b38c1bc30c7"
+    "tag": "0.12.3",
+    "commit": "93746e967aaeca29f4a8358b1f5e554e5a63724c"
   },
-  "_source": "git://github.com/konvajs/konva.git",
-  "_target": "~0.10.0",
+  "_source": "https://github.com/konvajs/konva.git",
+  "_target": "*",
   "_originalSource": "konva"
 }

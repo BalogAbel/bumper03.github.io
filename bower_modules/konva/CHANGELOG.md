@@ -2,6 +2,46 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Not released][Not released]
+
+## [0.12.3][2016-04-07]
+
+### Fixed
+- `batchDraw` function works less time now
+- lighter npm package
+
+## [0.12.2][2016-03-31]
+
+### Fixed
+- repair `cancelBubble` event property behaviour
+- fix wrong `Path` `getClientRect()` calculation
+- better HDPI support
+- better typescript definitions
+- node 0.12 support
+
+### Changed
+- more universal stage container selector
+- `mousewheel` event changed to `wheel`
+
+## [0.11.1][2016-01-16]
+
+### Fixed
+- correct `Konva.Arrow` drawing. Now it works better.
+- Better support for dragging when mouse out of stage
+- Better corner radius for `Label` shape
+- `contentTap` event for stage
+
+### Added
+- event delegation. You can use it in this way: `layer.on('click', 'Circle', handler);`
+- new `node.findAncestors(selector)` and `node.findAncestor(selector)` functions
+- optional selector parameter for `stage.getIntersection` and `layer.getIntersection`
+- show warning message if several instances of Konva are added to page.
+
+### Changed
+- `moveTo` and some other methods return `this`
+- `getAbsolutePosition` support optional relative parent argument (useful to find absolute position inside of some of parent nodes)
+- `change` event will be not fired if changed value is the same as old value
+
 ## [0.10.0][2015-10-27]
 
 ### Added
@@ -70,7 +110,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - new `getClientRect` method.
 - new `to` method for every node for shorter tweening
 
-## [0.8.0] - 2015-02-04
+## [0.8.0][2015-02-04]
 
 * Bug Fixes
     * browser crashing on pointer events fixed

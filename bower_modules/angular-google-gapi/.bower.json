@@ -36,7 +36,6 @@
     "commit": "49c893d67114624c116223714ff70d55e53c9751"
   },
   "_source": "git://github.com/maximepvrt/angular-google-gapi.git",
-  "_target": "~0.1.3",
-  "_originalSource": "angular-google-gapi",
-  "_direct": true
+  "_target": "*",
+  "_originalSource": "angular-google-gapi"
 }

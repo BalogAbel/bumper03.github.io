@@ -1,3 +1,4 @@
+"use strict";
 var TaskDrawer_1 = require("./TaskDrawer");
 var Utils_1 = require("./Utils");
 var TimeLineDrawer_1 = require("./TimeLineDrawer");
@@ -37,12 +38,13 @@ var ProjectDrawer = (function () {
             width: Utils_1.Utils.getCanvasWidth(),
             height: 100
         });
+        timeLineStage.clear();
         var timelineDrawer = new TimeLineDrawer_1.TimeLineDrawer();
         timelineDrawer.draw(this.timeLineLayer);
         timeLineStage.add(this.timeLineLayer);
         timeLineStage.height(Utils_1.Utils.getCanvasHeight());
-        var that = this;
-        that.scrollToDate(this.project.start);
+        // var that = this;
+        this.scrollToDate(this.project.start);
     };
     ProjectDrawer.refresh = function () {
         if (ProjectDrawer._instance != null) {
@@ -130,6 +132,6 @@ var ProjectDrawer = (function () {
     };
     ProjectDrawer._instance = null;
     return ProjectDrawer;
-})();
+}());
 exports.ProjectDrawer = ProjectDrawer;
 //# sourceMappingURL=ProjectDrawer.js.map

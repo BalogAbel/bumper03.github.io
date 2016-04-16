@@ -1,3 +1,4 @@
+"use strict";
 var IntervalOverlapError_1 = require("./IntervalOverlapError");
 var WorkingHour_1 = require("../../Model/WorkingCalendar/WorkingHour");
 var IntervalList = (function () {
@@ -52,15 +53,17 @@ var IntervalList = (function () {
     };
     IntervalList.prototype.deserializeHelper = function (interval) {
         if (interval.hasOwnProperty('fromHour')) {
-            var ret = (new WorkingHour_1.WorkingHour(0, 0, 0, 1).deserialize(interval));
-            return ret;
+            return (new WorkingHour_1.WorkingHour(0, 0, 0, 1).deserialize(interval));
         }
         throw "Not an interval: " + interval;
     };
     IntervalList.prototype.length = function () {
         return this.intervals.length;
     };
+    IntervalList.prototype.toArray = function () {
+        return this.intervals;
+    };
     return IntervalList;
-})();
+}());
 exports.IntervalList = IntervalList;
 //# sourceMappingURL=IntervalList.js.map

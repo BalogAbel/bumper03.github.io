@@ -1,3 +1,4 @@
+"use strict";
 var SummaryDrawer_1 = require("./SummaryDrawer");
 var Summary_1 = require("../Model/Summary");
 var SchedulableDrawer_1 = require("./SchedulableDrawer");
@@ -25,6 +26,6 @@ var TaskDrawerFactory = (function () {
         return sumDrawer;
     };
     return TaskDrawerFactory;
-})();
+}());
 exports.TaskDrawerFactory = TaskDrawerFactory;
 //# sourceMappingURL=TaskDrawerFactory.js.map

@@ -1,3 +1,4 @@
+"use strict";
 var IntervalList_1 = require("../../Util/IntervalList/IntervalList");
 var IntervalDate_1 = require("../../Util/IntervalList/IntervalDate");
 var WorkingCalendar_1 = require("../WorkingCalendar/WorkingCalendar");
@@ -78,6 +79,6 @@ var ResourceManager = (function () {
         return newFromDate;
     };
     return ResourceManager;
-})();
+}());
 exports.ResourceManager = ResourceManager;
 //# sourceMappingURL=ResourceManager.js.map

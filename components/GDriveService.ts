@@ -6,21 +6,37 @@ export class GDriveService {
     scopes = 'https://www.googleapis.com/auth/drive';
 
 
-    constructor(private GAuth:any, private GApi:any, private GData:any,
-                private $q:angular.IQService, private $window:any, private $http:angular.IHttpService) {
+    constructor(private GAuth:any, private GApi:any, private $q:angular.IQService, private $window:any, private $http:angular.IHttpService,
+                private $mdDialog:ng.material.IDialogService, private $mdToast:ng.material.IToastService) {
     }
 
     save(project:Project):void {
+        var that = this;
         var id:string;
         this.init().then((idParam) => {
             id = idParam;
             return this.checkIfFileExists(project, id)
-        }).then((exists) => {
-            if (exists) {
-                alert("File exists");
-                return;
+        }).then((fileId) => {
+            if (fileId != null) {
+                var confirm = this.$mdDialog.confirm()
+                    .title('File already exists')
+                    .textContent('The file with this project already exists on google drive, do you want to replace it?')
+                    .ariaLabel('File exists, replace?')
+                    .ok('Yes')
+                    .cancel('No');
+                this.$mdDialog.show(confirm).then(function () {
+                    that.deleteFile(fileId).then((result) => {
+                        return that.uploadFile(project, id)
+                    }).then((result) => {
+                        that.$mdToast.showSimple("Successfully saved to Google Drive")
+                    });
+
+                }, function () {
+                    that.$mdToast.showSimple("Project not saved");
+                });
+            } else {
+                this.uploadFile(project, id).then((result) => that.$mdToast.showSimple("Successfully saved to Google Drive"));
             }
-            this.uploadFile(project, id);
         });
     }
 
@@ -136,13 +152,17 @@ export class GDriveService {
     }
 
     //"0B7P00KS5T8k2eXltcFNIR2FJdEk" in parents and title = "Test project" and trashed = false
-    private checkIfFileExists(project:Project, id:string):angular.IPromise<boolean> {
-        var result = this.$q.defer<boolean>();
+    private checkIfFileExists(project:Project, id:string):angular.IPromise<string> {
+        var result = this.$q.defer<string>();
         this.GApi.executeAuth('drive', 'files.list', {
             q: '"' + id + '" in parents and title = "' + project.name + '" and trashed = false'
         }).then(
             (files:any) => {
-                result.resolve(files.result.items.length > 0);
+                if (files.result.items.length > 0) {
+                    result.resolve(files.result.items[0].id)
+                } else {
+                    result.resolve(null);
+                }
             },
             () => {
                 result.reject()
@@ -168,6 +188,13 @@ export class GDriveService {
         return result.promise;
     }
 
+    private deleteFile(id:string):angular.IPromise<any> {
+        var result = this.$q.defer<ProjectFile[]>();
+        return this.GApi.executeAuth('drive', 'files.delete', {
+            fileId: id
+        });
+    }
+
     private getProjectFromFile(downloadUrl:string):angular.IPromise<Project> {
         var result = this.$q.defer<Project>();
         var project = new Project();
@@ -190,6 +217,6 @@ export class GDriveService {
 }
 
 export interface ProjectFile {
-    name: string,
-    downloadUrl: string
+    name:string,
+    downloadUrl:string
 }

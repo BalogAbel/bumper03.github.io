@@ -1,3 +1,4 @@
+"use strict";
 var Summary_1 = require("../../Model/Summary");
 var Dependency_1 = require("../../Model/Dependency");
 var Duration_1 = require("../../Model/WorkingCalendar/Duration");
@@ -35,41 +36,40 @@ var TaskVO = (function () {
         return result;
     };
     TaskVO.prototype.merge = function (source) {
-        var result = source;
+        source.name = this.name;
+        source.description = this.description;
+        source.earliestStartConstraint = this.hasEarliestConstraint ? this.earliestStartConstraint : null;
         if (!this.isSummary) {
             var schedulable = source;
-            schedulable.duration = Duration_1.Duration.clone(this.duration);
+            schedulable.duration = this.duration;
         }
-        var oldParentIdx = result.parent == null ? -1 : source.parent.tasks.indexOf(source);
+        var oldParentIdx = source.parent == null ? -1 : source.parent.tasks.indexOf(source);
         if (oldParentIdx != -1)
-            result.parent.tasks.splice(oldParentIdx, 1);
-        result.parent = this.parent;
-        if (this.parent != null) {
-            result.parent.tasks.push(source);
+            source.parent.tasks.splice(oldParentIdx, 1);
+        source.parent = this.parent;
+        if (source.parent != null) {
+            source.parent.tasks.push(source);
         }
-        result.name = this.name;
-        result.description = this.description;
-        result.earliestStartConstraint = this.hasEarliestConstraint ? new Date(this.earliestStartConstraint.getTime()) : null;
-        result.resourceUsages = [];
+        source.resourceUsages = [];
         this.resourceUsages.forEach(function (res) {
-            result.resourceUsages.push(res);
+            source.resourceUsages.push(res);
         });
-        result.predecessors.forEach(function (pred) {
+        source.predecessors.forEach(function (pred) {
             var idx = pred.task.successors.indexOf(pred);
             if (idx == -1)
                 pred.task.successors.splice(idx, 1);
         });
-        result.predecessors = [];
+        source.predecessors = [];
         this.dependencies.forEach(function (dep) {
-            result.predecessors.push(dep);
+            source.predecessors.push(dep);
             var newDep = new Dependency_1.Dependency();
-            newDep.task = result;
+            newDep.task = source;
             newDep.lag = dep.lag;
             dep.task.successors.push(newDep);
         });
-        return result;
+        return source;
     };
     return TaskVO;
-})();
+}());
 exports.TaskVO = TaskVO;
 //# sourceMappingURL=TaskVO.js.map

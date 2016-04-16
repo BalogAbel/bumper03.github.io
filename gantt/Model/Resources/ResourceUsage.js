@@ -1,3 +1,4 @@
+"use strict";
 var ResourceType_1 = require("./ResourceType");
 var ResourceUsage = (function () {
     function ResourceUsage() {
@@ -9,6 +10,6 @@ var ResourceUsage = (function () {
         return this;
     };
     return ResourceUsage;
-})();
+}());
 exports.ResourceUsage = ResourceUsage;
 //# sourceMappingURL=ResourceUsage.js.map

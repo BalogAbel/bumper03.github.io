@@ -8,7 +8,7 @@ export class ProjectService {
 
 
     constructor(private gDriveService:GDriveService, private $mdDialog:angular.material.IDialogService,
-                private $window: angular.IWindowService) {
+                private $window: angular.IWindowService, private $mdToast: ng.material.IToastService) {
     }
 
     get():Project {
@@ -51,15 +51,14 @@ export class ProjectService {
     saveToLocal():void {
         var data = new Blob([JSON.stringify(JSON.decycle(this.project))], {type: 'application/json'});
         var fileName = this.project.name + ".gnt";
-
         var e = document.createEvent('MouseEvents');
         var a:any = document.createElement('a');
         a.download = fileName;
         a.href = this.$window.URL.createObjectURL(data);
-        a.dataset.downloadUrl = ['application/json', a.download, a.href]
+        a.dataset.downloadUrl = ['application/json', a.download, a.href];
         e.initMouseEvent('click', true, false, this.$window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
         a.dispatchEvent(e);
-
+        this.$mdToast.showSimple("Successfully saved locally");
     }
 
 }

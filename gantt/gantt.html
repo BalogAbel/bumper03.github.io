@@ -2,6 +2,11 @@
     <div class="btn-group">
     </div>
 </div>
+<div layout="row" class="menubar">
+    <md-button class="md-raised button" ng-href="index.html">Home</md-button>
+    <md-button class="md-raised button" ng-click="gantt.saveToGDrive()">Save to GDrive</md-button>
+    <md-button class="md-raised button" ng-click="gantt.saveLocally()">Save locally</md-button>
+</div>
 
 <md-input-container id="project-name">
     <label>Name of the project</label>
@@ -14,8 +19,6 @@
 
 
 <md-card id="gantt">
-
-
     <md-card-content layout="row">
         <div id="taskWrapper" resizable>
             <span id="tasks"></span>
@@ -34,4 +37,5 @@
     +
 </md-button>
 
-<md-button class="md-raised md-primary" ng-click="gantt.editResources()">Edit available resources</md-button>
+<md-button class="md-raised md-primary button" ng-click="gantt.editResources()">Edit available resources</md-button>
+<md-button class="md-raised md-primary button" ng-click="gantt.editCalendar()">Edit working hours</md-button>

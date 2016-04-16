@@ -1,10 +1,12 @@
+"use strict";
 var Project_1 = require("../gantt/Model/Project");
 var SelectItemController_1 = require("./SelectItemDialog/SelectItemController");
 var ProjectService = (function () {
-    function ProjectService(gDriveService, $mdDialog, $window) {
+    function ProjectService(gDriveService, $mdDialog, $window, $mdToast) {
         this.gDriveService = gDriveService;
         this.$mdDialog = $mdDialog;
         this.$window = $window;
+        this.$mdToast = $mdToast;
         this.project = null;
     }
     ProjectService.prototype.get = function () {
@@ -51,8 +53,9 @@ var ProjectService = (function () {
         a.dataset.downloadUrl = ['application/json', a.download, a.href];
         e.initMouseEvent('click', true, false, this.$window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
         a.dispatchEvent(e);
+        this.$mdToast.showSimple("Successfully saved locally");
     };
     return ProjectService;
-})();
+}());
 exports.ProjectService = ProjectService;
 //# sourceMappingURL=ProjectService.js.map

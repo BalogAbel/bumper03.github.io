@@ -31,7 +31,6 @@
     "commit": "0af12af4b129c9b9b9bac119e8dfbf105a8f4ade"
   },
   "_source": "git://github.com/patrickmarabeas/ng-FitText.js.git",
-  "_target": "^4.1.1",
-  "_originalSource": "ngFitText",
-  "_direct": true
+  "_target": "*",
+  "_originalSource": "ngFitText"
 }

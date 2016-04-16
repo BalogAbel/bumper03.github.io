@@ -1,3 +1,4 @@
+"use strict";
 var Task_1 = require("./Task");
 var WorkingCalendar_1 = require("./WorkingCalendar/WorkingCalendar");
 var ResourceType_1 = require("./Resources/ResourceType");
@@ -136,6 +137,6 @@ var Project = (function () {
         return result;
     };
     return Project;
-})();
+}());
 exports.Project = Project;
 //# sourceMappingURL=Project.js.map

@@ -1,3 +1,4 @@
+"use strict";
 var IntervalBoundariesError_1 = require("./IntervalBoundariesError");
 var IntervalDate = (function () {
     function IntervalDate(from, to) {
@@ -19,6 +20,6 @@ var IntervalDate = (function () {
         return !(this.to.getTime() <= other.from.getTime()) || (this.from.getTime() >= other.to.getTime());
     };
     return IntervalDate;
-})();
+}());
 exports.IntervalDate = IntervalDate;
 //# sourceMappingURL=IntervalDate.js.map

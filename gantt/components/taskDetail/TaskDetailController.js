@@ -1,3 +1,4 @@
+"use strict";
 var Dependency_1 = require("../../Model/Dependency");
 var ResourceUsage_1 = require("../../Model/Resources/ResourceUsage");
 var TaskDetailController = (function () {
@@ -35,6 +36,6 @@ var TaskDetailController = (function () {
         this.$mdDialog.hide();
     };
     return TaskDetailController;
-})();
+}());
 exports.TaskDetailController = TaskDetailController;
 //# sourceMappingURL=TaskDetailController.js.map

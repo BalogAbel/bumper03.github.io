@@ -52,7 +52,11 @@ md-sidenav  md-list {
 #content  {
     padding-left: 40px;
     padding-right: 40px;
-    padding-top: 5px;
+    padding-top: 40px;
+}
+
+.button {
+    max-width: 250px;
 }
 
 
@@ -72,5 +76,8 @@ md-bottom-sheet  md-icon {
     margin-right:20px;
 }
 
+.small {
+    max-width: 80px;
+}
 
 

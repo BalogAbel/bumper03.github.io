@@ -52,36 +52,37 @@ export class TaskVO {
     }
 
     merge(source:Task):Task {
-        var result:Task = source;
+        source.name = this.name;
+        source.description = this.description;
+        source.earliestStartConstraint = this.hasEarliestConstraint ? this.earliestStartConstraint : null;
+
         if (!this.isSummary) {
             var schedulable = <Schedulable>source;
-            schedulable.duration = Duration.clone(this.duration);
+            schedulable.duration = this.duration;
         }
-        var oldParentIdx = result.parent == null ? -1 : source.parent.tasks.indexOf(source);
-        if (oldParentIdx != -1) result.parent.tasks.splice(oldParentIdx, 1);
-        result.parent = this.parent;
-        if (this.parent != null) {
-            result.parent.tasks.push(source)
+        var oldParentIdx = source.parent == null ? -1 : source.parent.tasks.indexOf(source);
+        if (oldParentIdx != -1) source.parent.tasks.splice(oldParentIdx, 1);
+        source.parent = this.parent;
+        if (source.parent != null) {
+            source.parent.tasks.push(source)
         }
-        result.name = this.name;
-        result.description = this.description;
-        result.earliestStartConstraint = this.hasEarliestConstraint ? new Date(this.earliestStartConstraint.getTime()) : null;
-        result.resourceUsages = [];
+
+        source.resourceUsages = [];
         this.resourceUsages.forEach(res => {
-            result.resourceUsages.push(res)
+            source.resourceUsages.push(res)
         });
-        result.predecessors.forEach(pred => {
+        source.predecessors.forEach(pred => {
             var idx = pred.task.successors.indexOf(pred);
             if (idx == -1) pred.task.successors.splice(idx, 1);
         });
-        result.predecessors = [];
+        source.predecessors = [];
         this.dependencies.forEach(dep => {
-            result.predecessors.push(dep);
+            source.predecessors.push(dep);
             var newDep = new Dependency();
-            newDep.task = result;
+            newDep.task = source;
             newDep.lag = dep.lag;
             dep.task.successors.push(newDep);
         });
-        return result;
+        return source;
     }
 }

@@ -8,10 +8,11 @@
 
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
     <link rel="stylesheet" href="bower_modules/angular-material/angular-material.min.css"/>
+    <link rel="stylesheet" href="bower_modules/angular-material-icons/angular-material-icons.css"/>
+    <!--link rel="stylesheet" href="bower_modules/angular-simple-calendar/dist/angular-simple-calendar.css"/-->
 
     <link rel="stylesheet" href="app.css"/>
     <link rel="stylesheet" href="gantt/gantt.css"/>
-    <link rel="stylesheet" href="gantt/components/taskDetail/taskDetail.css"/>
     <link rel="stylesheet" href="components/SelectItemDialog/selectItem.css"/>
 
     <title>TypeScript HTML App</title>
@@ -28,9 +29,9 @@
     <script src="bower_modules/angular-route/angular-route.min.js"></script>
     <script src="bower_modules/angular-google-gapi/angular-google-gapi.min.js"></script>
     <script src="bower_modules/filepicker-js/filepicker.js"></script>
-    <script src="bower_modules/angular-filepicker/dist/angular_filepicker.js"></script>
     <script src="bower_modules/ng-file-upload/ng-file-upload.min.js"></script>
     <script src="bower_modules/ngFitText/dist/ng-FitText.min.js"></script>
+    <script src="bower_modules/angular-material-icons/angular-material-icons.min.js"></script>
     <script src="lib/cycle/cycle.js"></script>
 
     <script src="bower_modules/systemjs/build/system.min.js"></script>
@@ -41,7 +42,7 @@
 
 </head>
 
-<body layout="column" ng-controller="LayoutController as layout">
+<body ng-controller="LayoutController as layout">
 <!--md-toolbar layout="row">
     <md-button class="menu" hide-gt-md ng-click="layout.toggleList()" aria-label="Show User List">
         <md-icon md-svg-src="menu"></md-icon>
@@ -49,7 +50,7 @@
     <h1>Gantt-Diagram Application</h1>
 </md-toolbar-->
 
-<div flex layout="row">
+<div>
 
     <!--md-sidenav class="md-whiteframe-z2" md-component-id="left">
         <md-list ng-controller="SidenavController as sidenavCtrl">
@@ -93,7 +94,7 @@
 
     </md-sidenav-->
 
-    <md-content flex layout="column" layout-align="center stretch" id="content" ng-view></md-content>
+    <div flex layout="column" layout-align="center stretch" id="content" ng-view></div>
 </div>
 
 </body>

@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -82,6 +83,6 @@ var LeastSlackTimeScheduler = (function (_super) {
         return this;
     };
     return LeastSlackTimeScheduler;
-})(Scheduler_1.Scheduler);
+}(Scheduler_1.Scheduler));
 exports.LeastSlackTimeScheduler = LeastSlackTimeScheduler;
 //# sourceMappingURL=LeastSlackTimeScheduler.js.map

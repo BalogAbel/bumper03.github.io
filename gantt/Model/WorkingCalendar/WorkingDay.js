@@ -1,3 +1,4 @@
+"use strict";
 var IntervalList_1 = require("../../Util/IntervalList/IntervalList");
 var WorkingDay = (function () {
     function WorkingDay() {
@@ -49,17 +50,14 @@ var WorkingDay = (function () {
                 case -1:
                     //continue the iteration
                     return true;
-                    break;
                 case 0:
                     //break the iteration
                     return false;
-                    break;
                 //it's after the period
                 case 1:
                     //set to the end of the period, and break the iteration
                     date.setHours(workingHour.toHour, workingHour.toMinute);
                     return false;
-                    break;
                 default:
                     return true;
             }
@@ -74,17 +72,14 @@ var WorkingDay = (function () {
                     //set to the beginning of the period, and break the iteration
                     date.setHours(workingHour.fromHour, workingHour.fromMinute);
                     return false;
-                    break;
                 //it's in the period
                 case 0:
                     //break the iteration
                     return false;
-                    break;
                 //it's after the period
                 case 1:
                     //continue the iteration
                     return true;
-                    break;
                 default:
                     return true;
             }
@@ -95,6 +90,6 @@ var WorkingDay = (function () {
         return this;
     };
     return WorkingDay;
-})();
+}());
 exports.WorkingDay = WorkingDay;
 //# sourceMappingURL=WorkingDay.js.map

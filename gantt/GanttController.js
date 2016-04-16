@@ -1,3 +1,4 @@
+"use strict";
 var ResourcesController_1 = require("./components/resources/ResourcesController");
 var TaskVO_1 = require("./components/taskDetail/TaskVO");
 var TaskDetailController_1 = require("./components/taskDetail/TaskDetailController");
@@ -5,9 +6,13 @@ var Schedulable_1 = require("./Model/Schedulable");
 var Summary_1 = require("./Model/Summary");
 var ProjectDrawer_1 = require("./View/ProjectDrawer");
 var Utils_1 = require("./View/Utils");
+var EditCalendarController_1 = require("./components/EditCalendar/EditCalendarController");
+var ProjectGenerator_1 = require("./Util/ProjectGenerator");
 var GanttCtrl = (function () {
-    function GanttCtrl(ProjectService, $mdDialog) {
+    function GanttCtrl(ProjectService, $mdDialog, $mdToast) {
+        this.ProjectService = ProjectService;
         this.$mdDialog = $mdDialog;
+        this.$mdToast = $mdToast;
         this.project = ProjectService.get();
         this.project.schedule();
         this.projectDrawer = new ProjectDrawer_1.ProjectDrawer(this.project);
@@ -19,6 +24,12 @@ var GanttCtrl = (function () {
         //    $("#zoom").css("margin-left", margin+"px");
         //});
     }
+    GanttCtrl.prototype.saveToGDrive = function () {
+        this.ProjectService.saveToGoogleDrive();
+    };
+    GanttCtrl.prototype.saveLocally = function () {
+        this.ProjectService.saveToLocal();
+    };
     GanttCtrl.prototype.handleZoom = function () {
         this.projectDrawer.changeZoom(this.zoomLevel);
     };
@@ -36,18 +47,17 @@ var GanttCtrl = (function () {
             if (taskVO == null)
                 return;
             var task = taskVO.isSummary ? new Summary_1.Summary() : new Schedulable_1.Schedulable();
+            task.id = ProjectGenerator_1.ProjectGenerator.idCtr++;
             taskVO.merge(task);
             if (task.parent == null) {
                 that.project.tasks.push(task);
-            }
-            else {
-                task.parent.tasks.push(task);
             }
             that.project.schedule();
             that.projectDrawer.draw();
         });
     };
     GanttCtrl.prototype.editTask = function (task) {
+        var that = this;
         this.$mdDialog.show({
             controller: TaskDetailController_1.TaskDetailController,
             controllerAs: "taskDetailController",
@@ -63,17 +73,19 @@ var GanttCtrl = (function () {
                 var parentIdx = task.parent == null ? -1 : task.parent.tasks.indexOf(task);
                 if (parentIdx != -1)
                     task.parent.tasks.splice(parentIdx, 1);
+                else
+                    that.project.tasks.splice(that.project.tasks.indexOf(task), 1);
                 task.parent = taskVO.parent;
                 if (task.parent != null) {
                     task.parent.tasks.push(task);
                 }
                 else {
-                    this.project.tasks.push(task);
+                    that.project.tasks.push(task);
                 }
             }
             taskVO.merge(task);
-            this.project.schedule();
-            this.projectDrawer.draw();
+            that.project.schedule();
+            that.projectDrawer.draw();
         });
     };
     GanttCtrl.prototype.editResources = function () {
@@ -90,7 +102,21 @@ var GanttCtrl = (function () {
             _this.projectDrawer.draw();
         });
     };
+    GanttCtrl.prototype.editCalendar = function () {
+        var _this = this;
+        this.$mdDialog.show({
+            controller: EditCalendarController_1.EditCalendarController,
+            controllerAs: "editCalendarCtrl",
+            templateUrl: "gantt/components/EditCalendar/editCalendar.html",
+            locals: {
+                workingCalendar: this.project.workingCalendar
+            }
+        }).then(function () {
+            _this.project.schedule();
+            _this.projectDrawer.draw();
+        });
+    };
     return GanttCtrl;
-})();
+}());
 exports.GanttCtrl = GanttCtrl;
 //# sourceMappingURL=GanttController.js.map

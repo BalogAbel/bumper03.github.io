@@ -1,27 +1,45 @@
+"use strict";
 var Project_1 = require("../gantt/Model/Project");
 var GDriveService = (function () {
-    function GDriveService(GAuth, GApi, GData, $q, $window, $http) {
+    function GDriveService(GAuth, GApi, $q, $window, $http, $mdDialog, $mdToast) {
         this.GAuth = GAuth;
         this.GApi = GApi;
-        this.GData = GData;
         this.$q = $q;
         this.$window = $window;
         this.$http = $http;
+        this.$mdDialog = $mdDialog;
+        this.$mdToast = $mdToast;
         this.clientID = "352031715395-bho0ck1ajm6aojgnqv7j8oqiu8rknpta.apps.googleusercontent.com";
         this.scopes = 'https://www.googleapis.com/auth/drive';
     }
     GDriveService.prototype.save = function (project) {
         var _this = this;
+        var that = this;
         var id;
         this.init().then(function (idParam) {
             id = idParam;
             return _this.checkIfFileExists(project, id);
-        }).then(function (exists) {
-            if (exists) {
-                alert("File exists");
-                return;
+        }).then(function (fileId) {
+            if (fileId != null) {
+                var confirm = _this.$mdDialog.confirm()
+                    .title('File already exists')
+                    .textContent('The file with this project already exists on google drive, do you want to replace it?')
+                    .ariaLabel('File exists, replace?')
+                    .ok('Yes')
+                    .cancel('No');
+                _this.$mdDialog.show(confirm).then(function () {
+                    that.deleteFile(fileId).then(function (result) {
+                        return that.uploadFile(project, id);
+                    }).then(function (result) {
+                        that.$mdToast.showSimple("Successfully saved to Google Drive");
+                    });
+                }, function () {
+                    that.$mdToast.showSimple("Project not saved");
+                });
             }
-            _this.uploadFile(project, id);
+            else {
+                _this.uploadFile(project, id).then(function (result) { return that.$mdToast.showSimple("Successfully saved to Google Drive"); });
+            }
         });
     };
     GDriveService.prototype.list = function () {
@@ -125,7 +143,12 @@ var GDriveService = (function () {
         this.GApi.executeAuth('drive', 'files.list', {
             q: '"' + id + '" in parents and title = "' + project.name + '" and trashed = false'
         }).then(function (files) {
-            result.resolve(files.result.items.length > 0);
+            if (files.result.items.length > 0) {
+                result.resolve(files.result.items[0].id);
+            }
+            else {
+                result.resolve(null);
+            }
         }, function () {
             result.reject();
         });
@@ -146,6 +169,12 @@ var GDriveService = (function () {
         });
         return result.promise;
     };
+    GDriveService.prototype.deleteFile = function (id) {
+        var result = this.$q.defer();
+        return this.GApi.executeAuth('drive', 'files.delete', {
+            fileId: id
+        });
+    };
     GDriveService.prototype.getProjectFromFile = function (downloadUrl) {
         var _this = this;
         var result = this.$q.defer();
@@ -164,6 +193,6 @@ var GDriveService = (function () {
         return result.promise;
     };
     return GDriveService;
-})();
+}());
 exports.GDriveService = GDriveService;
 //# sourceMappingURL=GDriveService.js.map

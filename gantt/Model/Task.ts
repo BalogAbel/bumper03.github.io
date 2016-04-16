@@ -137,7 +137,7 @@ export class Task implements Hashable, ISerializable<Task> {
         this.parent = input.parent != null ? <Summary>Task.deserializeHelper(input.parent) : null;
         this.start = input.start != null ? new Date(input.start) : null;
         this.finish = input.finish != null ? new Date(input.finish) : null;
-        this.earliestStartConstraint = input.earliestStartConstraint;
+        this.earliestStartConstraint = input.earliestStartConstraint != null ? new Date(input.earliestStartConstraint) : null;
         if (input.resourceUsages != null) {
             for (var i = 0; i < input.resourceUsages.length; i++) {
                 this.resourceUsages.push(new ResourceUsage().deserialize(input.resourceUsages[i]));

@@ -1,1 +1,1 @@
-{"version":3,"file":"IntervalBoundariesError.js","sourceRoot":"","sources":["IntervalBoundariesError.ts"],"names":["IntervalBoundariesError","IntervalBoundariesError.constructor"],"mappings":"AAAA;IAAAA;IAIAC,CAACA;IAADD,8BAACA;AAADA,CAACA,AAJD,IAIC;AAJY,+BAAuB,0BAInC,CAAA"}
+{"version":3,"file":"IntervalBoundariesError.js","sourceRoot":"","sources":["IntervalBoundariesError.ts"],"names":[],"mappings":";AAAA;IAAA;IAIA,CAAC;IAAD,8BAAC;AAAD,CAAC,AAJD,IAIC;AAJY,+BAAuB,0BAInC,CAAA"}

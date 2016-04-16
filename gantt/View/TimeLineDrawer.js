@@ -1,9 +1,11 @@
+"use strict";
 var Utils_1 = require("./Utils");
 var WorkingCalendar_1 = require("../Model/WorkingCalendar/WorkingCalendar");
 var TimeLineDrawer = (function () {
     function TimeLineDrawer() {
     }
     TimeLineDrawer.prototype.draw = function (layer) {
+        TimeLineDrawer.createSampleDay();
         var date = new Date(Utils_1.Utils.startDate.getTime());
         for (var i = 0; date.getTime() < Utils_1.Utils.finishDate.getTime(); i++) {
             var dayNode = this.getSingleDay(date);
@@ -19,8 +21,6 @@ var TimeLineDrawer = (function () {
         }
     };
     TimeLineDrawer.prototype.getSingleDay = function (date) {
-        if (TimeLineDrawer.sampleDay == null)
-            TimeLineDrawer.createSampleDay();
         var node = TimeLineDrawer.sampleDay.clone({});
         var dateText = node.find('.Date')[0];
         dateText.width(Utils_1.Utils.dayWidth);
@@ -115,6 +115,6 @@ var TimeLineDrawer = (function () {
     TimeLineDrawer.sampleDay = null;
     TimeLineDrawer.sampleHour = null;
     return TimeLineDrawer;
-})();
+}());
 exports.TimeLineDrawer = TimeLineDrawer;
 //# sourceMappingURL=TimeLineDrawer.js.map

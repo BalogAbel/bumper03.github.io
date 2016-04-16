@@ -23,6 +23,10 @@ export class HashSet<T extends Hashable> {
         });
     }
 
+    get(hash: number): T {
+        return this.set[hash];
+    }
+
     clear() {
         this._length = 0;
         this.set = [];
@@ -30,6 +34,11 @@ export class HashSet<T extends Hashable> {
 
     remove(t:T) {
         delete this.set[t.hash()];
+        this._length--;
+    }
+
+    removeByHash(hash:number) {
+        delete this.set[hash];
         this._length--;
     }
 

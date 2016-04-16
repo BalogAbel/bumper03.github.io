@@ -6,7 +6,7 @@ import {WorkingHour} from "../../Model/WorkingCalendar/WorkingHour";
 
 
 export class IntervalList<T extends IInterval> implements ISerializable<IntervalList<T>> {
-    private intervals:IInterval[];
+    private intervals:T[];
 
     constructor() {
         this.intervals = [];
@@ -61,21 +61,24 @@ export class IntervalList<T extends IInterval> implements ISerializable<Interval
 
     deserialize(input:any):IntervalList<T> {
         for (var i = 0; i < input.intervals.length; i++) {
-            this.intervals.push(this.deserializeHelper(input.intervals[i]))
+            this.intervals.push(<T>this.deserializeHelper(input.intervals[i]))
         }
         return this;
     }
 
     deserializeHelper(interval:any):IInterval {
         if (interval.hasOwnProperty('fromHour')) {
-            var ret = <IInterval>(new WorkingHour(0, 0, 0, 1).deserialize(interval));
-            return ret;
+            return <IInterval>(new WorkingHour(0, 0, 0, 1).deserialize(interval));
         }
         throw "Not an interval: " + interval;
     }
 
     length():number {
         return this.intervals.length;
+    }
+
+    toArray(): T[] {
+        return this.intervals;
     }
 
 }

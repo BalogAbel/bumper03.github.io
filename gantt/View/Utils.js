@@ -1,3 +1,4 @@
+"use strict";
 var Utils = (function () {
     function Utils() {
     }
@@ -28,6 +29,6 @@ var Utils = (function () {
     Utils.startDate = new Date();
     Utils.finishDate = new Date();
     return Utils;
-})();
+}());
 exports.Utils = Utils;
 //# sourceMappingURL=Utils.js.map

@@ -1,3 +1,4 @@
+"use strict";
 function resizeable() {
     return {
         restrict: 'A',

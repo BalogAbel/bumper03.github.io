@@ -1,3 +1,4 @@
+"use strict";
 var Task_1 = require("./Task");
 var Duration_1 = require("./WorkingCalendar/Duration");
 var Dependency = (function () {
@@ -14,6 +15,6 @@ var Dependency = (function () {
         return this;
     };
     return Dependency;
-})();
+}());
 exports.Dependency = Dependency;
 //# sourceMappingURL=Dependency.js.map

@@ -1,3 +1,4 @@
+"use strict";
 console.log('Task');
 var ResourceUsage_1 = require("./Resources/ResourceUsage");
 var HashSet_1 = require("../Util/HashSet");
@@ -108,7 +109,7 @@ var Task = (function () {
         this.parent = input.parent != null ? Task.deserializeHelper(input.parent) : null;
         this.start = input.start != null ? new Date(input.start) : null;
         this.finish = input.finish != null ? new Date(input.finish) : null;
-        this.earliestStartConstraint = input.earliestStartConstraint;
+        this.earliestStartConstraint = input.earliestStartConstraint != null ? new Date(input.earliestStartConstraint) : null;
         if (input.resourceUsages != null) {
             for (var i = 0; i < input.resourceUsages.length; i++) {
                 this.resourceUsages.push(new ResourceUsage_1.ResourceUsage().deserialize(input.resourceUsages[i]));
@@ -128,7 +129,7 @@ var Task = (function () {
         return [];
     };
     return Task;
-})();
+}());
 exports.Task = Task;
 var Schedulable_1 = require("./Schedulable");
 var Summary_1 = require("./Summary");

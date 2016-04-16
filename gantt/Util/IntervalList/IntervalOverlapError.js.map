@@ -1,1 +1,1 @@
-{"version":3,"file":"IntervalOverlapError.js","sourceRoot":"","sources":["IntervalOverlapError.ts"],"names":["IntervalOverlapError","IntervalOverlapError.constructor"],"mappings":"AAAA;IAAAA;IAIAC,CAACA;IAADD,2BAACA;AAADA,CAACA,AAJD,IAIC;AAJY,4BAAoB,uBAIhC,CAAA"}
+{"version":3,"file":"IntervalOverlapError.js","sourceRoot":"","sources":["IntervalOverlapError.ts"],"names":[],"mappings":";AAAA;IAAA;IAIA,CAAC;IAAD,2BAAC;AAAD,CAAC,AAJD,IAIC;AAJY,4BAAoB,uBAIhC,CAAA"}

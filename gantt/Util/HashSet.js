@@ -1,3 +1,4 @@
+"use strict";
 var HashSet = (function () {
     function HashSet() {
         this._length = 0;
@@ -15,12 +16,19 @@ var HashSet = (function () {
             return true;
         });
     };
+    HashSet.prototype.get = function (hash) {
+        return this.set[hash];
+    };
     HashSet.prototype.clear = function () {
         this._length = 0;
         this.set = [];
     };
     HashSet.prototype.remove = function (t) {
         delete this.set[t.hash()];
+        this._length--;
+    };
+    HashSet.prototype.removeByHash = function (hash) {
+        delete this.set[hash];
         this._length--;
     };
     HashSet.prototype.contains = function (t) {
@@ -48,6 +56,6 @@ var HashSet = (function () {
         return this.set;
     };
     return HashSet;
-})();
+}());
 exports.HashSet = HashSet;
 //# sourceMappingURL=HashSet.js.map

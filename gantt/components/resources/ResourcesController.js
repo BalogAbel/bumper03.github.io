@@ -1,3 +1,4 @@
+"use strict";
 var ResourceType_1 = require("../../Model/Resources/ResourceType");
 var ResourcesController = (function () {
     function ResourcesController($mdDialog, resources) {
@@ -8,6 +9,6 @@ var ResourcesController = (function () {
         console.log(resources);
     }
     return ResourcesController;
-})();
+}());
 exports.ResourcesController = ResourcesController;
 //# sourceMappingURL=ResourcesController.js.map

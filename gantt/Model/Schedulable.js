@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -74,6 +75,6 @@ var Schedulable = (function (_super) {
         return [this];
     };
     return Schedulable;
-})(Task_1.Task);
+}(Task_1.Task));
 exports.Schedulable = Schedulable;
 //# sourceMappingURL=Schedulable.js.map

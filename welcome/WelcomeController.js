@@ -1,3 +1,4 @@
+"use strict";
 var ProjectGenerator_1 = require("../gantt/Util/ProjectGenerator");
 var Project_1 = require("../gantt/Model/Project");
 var WelcomeController = (function () {
@@ -21,11 +22,26 @@ var WelcomeController = (function () {
             _this.showProject(project);
         });
     };
+    WelcomeController.prototype.upload = function (files) {
+        var _this = this;
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var projectObj = JSON.parse(e.srcElement.result);
+            var project = new Project_1.Project();
+            if (projectObj != null) {
+                project.deserialize(projectObj);
+                JSON.retrocycle(project);
+                _this.showProject(project);
+            }
+            console.log(project);
+        };
+        reader.readAsText(files[0]);
+    };
     WelcomeController.prototype.showProject = function (project) {
         this.ProjectService.set(project);
         this.$location.path("/gantt");
     };
     return WelcomeController;
-})();
+}());
 exports.WelcomeController = WelcomeController;
 //# sourceMappingURL=WelcomeController.js.map

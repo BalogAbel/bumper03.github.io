@@ -1,6 +1,7 @@
 import {ISerializable} from "../../Util/Serializer";
 import {IntervalList} from "../../Util/IntervalList/IntervalList";
 import {WorkingHour} from "./WorkingHour";
+import {Hashable} from "../../Util/Hashable";
 
 export class WorkingDay implements ISerializable<WorkingDay> {
     workingHours:IntervalList<WorkingHour>;
@@ -59,17 +60,14 @@ export class WorkingDay implements ISerializable<WorkingDay> {
                 case -1:
                     //continue the iteration
                     return true;
-                    break;
                 case 0:
                     //break the iteration
                     return false;
-                    break;
                 //it's after the period
                 case 1:
                     //set to the end of the period, and break the iteration
                     date.setHours(workingHour.toHour, workingHour.toMinute);
                     return false;
-                    break;
                 default:
                     return true;
 
@@ -86,17 +84,14 @@ export class WorkingDay implements ISerializable<WorkingDay> {
                     //set to the beginning of the period, and break the iteration
                     date.setHours(workingHour.fromHour, workingHour.fromMinute);
                     return false;
-                    break;
                 //it's in the period
                 case 0:
                     //break the iteration
                     return false;
-                    break;
                 //it's after the period
                 case 1:
                     //continue the iteration
                     return true;
-                    break;
                 default:
                     return true;
 

@@ -1,3 +1,4 @@
+"use strict";
 var Duration = (function () {
     function Duration() {
         this.hoursPerDay = 8;
@@ -42,6 +43,6 @@ var Duration = (function () {
         return this;
     };
     return Duration;
-})();
+}());
 exports.Duration = Duration;
 //# sourceMappingURL=Duration.js.map

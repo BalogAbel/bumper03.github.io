@@ -1,9 +1,7 @@
 <link rel="stylesheet" href="welcome/welcome.css">
 
-<div flex layout-align="center center" ngf-drop ng-model="files" class="drop-box" layout="row"
-     ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true"
-     accept="image/*,application/pdf"
-     ngf-pattern="'image/*,application/pdf'" id="welcome">
+<div flex layout-align="center center" class="drop-box" layout="row"
+     ngf-drag-over-class="'dragover'" id="welcome" ngf-drop="welcomeCtrl.upload($files)">
 
     <div flex layout-align="center stretch" layout="column" id="welcome-content">
 

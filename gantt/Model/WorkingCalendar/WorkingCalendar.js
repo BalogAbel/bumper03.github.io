@@ -1,8 +1,11 @@
+"use strict";
 var WorkingDay_1 = require("./WorkingDay");
+var SpecialDaysList_1 = require("./SpecialDaysList");
 var WorkingCalendar = (function () {
     function WorkingCalendar() {
         this.workingDays = [, true, true, true, true, true, false, false];
         this.normalWorkingDay = new WorkingDay_1.WorkingDay();
+        this.specialDays = new SpecialDaysList_1.SpecialDaysList();
     }
     WorkingCalendar.getWorkingCalendar = function () {
         if (WorkingCalendar._instance == null) {
@@ -44,6 +47,9 @@ var WorkingCalendar = (function () {
     };
     WorkingCalendar.prototype.getActualWorkingDay = function (date, backward) {
         if (backward === void 0) { backward = false; }
+        var sday = this.specialDays.get(date);
+        if (sday != null)
+            return sday.workingDay;
         while (!this.workingDays[date.getDay()]) {
             this.setToNextDay(date, backward);
         }
@@ -63,11 +69,12 @@ var WorkingCalendar = (function () {
     WorkingCalendar.prototype.deserialize = function (input) {
         this.workingDays = input.workingDays;
         this.normalWorkingDay = new WorkingDay_1.WorkingDay().deserialize(input.normalWorkingDay);
+        this.specialDays = new SpecialDaysList_1.SpecialDaysList().deserialize(input.specialDays);
         WorkingCalendar._instance = this;
         return this;
     };
     WorkingCalendar._instance = null;
     return WorkingCalendar;
-})();
+}());
 exports.WorkingCalendar = WorkingCalendar;
 //# sourceMappingURL=WorkingCalendar.js.map

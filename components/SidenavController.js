@@ -1,3 +1,4 @@
+"use strict";
 var ProjectGenerator_1 = require("../gantt/Util/ProjectGenerator");
 var SidenavController = (function () {
     function SidenavController($location, projectService) {
@@ -39,6 +40,6 @@ var SidenavController = (function () {
         this.$location.path("/gantt");
     };
     return SidenavController;
-})();
+}());
 exports.SidenavController = SidenavController;
 //# sourceMappingURL=SidenavController.js.map

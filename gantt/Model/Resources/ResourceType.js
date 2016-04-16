@@ -1,3 +1,4 @@
+"use strict";
 var ResourceType = (function () {
     function ResourceType() {
     }
@@ -10,6 +11,6 @@ var ResourceType = (function () {
         return this;
     };
     return ResourceType;
-})();
+}());
 exports.ResourceType = ResourceType;
 //# sourceMappingURL=ResourceType.js.map

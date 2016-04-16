@@ -6,7 +6,7 @@ import {GDriveService} from "./components/GDriveService";
 import {WelcomeController} from "./welcome/WelcomeController";
 
 
-var ganttApp = angular.module('ganttApp', ['ngRoute', 'ngMaterial', 'angular-google-gapi', 'ngFileUpload', 'ngFitText'])
+var ganttApp = angular.module('ganttApp', ['ngRoute', 'ngMaterial', 'angular-google-gapi', 'ngFileUpload', 'ngFitText', 'ngMdIcons'])
 
     .directive('resizable', function () {
         return {
@@ -28,8 +28,23 @@ var ganttApp = angular.module('ganttApp', ['ngRoute', 'ngMaterial', 'angular-goo
     })
 
 
-    .service('GDriveService', ['GAuth', 'GApi', 'GData', '$q', '$window', '$http', GDriveService])
-    .service('ProjectService', ['GDriveService', '$mdDialog', '$window', ProjectService])
+    .filter('leadingZeros', () => {
+        return (n:any, len:any) => {
+            var num:any = parseInt(n, 10);
+            len = parseInt(len, 10);
+            if (isNaN(num) || isNaN(len)) {
+                return n;
+            }
+            num = ''+num;
+            while (num.length < len) {
+                num = '0'+num;
+            }
+            return num;
+        }
+    })
+
+    .service('GDriveService', ['GAuth', 'GApi', '$q', '$window', '$http', '$mdDialog', '$mdToast', GDriveService])
+    .service('ProjectService', ['GDriveService', '$mdDialog', '$window', '$mdToast', ProjectService])
 
     .controller('LayoutController', ['$mdBottomSheet', '$q', '$mdSidenav', LayoutController])
     .controller('SidenavController', ['$location', 'ProjectService', SidenavController])

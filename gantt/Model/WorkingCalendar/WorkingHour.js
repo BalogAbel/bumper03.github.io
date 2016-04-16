@@ -1,3 +1,4 @@
+"use strict";
 var IntervalBoundariesError_1 = require("../../Util/IntervalList/IntervalBoundariesError");
 var WorkingHour = (function () {
     function WorkingHour(fromHour, fromMinute, toHour, toMinute) {
@@ -95,6 +96,6 @@ var WorkingHour = (function () {
         return this;
     };
     return WorkingHour;
-})();
+}());
 exports.WorkingHour = WorkingHour;
 //# sourceMappingURL=WorkingHour.js.map

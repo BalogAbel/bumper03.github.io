@@ -1,3 +1,4 @@
+"use strict";
 //
 //export class Serializer {
 //    static serialize(object): string {

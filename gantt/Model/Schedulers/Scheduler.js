@@ -1,3 +1,4 @@
+"use strict";
 var Scheduler = (function () {
     function Scheduler() {
     }
@@ -13,7 +14,7 @@ var Scheduler = (function () {
         throw "Not a scheduler";
     };
     return Scheduler;
-})();
+}());
 exports.Scheduler = Scheduler;
 var SchedulerHelper = (function () {
     function SchedulerHelper() {
@@ -24,7 +25,7 @@ var SchedulerHelper = (function () {
         throw "Not an scheduler: " + scheduler;
     };
     return SchedulerHelper;
-})();
+}());
 exports.SchedulerHelper = SchedulerHelper;
 var LeastSlackTimeScheduler_1 = require("./LeastSlackTimeScheduler");
 //# sourceMappingURL=Scheduler.js.map

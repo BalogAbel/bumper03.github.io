@@ -53,14 +53,15 @@ export class ProjectDrawer {
             width: Utils.getCanvasWidth(),
             height: 100
         });
+        timeLineStage.clear();
         var timelineDrawer = new TimeLineDrawer();
         timelineDrawer.draw(this.timeLineLayer);
 
         timeLineStage.add(this.timeLineLayer);
         timeLineStage.height(Utils.getCanvasHeight());
 
-        var that = this;
-        that.scrollToDate(this.project.start);
+        // var that = this;
+        this.scrollToDate(this.project.start);
 
     }
 

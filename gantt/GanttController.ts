@@ -8,14 +8,16 @@ import {ProjectService} from "../components/ProjectService";
 import {ProjectDrawer} from "./View/ProjectDrawer";
 import {Project} from "./Model/Project";
 import {Utils} from "./View/Utils";
+import {EditCalendarController} from "./components/EditCalendar/EditCalendarController";
+import {ProjectGenerator} from "./Util/ProjectGenerator";
 export class GanttCtrl {
 
     zoomLevel:number;
     private project:Project;
     private projectDrawer:ProjectDrawer;
 
-    constructor(ProjectService:ProjectService,
-                private $mdDialog:ng.material.IDialogService) {
+    constructor(private ProjectService:ProjectService,
+                private $mdDialog:ng.material.IDialogService, private $mdToast:ng.material.IToastService) {
 
         this.project = ProjectService.get();
         this.project.schedule();
@@ -30,6 +32,15 @@ export class GanttCtrl {
         //    $("#zoom").css("margin-left", margin+"px");
         //});
     }
+
+    public saveToGDrive():void {
+        this.ProjectService.saveToGoogleDrive();
+    }
+
+    public saveLocally():void {
+        this.ProjectService.saveToLocal();
+    }
+
 
     public handleZoom():void {
         this.projectDrawer.changeZoom(this.zoomLevel);
@@ -48,11 +59,10 @@ export class GanttCtrl {
         }).then(function (taskVO:TaskVO) {
             if (taskVO == null) return;
             var task:Task = taskVO.isSummary ? new Summary() : new Schedulable();
+            task.id = ProjectGenerator.idCtr++;
             taskVO.merge(task);
             if (task.parent == null) {
                 that.project.tasks.push(task);
-            } else {
-                task.parent.tasks.push(task);
             }
             that.project.schedule();
             that.projectDrawer.draw();
@@ -61,6 +71,7 @@ export class GanttCtrl {
     }
 
     public editTask(task:Task):void {
+        var that = this;
         this.$mdDialog.show({
             controller: TaskDetailController,
             controllerAs: "taskDetailController",
@@ -71,20 +82,20 @@ export class GanttCtrl {
             }
         }).then(function (taskVO:TaskVO) {
             if (taskVO == null) return;
-
             if (taskVO.parent != task.parent) {
                 var parentIdx = task.parent == null ? -1 : task.parent.tasks.indexOf(task);
-                if (parentIdx != -1) task.parent.tasks.splice(parentIdx, 1);
+                if (parentIdx != -1) task.parent.tasks.splice(parentIdx, 1)
+                else that.project.tasks.splice(that.project.tasks.indexOf(task), 1);
                 task.parent = taskVO.parent;
                 if (task.parent != null) {
                     task.parent.tasks.push(task);
                 } else {
-                    this.project.tasks.push(task);
+                    that.project.tasks.push(task);
                 }
             }
             taskVO.merge(task);
-            this.project.schedule();
-            this.projectDrawer.draw();
+            that.project.schedule();
+            that.projectDrawer.draw();
         });
     }
 
@@ -95,6 +106,20 @@ export class GanttCtrl {
             templateUrl: "gantt/components/resources/resources.html",
             locals: {
                 resources: this.project.resourceTypes
+            }
+        }).then(() => {
+            this.project.schedule();
+            this.projectDrawer.draw();
+        })
+    }
+
+    public editCalendar():void {
+        this.$mdDialog.show({
+            controller: EditCalendarController,
+            controllerAs: "editCalendarCtrl",
+            templateUrl: "gantt/components/EditCalendar/editCalendar.html",
+            locals: {
+                workingCalendar: this.project.workingCalendar
             }
         }).then(() => {
             this.project.schedule();

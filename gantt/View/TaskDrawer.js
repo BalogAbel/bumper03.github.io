@@ -1,3 +1,4 @@
+"use strict";
 var Utils_1 = require("./Utils");
 var ProjectDrawer_1 = require("./ProjectDrawer");
 var TaskDrawer = (function () {
@@ -140,6 +141,6 @@ var TaskDrawer = (function () {
         node.scale({ x: 1, y: 1.1 });
     };
     return TaskDrawer;
-})();
+}());
 exports.TaskDrawer = TaskDrawer;
 //# sourceMappingURL=TaskDrawer.js.map
