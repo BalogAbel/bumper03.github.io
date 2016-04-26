@@ -99,3 +99,7 @@ md-content {
 md-dialog-content {
     padding: 10px;
 }
+
+.delete {
+    color: #ff0000 !important;
+}

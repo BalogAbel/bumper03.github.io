@@ -13,6 +13,10 @@ var TaskDrawer = (function () {
         var taskName = this.nameGroup.find('.TaskName')[0];
         taskName.text(this.task.name);
         this.nameGroup.position(TaskDrawer.actualPosition);
+        this.nameGroup.on("dblclick", function (evt) {
+            var scope = angular.element($("#gantt")).scope().gantt;
+            scope.editTask(that.task);
+        });
         layer.add(this.nameGroup);
         var line = TaskDrawer.taskTimeLineSample.clone({});
         var taskLine = line.find('.TaskLine')[0];
@@ -24,6 +28,10 @@ var TaskDrawer = (function () {
         timeLineLayer.add(line);
         TaskDrawer.actualPosition.y += Utils_1.Utils.taskLineHeight;
         var that = this;
+        this.taskGroup.on("dblclick", function (evt) {
+            var scope = angular.element($("#gantt")).scope().gantt;
+            scope.editTask(that.task);
+        });
         this.taskGroup.on("dragstart", function (evt) {
             that.dragStart = evt.target.getAbsolutePosition().x;
             if (!that.isNormalClick) {

@@ -35,6 +35,10 @@ var TaskDetailController = (function () {
     TaskDetailController.prototype.cancel = function () {
         this.$mdDialog.hide();
     };
+    TaskDetailController.prototype.delete = function () {
+        this.task.toDelete = true;
+        this.$mdDialog.hide(this.task);
+    };
     return TaskDetailController;
 }());
 exports.TaskDetailController = TaskDetailController;

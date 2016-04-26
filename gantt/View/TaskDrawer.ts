@@ -26,6 +26,10 @@ export class TaskDrawer {
 
 
         this.nameGroup.position(TaskDrawer.actualPosition);
+        this.nameGroup.on("dblclick", (evt: any) => {
+            var scope = <GanttCtrl>(<any>angular.element($("#gantt")).scope()).gantt;
+            scope.editTask(that.task);
+        });
         layer.add(this.nameGroup);
 
         var line = <Konva.Group>TaskDrawer.taskTimeLineSample.clone({});
@@ -41,6 +45,10 @@ export class TaskDrawer {
         TaskDrawer.actualPosition.y += Utils.taskLineHeight;
 
         var that = this;
+        this.taskGroup.on("dblclick", (evt: any) => {
+            var scope = <GanttCtrl>(<any>angular.element($("#gantt")).scope()).gantt;
+            scope.editTask(that.task);
+        });
         this.taskGroup.on("dragstart", function (evt:any) {
             that.dragStart = evt.target.getAbsolutePosition().x;
             if(!that.isNormalClick) {

@@ -28,7 +28,7 @@ export class Schedulable extends Task implements ISerializable<Schedulable> {
         var start:Date = new Date(projectStartDate.getTime());
         var defaultStart:Date = new Date(projectStartDate.getTime());
         for (var i:number = 0; i < predecessors.length; i++) {
-            var actualDate = new Date((<Schedulable>predecessors[i].task).earliestFinish.getTime())
+            var actualDate = new Date((<Schedulable>predecessors[i].task).earliestFinish.getTime());
             actualDate = workingCalendar.add(actualDate, predecessors[i].lag);
             if (actualDate.getTime() > start.getTime()) start.setTime(actualDate.getTime());
         }

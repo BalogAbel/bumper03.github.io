@@ -1,5 +1,5 @@
 <md-dialog aria-label="New task" flex-gt-md="60" flex="90">
-    <form>
+    <form >
         <md-dialog-content class="sticky-container" class="content">
             <md-subheader class="md-sticky-no-effect">
                 <h2>
@@ -8,7 +8,7 @@
                     <span ng-show="taskDetailController.task.name.length != 0">({{taskDetailController.task.name}})</span>
                 </h2>
             </md-subheader>
-            <md-tabs md-dynamic-height="true">
+            <md-tabs md-dynamic-height="true" layout-padding>
                 <md-tab>
                     <md-tab-label>Details</md-tab-label>
                     <md-tab-body>
@@ -153,7 +153,8 @@
             <span flex></span>
             <md-button class="md-primary" ng-click="taskDetailController.save()">Save</md-button>
             <md-button class="md-primary" ng-click="taskDetailController.cancel()">Cancel</md-button>
+            <md-button class="md-primary delete" ng-click="taskDetailController.delete()" ng-hide="taskDetailController.task.isNew">Delete</md-button>
         </div>
-    </form>
+    </formlayout-padding>
 </md-dialog>
 

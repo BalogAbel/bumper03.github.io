@@ -38,7 +38,7 @@ export class Project implements ISerializable<Project> {
         for (var i:number = 0; i < this.tasks.length; i++) {
             this.tasks[i].reset();
         }
-        var tasks = this.collectAllTasks();
+        var tasks = this.getAllSchedulable();
         this.calculateEarliestTimes(tasks);
         this.calculateLatestTimes(tasks);
 
@@ -120,7 +120,7 @@ export class Project implements ISerializable<Project> {
      *
      * @returns {Schedulable[]}
      */
-    private collectAllTasks():Schedulable[] {
+    private getAllSchedulable():Schedulable[] {
         var result = new HashSet<Schedulable>();
         for (var i:number = 0; i < this.tasks.length; i++) {
             result.putAll(this.tasks[i].getSubTasks());

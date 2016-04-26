@@ -80,20 +80,36 @@ export class GanttCtrl {
                 project: this.project,
                 task: TaskVO.fromTask(task)
             }
-        }).then(function (taskVO:TaskVO) {
+        }).then(function (taskVO:TaskVO, toDelete=false) {
             if (taskVO == null) return;
-            if (taskVO.parent != task.parent) {
-                var parentIdx = task.parent == null ? -1 : task.parent.tasks.indexOf(task);
-                if (parentIdx != -1) task.parent.tasks.splice(parentIdx, 1)
-                else that.project.tasks.splice(that.project.tasks.indexOf(task), 1);
-                task.parent = taskVO.parent;
-                if (task.parent != null) {
-                    task.parent.tasks.push(task);
-                } else {
-                    that.project.tasks.push(task);
+            if(taskVO.toDelete) {
+                if(task instanceof Summary) {
+                    var summary = <Summary>task;
+                    for(var i = 0; i < summary.tasks.length; i++) {
+                        summary.tasks[i].parent = summary.parent;
+                        if (summary.parent == null) that.project.tasks.push(summary.tasks[i]);
+                    }
                 }
+                if(task.parent != null) task.parent.tasks.splice(task.parent.tasks.indexOf(task), 1);
+                else that.project.tasks.splice(that.project.tasks.indexOf(task), 1);
+                console.log(that.project);
+                for(var i = 0; i < task.successors.length; i++) {
+                    task.successors[i].task.removeFromDependency(task);
+                }
+            } else {
+                if (taskVO.parent != task.parent) {
+                    var parentIdx = task.parent == null ? -1 : task.parent.tasks.indexOf(task);
+                    if (parentIdx != -1) task.parent.tasks.splice(parentIdx, 1);
+                    else that.project.tasks.splice(that.project.tasks.indexOf(task), 1);
+                    task.parent = taskVO.parent;
+                    if (task.parent != null) {
+                        task.parent.tasks.push(task);
+                    } else {
+                        that.project.tasks.push(task);
+                    }
+                }
+                taskVO.merge(task);
             }
-            taskVO.merge(task);
             that.project.schedule();
             that.projectDrawer.draw();
         });

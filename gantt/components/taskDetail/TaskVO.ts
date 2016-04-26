@@ -19,6 +19,7 @@ export class TaskVO {
 
     duration:Duration;
 
+    toDelete:boolean = false;
 
     constructor() {
         this.isNew = true;

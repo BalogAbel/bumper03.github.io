@@ -22,7 +22,7 @@ var Project = (function () {
         for (var i = 0; i < this.tasks.length; i++) {
             this.tasks[i].reset();
         }
-        var tasks = this.collectAllTasks();
+        var tasks = this.getAllSchedulable();
         this.calculateEarliestTimes(tasks);
         this.calculateLatestTimes(tasks);
         this.scheduler.schedule(tasks);
@@ -100,7 +100,7 @@ var Project = (function () {
      *
      * @returns {Schedulable[]}
      */
-    Project.prototype.collectAllTasks = function () {
+    Project.prototype.getAllSchedulable = function () {
         var result = new HashSet_1.HashSet();
         for (var i = 0; i < this.tasks.length; i++) {
             result.putAll(this.tasks[i].getSubTasks());

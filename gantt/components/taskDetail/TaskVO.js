@@ -6,6 +6,7 @@ var TaskVO = (function () {
     function TaskVO() {
         this.isSummary = false;
         this.hasEarliestConstraint = false;
+        this.toDelete = false;
         this.isNew = true;
         this.hasEarliestConstraint = false;
         this.duration = new Duration_1.Duration();

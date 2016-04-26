@@ -42,4 +42,9 @@ export class TaskDetailController {
         this.$mdDialog.hide();
     }
 
+    delete(): void {
+        this.task.toDelete = true;
+        this.$mdDialog.hide(this.task);
+
+    }
 }
