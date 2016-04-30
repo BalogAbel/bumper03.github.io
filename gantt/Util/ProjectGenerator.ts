@@ -150,7 +150,7 @@ export class ProjectGenerator {
         workingCalendar.normalWorkingDay = normalWorkingDay;
         var sday1 = new WorkingDay();
         sday1.workingHours.push(new WorkingHour(10, 0, 10, 10));
-        workingCalendar.specialDays.add(new Date("2016.03.18"), sday1);
+        workingCalendar.specialDays.add(new SpecialDay(new Date("2016.03.18"), sday1));
 
         project.workingCalendar = workingCalendar;
         project.resourceTypes.push(resourceType);

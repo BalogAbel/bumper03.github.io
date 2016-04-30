@@ -5,8 +5,8 @@ var SpecialDaysList = (function () {
     function SpecialDaysList() {
         this.specialDays = new HashSet_1.HashSet();
     }
-    SpecialDaysList.prototype.add = function (date, day) {
-        this.specialDays.put(new SpecialDay_1.SpecialDay(date, day));
+    SpecialDaysList.prototype.add = function (specialDay) {
+        this.specialDays.put(specialDay);
     };
     SpecialDaysList.prototype.get = function (date) {
         return this.specialDays.get(SpecialDay_1.SpecialDay.hash(date));
@@ -25,6 +25,7 @@ var SpecialDaysList = (function () {
     };
     SpecialDaysList.prototype.deserialize = function (input) {
         this.specialDays = new HashSet_1.HashSet();
+        this.specialDays.deserialize(input.specialDays, new SpecialDay_1.SpecialDay());
         return this;
     };
     return SpecialDaysList;

@@ -4,13 +4,11 @@ import {WorkingDay} from "../../Model/WorkingCalendar/WorkingDay";
 import {IntervalList} from "../../Util/IntervalList/IntervalList";
 import {SpecialDay} from "../../Model/WorkingCalendar/SpecialDay";
 export class EditCalendarController {
-
-    workingDay:WorkingDay = null;
-    workingDayDate:Date = null;
+    specialDay: SpecialDay = null;
 
     private normalOpen = -1;
     private newOpen = -1;
-    new:boolean;
+    newWorkingDay:boolean;
 
     constructor(private $mdDialog:ng.material.IDialogService, private workingCalendar:WorkingCalendar) {
     }
@@ -19,34 +17,49 @@ export class EditCalendarController {
         this.workingCalendar.normalWorkingDay.workingHours.removeLast(workingHour);
     }
 
+    addNormalWorkingHour() {
+        var lastWH = this.workingCalendar.normalWorkingDay.workingHours.last();
+        var lastHour = lastWH == null ? 8 : (lastWH.toHour + 1);
+        this.workingCalendar.normalWorkingDay.workingHours.push(new WorkingHour(lastHour, 0, lastHour > 23 ? 24 : (lastHour + 1), 0));
+    }
+
     close():void {
         this.$mdDialog.hide();
     }
 
     addWorkingDay():void {
-        this.workingDay = new WorkingDay();
-        this.workingDay.workingHours = new IntervalList<WorkingHour>();
+        this.specialDay = new SpecialDay();
+        this.newWorkingDay = true;
     }
 
     editSpecialDay(specialDay:SpecialDay):void {
-        this.workingDayDate = specialDay.date;
-        this.workingDay = specialDay.workingDay;
+        this.specialDay = specialDay;
+        this.newWorkingDay = false;
     }
 
     saveWorkingDay():void {
-        this.workingCalendar.specialDays.add(this.workingDayDate, this.workingDay);
+        if(this.newWorkingDay) {
+            this.workingCalendar.specialDays.add(this.specialDay);
+        }
+        this.specialDay = null;
+
     }
 
-    undoWorkingDay():void {
-        this.workingDay = null;
-        this.workingDayDate = null;
-    }
 
     addWorkingHour():void {
-        var lastWH = this.workingDay.workingHours.last();
+        var lastWH = this.specialDay.workingDay.workingHours.last();
         var lastHour = lastWH == null ? 8 : (lastWH.toHour + 1);
-        this.workingDay.workingHours.push(new WorkingHour(lastHour, 0, lastHour > 23 ? 24 : (lastHour + 1), 0));
+        this.specialDay.workingDay.workingHours.push(new WorkingHour(lastHour, 0, lastHour > 23 ? 24 : (lastHour + 1), 0));
     }
+
+    deleteWorkingHour(workingHour:WorkingHour) {
+        this.specialDay.workingDay.workingHours.removeLast(workingHour);
+    }
+
+    deleteSpecialDay(specialDay:SpecialDay):void {
+        this.workingCalendar.specialDays.delete(specialDay);
+    }
+
 
 
 }

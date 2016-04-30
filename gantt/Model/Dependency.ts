@@ -9,7 +9,8 @@ export class Dependency implements Hashable, ISerializable<Dependency> {
     task:Task;
     lag:Duration;
 
-    constructor() {
+
+    constructor()  {
         this.lag = new Duration();
     }
 
@@ -22,5 +23,9 @@ export class Dependency implements Hashable, ISerializable<Dependency> {
         this.task = Task.deserializeHelper(input.task);
         this.lag = new Duration().deserialize(input.lag);
         return this;
+    }
+
+    getNew():Hashable {
+        return new Dependency();
     }
 }

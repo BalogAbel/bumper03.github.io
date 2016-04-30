@@ -129,18 +129,18 @@ var Task = (function () {
         return [];
     };
     Task.prototype.removeFromDependency = function (task) {
-        console.log("Removing " + task.name + " from " + this.name);
         var toRemove = [];
         for (var i = 0; i < this.predecessors.length; i++) {
             if (task.id == this.predecessors[i].task.id) {
                 toRemove.push(this.predecessors[i]);
             }
         }
-        console.log(toRemove);
         for (var i = 0; i < toRemove.length; i++) {
             this.predecessors.splice(this.predecessors.indexOf(toRemove[i], 1));
         }
-        console.log(this.predecessors);
+    };
+    Task.prototype.getNew = function () {
+        return undefined;
     };
     return Task;
 }());

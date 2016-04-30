@@ -9,6 +9,7 @@ var WorkingHour_1 = require("../Model/WorkingCalendar/WorkingHour");
 var ResourceUsage_1 = require("../Model/Resources/ResourceUsage");
 var Dependency_1 = require("../Model/Dependency");
 var Summary_1 = require("../Model/Summary");
+var SpecialDay_1 = require("../Model/WorkingCalendar/SpecialDay");
 var ProjectGenerator = (function () {
     function ProjectGenerator() {
     }
@@ -135,7 +136,7 @@ var ProjectGenerator = (function () {
         workingCalendar.normalWorkingDay = normalWorkingDay;
         var sday1 = new WorkingDay_1.WorkingDay();
         sday1.workingHours.push(new WorkingHour_1.WorkingHour(10, 0, 10, 10));
-        workingCalendar.specialDays.add(new Date("2016.03.18"), sday1);
+        workingCalendar.specialDays.add(new SpecialDay_1.SpecialDay(new Date("2016.03.18"), sday1));
         project.workingCalendar = workingCalendar;
         project.resourceTypes.push(resourceType);
         project.resourceTypes.push(resourceType2);

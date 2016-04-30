@@ -1,10 +1,6 @@
 import {HashSet} from "../../Util/HashSet";
-import {WorkingDay} from "./WorkingDay";
 import {SpecialDay} from "./SpecialDay";
 import {ISerializable} from "../../Util/Serializer";
-import {WorkingHour} from "./WorkingHour";
-import {IntervalList} from "../../Util/IntervalList/IntervalList";
-import {resizeable} from "../../../components/Resizeable";
 export class SpecialDaysList implements ISerializable<SpecialDaysList> {
 
     public specialDays:HashSet<SpecialDay>;
@@ -13,8 +9,8 @@ export class SpecialDaysList implements ISerializable<SpecialDaysList> {
         this.specialDays = new HashSet<SpecialDay>()
     }
 
-    add(date:Date, day:WorkingDay) {
-        this.specialDays.put(new SpecialDay(date, day));
+    add(specialDay:SpecialDay) {
+        this.specialDays.put(specialDay);
     }
 
     get(date:Date):SpecialDay {
@@ -39,7 +35,7 @@ export class SpecialDaysList implements ISerializable<SpecialDaysList> {
 
     deserialize(input:any):SpecialDaysList {
         this.specialDays = new HashSet<SpecialDay>();
-        
+        this.specialDays.deserialize(input.specialDays, new SpecialDay());
         return this;
     }
 }

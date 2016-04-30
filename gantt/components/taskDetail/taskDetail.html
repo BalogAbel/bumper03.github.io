@@ -29,12 +29,14 @@
                                 <input type="text" ng-model="taskDetailController.task.description"/>
                             </md-input-container>
 
-
-                            <label>Select parent</label>
-                            <select ng-options="summary as summary.name for summary in taskDetailController.project.getAllSummaries()"
-                                    ng-model="taskDetailController.task.parent">
-                                <option></option>
-                            </select>
+                            <md-input-container>
+                                <label>Parent</label>
+                                <md-select ng-model="taskDetailController.task.parent">
+                                    <md-option ng-value="summary" ng-repeat="summary in taskDetailController.project.getAllSummaries()">
+                                        {{summary.name}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
 
 
                             <md-checkbox ng-model="taskDetailController.task.hasEarliestConstraint"
@@ -76,9 +78,16 @@
                     <md-tab-label>Dependencies</md-tab-label>
                     <md-tab-body>
                         <h4>New dependency</h4>
-                        <select ng-options="task as task.name for task in taskDetailController.project.getAllTasks()"
-                                ng-model="taskDetailController.newDependency.task">
-                        </select>
+
+                        <md-input-container>
+                            <label>Task</label>
+                            <md-select ng-model="taskDetailController.newDependency.task">
+                                <md-option ng-value="task" ng-repeat="task in taskDetailController.project.getAllTasks()">
+                                    {{task.name}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+
                         <h5>Lag</h5>
 
                         <div layout layout-sm="column">
@@ -119,9 +128,15 @@
                     <md-tab-label>Resources</md-tab-label>
                     <md-tab-body>
                         <h4>New resource usage</h4>
-                        <select ng-options="resource as resource.name for resource in taskDetailController.project.resourceTypes"
-                                ng-model="taskDetailController.newResourceUsage.resource">
-                        </select>
+
+                        <md-input-container>
+                            <label>Resource</label>
+                            <md-select ng-model="taskDetailController.newResourceUsage.resource">
+                                <md-option ng-value="resource" ng-repeat="resource in taskDetailController.project.resourceTypes">
+                                    {{resource.name}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
 
                         <div layout layout-sm="column">
                             <md-input-container flex>

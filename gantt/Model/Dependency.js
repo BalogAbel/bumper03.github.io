@@ -14,6 +14,9 @@ var Dependency = (function () {
         this.lag = new Duration_1.Duration().deserialize(input.lag);
         return this;
     };
+    Dependency.prototype.getNew = function () {
+        return new Dependency();
+    };
     return Dependency;
 }());
 exports.Dependency = Dependency;

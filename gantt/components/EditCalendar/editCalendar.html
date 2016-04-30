@@ -3,99 +3,111 @@
         <md-dialog-content ng-cloak="">
             <md-tabs layout-fill="true" md-dynamic-height layout-padding>
                 <md-tab label="Normal days">
+                    <div layout-margin>
+                        <md-button class="md-primary" ng-click="editCalendarCtrl.addNormalWorkingHour()">
+                            Add new workhour
+                        </md-button>
+                    </div>
                     <md-list>
                         <md-list-item
                                 ng-repeat="(key, normalHour) in editCalendarCtrl.workingCalendar.normalWorkingDay.workingHours.toArray()">
-                                <span ng-hide="editCalendarCtrl.normalOpen == key"
-                                      ng-click="editCalendarCtrl.normalOpen = key">
-                                    {{normalHour.fromHour | leadingZeros:2}}:{{normalHour.fromMinute | leadingZeros:2}} -
-                                    {{normalHour.toHour | leadingZeros:2}}:{{normalHour.toMinute | leadingZeros:2}}
-                                </span>
-                                <span ng-show="editCalendarCtrl.normalOpen == key" layout="row">
-                                    <md-input-container class="small">
-                                        <input type="number" step="any" required
-                                               ng-model="normalHour.fromHour"/>
-                                    </md-input-container>
-                                    :
-                                    <md-input-container class="small">
-                                        <input type="number" step="any" required
-                                               ng-model="normalHour.fromMinute"/>
-                                    </md-input-container>
-                                    -
-                                    <md-input-container class="small">
-                                        <input type="number" step="any" required
-                                               ng-model="normalHour.toHour"/>
-                                    </md-input-container>
-                                    :
-                                    <md-input-container class="small">
-                                        <input type="number" step="any" required
-                                               ng-model="normalHour.toMinute"/>
-                                    </md-input-container>
-                                </span>
+                            <span ng-hide="editCalendarCtrl.normalOpen == key"
+                                  ng-click="editCalendarCtrl.normalOpen = key">
+                                {{normalHour.fromHour | leadingZeros:2}}:{{normalHour.fromMinute | leadingZeros:2}} -
+                                {{normalHour.toHour | leadingZeros:2}}:{{normalHour.toMinute | leadingZeros:2}}
+                            </span>
+                            <span ng-show="editCalendarCtrl.normalOpen == key" layout="row">
+                                <md-input-container class="small">
+                                    <input type="number" step="any" required class="number-input"
+                                           ng-model="normalHour.fromHour"/>
+                                </md-input-container>
+                                <span class="middle">:</span>
+                                <md-input-container class="small">
+                                    <input type="number" step="any" required class="number-input"
+                                           ng-model="normalHour.fromMinute"/>
+                                </md-input-container>
+                                <span class="middle">-</span>
+                                <md-input-container class="small">
+                                    <input type="number" step="any" required class="number-input"
+                                           ng-model="normalHour.toHour"/>
+                                </md-input-container>
+                                <span class="middle">:</span>
+                                <md-input-container class="small">
+                                    <input type="number" step="any" required class="number-input"
+                                           ng-model="normalHour.toMinute"/>
+                                </md-input-container>
+                            </span>
                             <img class="remove-icon" ng-src="img/remove.png"
                                  ng-click="editCalendarCtrl.deleteNormalWorkingHour(normalHour)"/>
                         </md-list-item>
                     </md-list>
                 </md-tab>
                 <md-tab label="All specific dates">
-                    <md-list ng-show="editCalendarCtrl.workingDay == null">
+                    <md-list ng-show="editCalendarCtrl.specialDay == null">
                         <md-list-item
                                 ng-repeat="(key, specialDay) in editCalendarCtrl.workingCalendar.specialDays.getDaysOrdered()">
                             <p>
                                 <span>{{specialDay.date.toDateString()}}</span>
                                 <img class="remove-icon" ng-src="img/remove.png"
-                                     ng-click=""/>
-                                <md-button class="md-primary" ng-click="editCalendarCtrl.editWorkingDay(specialDay)">Edit</md-button>
+                                     ng-click="editCalendarCtrl.deleteSpecialDay(specialDay)"/>
+
+                                <img class="remove-icon" ng-src="img/edit.png"
+                                     ng-click="editCalendarCtrl.editSpecialDay(specialDay)"/>
                             </p>
                         </md-list-item>
                         <div layout-margin>
-                            <md-button class="md-primary" ng-click="editCalendarCtrl.addWorkingDay()">Add new working day</md-button>
+                            <md-button class="md-primary" ng-click="editCalendarCtrl.addWorkingDay()">
+                                Add new working day
+                            </md-button>
                         </div>
                     </md-list>
-                    <div layout="column" ng-show="editCalendarCtrl.workingDay != null">
-                        <div layout-margin><input type="date" ng-model="editCalendarCtrl.workingDayDate"/></div>
+                    <div layout="column" ng-show="editCalendarCtrl.specialDay != null">
                         <div layout-margin>
-                            <md-button class="md-primary" ng-click="editCalendarCtrl.addWorkingHour()">Add new
-                                workhours
+                            <h4>Select date</h4>
+                            <md-datepicker ng-model="editCalendarCtrl.specialDay.date" md-placeholder="Enter date"></md-datepicker>
+                        </div>
+                        <div layout-margin>
+                            <md-button class="md-primary" ng-click="editCalendarCtrl.addWorkingHour()">
+                                Add new workhour
                             </md-button>
                         </div>
                         <md-list>
                             <md-list-item
-                                    ng-repeat="(key, wHour) in editCalendarCtrl.workingDay.workingHours.toArray()">
-                                <div ng-hide="editCalendarCtrl.newOpen == key"
+                                    ng-repeat="(key, wHour) in editCalendarCtrl.specialDay.workingDay.workingHours.toArray()">
+                                <span ng-hide="editCalendarCtrl.newOpen == key"
                                      ng-click="editCalendarCtrl.newOpen = key">
                                     {{wHour.fromHour | leadingZeros:2}}:{{wHour.fromMinute | leadingZeros:2}} -
                                     {{wHour.toHour | leadingZeros:2}}:{{wHour.toMinute | leadingZeros:2}}
-                                </div>
-                                <div ng-show="editCalendarCtrl.newOpen == key" layout="row">
+                                </span>
+                                <span ng-show="editCalendarCtrl.newOpen == key" layout="row">
                                     <md-input-container class="small">
-                                        <input type="number" step="any" required
+                                        <input type="number" step="any" required class="number-input"
                                                ng-model="wHour.fromHour"/>
                                     </md-input-container>
-                                    :
+                                    <span class="middle">:</span>
                                     <md-input-container class="small">
-                                        <input type="number" step="any" required
+                                        <input type="number" step="any" required class="number-input"
                                                ng-model="wHour.fromMinute"/>
                                     </md-input-container>
-                                    -
+                                    <span class="middle">-</span>
                                     <md-input-container class="small">
-                                        <input type="number" step="any" required
+                                        <input type="number" step="any" required class="number-input"
                                                ng-model="wHour.toHour"/>
                                     </md-input-container>
-                                    :
+                                    <span class="middle">:</span>
                                     <md-input-container class="small">
-                                        <input type="number" step="any" required
+                                        <input type="number" step="any" required class="number-input"
                                                ng-model="wHour.toMinute"/>
                                     </md-input-container>
-                                    <md-button class="md-raised small"
-                                               ng-click="editCalendarCtrl.deleteNormalWorkingHour(normalHour)">
-                                        Remove
-                                    </md-button>
-                                </div>
+                                </span>
+                                <img class="remove-icon" ng-src="img/remove.png"
+                                     ng-click="editCalendarCtrl.deleteWorkingHour(normalHour)"/>
                             </md-list-item>
                         </md-list>
-                        <md-button ng-show="editCalenderCtrl.new" class="md-primary" ng-click="editCalendarCtrl.saveWorkingDay()">Cancel</md-button>
-                        <md-button class="md-primary" ng-click="editCalendarCtrl.cancelWorkingDay()">Save</md-button>
+                        <md-button class="md-primary"
+                                   ng-click="editCalendarCtrl.saveWorkingDay()">
+                            Cancel
+                        </md-button>
                     </div>
                 </md-tab>
             </md-tabs>

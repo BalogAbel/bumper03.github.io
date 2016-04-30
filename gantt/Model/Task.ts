@@ -161,18 +161,19 @@ export class Task implements Hashable, ISerializable<Task> {
     }
 
     public removeFromDependency(task: Task) {
-        console.log("Removing " + task.name + " from " + this.name);
         var toRemove: Dependency[] = [];
         for(var i = 0; i < this.predecessors.length; i++) {
             if(task.id == this.predecessors[i].task.id) {
                 toRemove.push(this.predecessors[i]);
             }
         }
-        console.log(toRemove);
         for(var i= 0; i < toRemove.length; i++) {
             this.predecessors.splice(this.predecessors.indexOf(toRemove[i], 1));
         }
-        console.log(this.predecessors);
+    }
+
+    getNew():Hashable {
+        return undefined;
     }
 }
 import {Schedulable} from "./Schedulable";

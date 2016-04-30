@@ -1,18 +1,18 @@
 import {} from 'Hashable'
-import {Hashable} from "./Hashable";
+import {Hashable} from "./Hashable"
 
 export class HashSet<T extends Hashable> {
-    private set:T[];
+    private set:any;
     private _length:number;
 
     constructor() {
         this._length = 0;
-        this.set = [];
+        this.set = {};
     }
 
     put(t:T) {
         if (!this.contains(t)) this._length++;
-        this.set[t.hash()] = t;
+        this.set['hash.'+t.hash()] = t;
     }
 
     putAll(hashSet:HashSet<T>) {
@@ -33,17 +33,17 @@ export class HashSet<T extends Hashable> {
     }
 
     remove(t:T) {
-        delete this.set[t.hash()];
+        delete this.set['hash.'+t.hash()];
         this._length--;
     }
 
     removeByHash(hash:number) {
-        delete this.set[hash];
+        delete this.set['hash.'+hash];
         this._length--;
     }
 
     contains(t:T):boolean {
-        return t.hash() in this.set;
+        return ('hash.'+t.hash()) in this.set;
     }
 
     containsAll(hashSet:HashSet<T>) {
@@ -67,7 +67,22 @@ export class HashSet<T extends Hashable> {
     }
 
     toArray():T[] {
-        return this.set;
+        var result:T[] = [];
+        this.each(function (t:T):boolean {
+            result.push(t);
+            return true;
+        });
+        return result;
+    }
+
+    public deserialize(input: any, inst: T): HashSet<T> {
+        this.set = {};
+        this._length = input._length;
+        for (var prop in input.set) {
+            var item = inst.getNew().deserialize(input.set[prop]);
+            this.set["hash"+item.hash()] = item;
+        }
+        return this;
     }
 
 
