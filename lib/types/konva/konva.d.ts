@@ -151,6 +151,7 @@ declare module Konva {
         // CHECK
         getCanvas() : Canvas;
         getClassName() : string;
+        getClientRect(): SizeConfig;
         getContext() : Context;
         getDepth() : number;
         getHeight() : number;
@@ -230,7 +231,7 @@ declare module Konva {
         setAttr(attr: string, val : any): Node;
         setAttrs(attrs: NodeConfig) : void;
         setId(id: string) : Node;
-        setSize(size: any, width: number, height: number) : Node;
+        setSize(size: {width:number; height: number}) : Node;
         setZIndex(zIndex: number): void;
         shouldDrawHit() : boolean;
         show() : Node;
@@ -291,9 +292,6 @@ declare module Konva {
 
     interface ShapeConfig extends NodeConfig {
         fill?: string;
-        fillRed?: number;
-        fillGreen?: number;
-        fillBlue?: number;
         fillPatternImage?: HTMLImageElement;
         fillPatternX?: number;
         fillPatternY?: number;
@@ -324,9 +322,6 @@ declare module Konva {
         fillEnabled?: boolean;
         fillPriority?: string;
         stroke?: string;
-        strokeRed?: number;
-        strokeGreen?: number;
-        strokeBlue?: number;
         strokeWidth?: number;
         strokeScaleEnabled?: boolean;
         strokeEnabled?: boolean;
@@ -336,9 +331,6 @@ declare module Konva {
         hitFunc? : (con : Context) => void;
         drawFunc? : (con : Context) => void;
         shadowColor?: string;
-        shadowColorRed?: number;
-        shadowColorGreen?: number;
-        shadowColorBlue?: number;
         shadowBlur?: number;
         shadowOffset? : Vector2d;
         shadowOffsetX? : number;
@@ -358,12 +350,8 @@ declare module Konva {
         drawHitFromCache(alphaThreshold: number): Shape;
         fill() : string;
         fill(fill: string): Shape;
-        fillBlue() : number;
-        fillBlue(fillBlue: number): Shape;
         fillEnabled() : boolean;
         fillEnabled(fillEnabled: boolean): Shape;
-        fillGreen() : number;
-        fillGreen(fillGreen: number): Shape;
         fillLinearGradientColorStops() : string[];
         fillLinearGradientColorStops(colors: string[]): Shape;
         fillLinearGradientStartPoint(): Vector2d;
@@ -420,8 +408,6 @@ declare module Konva {
         fillPatternY(y: number): Shape;
         fillPriority(): string;
         fillPriority(priority: string): Shape;
-        fillRed() : number;
-        fillRed(fillRed: number): Shape;
         hasFill(): boolean;
         hasShadow(): boolean;
         hasStroke(): boolean;
@@ -434,14 +420,10 @@ declare module Konva {
         lineJoin(lineJoin: string): Shape;
         sceneFunc(): Function;
         sceneFunc(func: (con : Context) => {}): Shape;
-        shadowBlue() : number;
-        shadowBlue(shadowBlue: number): Shape;
         shadowColor() : string;
         shadowColor(shadowColor: string): Shape;
         shadowEnabled() : boolean;
         shadowEnabled(shadowEnabled: boolean): Shape;
-        shadowGreen() : number;
-        shadowGreen(shadowGreen: number): Shape;
         shadowOffset() : Vector2d;
         shadowOffset(shadowOffset: Vector2d): Shape;
         shadowOffsetX() : number;
@@ -450,16 +432,10 @@ declare module Konva {
         shadowOffsetY(shadowOffsetY: number): Shape;
         shadowOpacity() : number;
         shadowOpacity(shadowOpacity: number): Shape;
-        shadowRed() : number;
-        shadowRed(shadowRed: number): Shape;
+        shadowBlur() : number;
+        shadowBlur(blur: number): Shape;
         stroke() : string;
         stroke(stroke: string): Shape;
-        strokeBlue() : number;
-        strokeBlue(strokeBlue: number): Shape;
-        strokeRed() : number;
-        strokeRed(strokeRed: number): Shape;
-        strokeGreen() : number;
-        strokeGreen(strokeGreen: number): Shape;
         strokeEnabled() : boolean;
         strokeEnabled(strokeEnabled: boolean): Shape;
         strokeScaleEnabled() : boolean;
@@ -521,10 +497,10 @@ declare module Konva {
         getContext(): CanvasRenderingContext2D;
         getHeight(): number;
         getWidth(): number;
-        getPixelRation(): number;
+        getPixelRatio(): number;
         setHeight(val: number) : void;
         setWidth(val: number) : void ;
-        setPixelRation(val: number) : void;
+        setPixelRatio(val: number) : void;
         setSize(size: {width:number; height: number}) : void;
         toDataURL(mimeType: string, quality: number) : string;
         public _canvas : HTMLElement;
@@ -702,6 +678,8 @@ declare module Konva {
         fontSize(fontSize: number): Text;
         fontStyle(): string;
         fontStyle(fontStyle: string): Text;
+        fontVariant(): string;
+        fontVariant(fontVariant: string): Text;
         align(): string;
         align(align: string): Text;
         padding(): number;
@@ -847,6 +825,17 @@ declare module Konva {
         y: number;
     }
 
+
+
+
+    interface ArrowConfig extends LineConfig {
+        pointerLength: number,
+        pointerWidth: number
+    }
+
+    class Arrow extends Line {
+        constructor(ArrowCOnfig: ArrowConfig);
+    }
 }
 
 declare module "konva" {

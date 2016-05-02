@@ -18,6 +18,7 @@ var IntervalDate = (function () {
             throw TypeError();
         var other = t;
         return !(this.to.getTime() <= other.from.getTime()) || (this.from.getTime() >= other.to.getTime());
+        this.to.getDate() > other.from.getTime() && this.from.getTime() < other.to.getTime();
     };
     return IntervalDate;
 }());

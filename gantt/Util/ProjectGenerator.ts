@@ -72,8 +72,8 @@ export class ProjectGenerator {
         task21.description = 'First task of phase 2';
         task21.duration = new Duration();
         task21.duration.day = 0;
-        task21.duration.hour = 0;
-        task21.duration.minute = 10;
+        task21.duration.hour = 2;
+        task21.duration.minute = 0;
         task21.id = this.idCtr++;
         var task22:Schedulable = new Schedulable();
         task22.name = 'Task4';

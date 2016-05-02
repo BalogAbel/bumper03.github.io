@@ -12,27 +12,33 @@
     <label>Name of the project</label>
     <input ng-model="gantt.project.name" size="20"/>
 </md-input-container>
-<div id="zoom">
-    Zoom: <md-slider id="slider" ng-model="gantt.zoomLevel" min="10" max="500" ng-mouseup="gantt.handleZoom()"
-               ng-keyup="gantt.handleZoom()"></md-slider>
+
+<div ng-show="gantt.project.tasks.length > 0">
+    <div id="zoom">
+        Zoom: <md-slider id="slider" ng-model="gantt.zoomLevel" min="10" max="500" ng-mouseup="gantt.handleZoom()"
+                         ng-keyup="gantt.handleZoom()"></md-slider>
+    </div>
+
+    <md-card id="gantt">
+        <md-card-content layout="row">
+            <div id="taskWrapper" resizable>
+                <span id="tasks"></span>
+            </div>
+            <div id="timeLineWrapper" flex>
+                <span id="timeLine"></span>
+            </div>
+        </md-card-content>
+    </md-card>
+
+    <span id="arrows">
+        <span id="addBefore"><<</span>
+        <span id="addAfter">>></span>
+    </span>
+</div>
+<div ng-show="gantt.project.tasks.length == 0">
+    No task has been defined
 </div>
 
-
-<md-card id="gantt">
-    <md-card-content layout="row">
-        <div id="taskWrapper" resizable>
-            <span id="tasks"></span>
-        </div>
-        <div id="timeLineWrapper" flex>
-            <span id="timeLine"></span>
-        </div>
-    </md-card-content>
-</md-card>
-
-<span id="arrows">
-    <span id="addBefore"><<</span>
-    <span id="addAfter">>></span>
-</span>
 <md-button class="md-fab" id="add-button" ng-click="gantt.newTask()">
     +
 </md-button>

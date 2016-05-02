@@ -14,6 +14,7 @@ export class TaskDrawer {
 
     public taskGroup:Konva.Group;
     public nameGroup:Konva.Group;
+    public arrowGroup:Konva.Group;
 
     draw(layer:Konva.Layer, timeLineLayer:Konva.Layer) {
         if (TaskDrawer.taskNameSample == null || TaskDrawer.taskTimeLineSample == null)
@@ -26,7 +27,7 @@ export class TaskDrawer {
 
 
         this.nameGroup.position(TaskDrawer.actualPosition);
-        this.nameGroup.on("dblclick", (evt: any) => {
+        this.nameGroup.on("dblclick", (evt:any) => {
             var scope = <GanttCtrl>(<any>angular.element($("#gantt")).scope()).gantt;
             scope.editTask(that.task);
         });
@@ -45,13 +46,13 @@ export class TaskDrawer {
         TaskDrawer.actualPosition.y += Utils.taskLineHeight;
 
         var that = this;
-        this.taskGroup.on("dblclick", (evt: any) => {
+        this.taskGroup.on("dblclick", (evt:any) => {
             var scope = <GanttCtrl>(<any>angular.element($("#gantt")).scope()).gantt;
             scope.editTask(that.task);
         });
         this.taskGroup.on("dragstart", function (evt:any) {
             that.dragStart = evt.target.getAbsolutePosition().x;
-            if(!that.isNormalClick) {
+            if (!that.isNormalClick) {
                 var scope = <GanttCtrl>(<any>angular.element($("#gantt")).scope()).gantt;
                 scope.editTask(that.task);
                 return;
@@ -63,7 +64,7 @@ export class TaskDrawer {
         });
         this.taskGroup.on("dragend", function (evt:any) {
             var move = Math.abs(that.dragStart = evt.target.getAbsolutePosition().x - that.dragStart);
-            if(!that.isNormalClick && move < 10) evt.target.getAbsolutePosition().x = that.dragStart;
+            if (!that.isNormalClick && move < 10) evt.target.getAbsolutePosition().x = that.dragStart;
             that.dragged(evt);
         });
 
@@ -126,7 +127,7 @@ export class TaskDrawer {
         TaskDrawer.taskTimeLineSample.add(line);
     }
 
-    dragged(evt:any) {
+    private dragged(evt:any) {
         this.task.earliestStartConstraint = Utils.positionToDate(evt.target.getAbsolutePosition().x);
         ProjectDrawer.refresh();
     }
@@ -148,7 +149,6 @@ export class TaskDrawer {
             this.taskGroup.setAbsolutePosition({x: position.x + frame.timeDiff * step, y: position.y});
             if ((forward && this.taskGroup.getAbsolutePosition().x > slideToPosX) || (!forward && this.taskGroup.getAbsolutePosition().x < slideToPosX)) {
                 anim.stop();
-                this.taskGroup.setAbsolutePosition({x: slideToPosX, y: position.y});
             }
         }, layer);
         anim.start();

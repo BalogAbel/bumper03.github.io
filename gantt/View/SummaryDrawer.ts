@@ -15,13 +15,17 @@ export class SummaryDrawer extends TaskDrawer {
         if (SummaryDrawer.summarySample == null) this.createSummarySample();
 
         this.taskGroup = <Konva.Group>SummaryDrawer.summarySample.clone({});
+
         this.taskGroup.position({
             x: Utils.dateToPosition(this.getTask().start),
             y: TaskDrawer.actualPosition.y
         });
 
+
         var durationRect = <Konva.Text>this.taskGroup.find('.durationRect')[0];
-        durationRect.width(Utils.dateToPosition(this.getTask().finish) - Utils.dateToPosition(this.getTask().start));
+        var width = Utils.dateToPosition(this.getTask().finish) - Utils.dateToPosition(this.getTask().start)
+        durationRect.width(width);
+        
         var that = this;
         timeLineLayer.add(this.taskGroup);
 

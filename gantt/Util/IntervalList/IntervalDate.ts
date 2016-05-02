@@ -23,6 +23,7 @@ export class IntervalDate implements IInterval {
         if (!(t instanceof IntervalDate)) throw TypeError();
         var other = <IntervalDate>t;
         return !(this.to.getTime() <= other.from.getTime()) || (this.from.getTime() >= other.to.getTime());
+        this.to.getDate() > other.from.getTime() && this.from.getTime() < other.to.getTime()
     }
 
 

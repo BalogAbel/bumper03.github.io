@@ -11,10 +11,6 @@ var ProjectDrawer = (function () {
         Utils_1.Utils.finishDate = new Date(this.project.finish.getTime());
         Utils_1.Utils.startDate.setDate(Utils_1.Utils.startDate.getDate() - 14);
         Utils_1.Utils.finishDate.setDate(Utils_1.Utils.finishDate.getDate() + 14);
-        //$("#timeLineWrapper").animate({
-        //    scrollLeft: 7 * Utils.dayWidth
-        //}, 1);
-        this.handleScroll();
         this.handleAddDates();
     }
     ProjectDrawer.prototype.draw = function () {
@@ -31,6 +27,12 @@ var ProjectDrawer = (function () {
         for (var i = 0; i < this.taskDrawers.length; i++) {
             this.taskDrawers[i].draw(this.taskLayer, this.timeLineLayer);
         }
+        this.arrowGroup = new Konva.Group();
+        this.depDrawers = TaskDrawerFactory_1.TaskDrawerFactory.getDependencyDrawers();
+        for (var i = 0; i < this.depDrawers.length; i++) {
+            this.arrowGroup.add(this.depDrawers[i].getArrow());
+        }
+        this.timeLineLayer.add(this.arrowGroup);
         taskStage.add(this.taskLayer);
         taskStage.height(TaskDrawer_1.TaskDrawer.actualPosition.y);
         var timeLineStage = new Konva.Stage({
@@ -42,8 +44,7 @@ var ProjectDrawer = (function () {
         var timelineDrawer = new TimeLineDrawer_1.TimeLineDrawer();
         timelineDrawer.draw(this.timeLineLayer);
         timeLineStage.add(this.timeLineLayer);
-        timeLineStage.height(Utils_1.Utils.getCanvasHeight());
-        // var that = this;
+        timeLineStage.height(TaskDrawer_1.TaskDrawer.actualPosition.y);
         this.scrollToDate(this.project.start);
     };
     ProjectDrawer.refresh = function () {
@@ -52,20 +53,25 @@ var ProjectDrawer = (function () {
         }
     };
     ProjectDrawer.prototype.update = function () {
+        var _this = this;
+        this.arrowGroup.removeChildren();
         this.project.schedule();
         for (var i = 0; i < this.taskDrawers.length; i++) {
             this.taskDrawers[i].update(this.timeLineLayer);
         }
+        setTimeout(function () {
+            for (var i = 0; i < _this.depDrawers.length; i++) {
+                _this.arrowGroup.add(_this.depDrawers[i].getArrow());
+            }
+        }, 300);
         //ProjectDrawer._instance.draw();
     };
     ProjectDrawer.prototype.generateTaskDrawers = function () {
         this.taskDrawers = [];
+        TaskDrawerFactory_1.TaskDrawerFactory.reset();
         for (var i = 0; i < this.project.tasks.length; i++) {
             this.taskDrawers.push(TaskDrawerFactory_1.TaskDrawerFactory.getTaskDrawer(this.project.tasks[i]));
         }
-    };
-    ProjectDrawer.prototype.handleScroll = function () {
-        var that = this;
     };
     ProjectDrawer.prototype.handleAddDates = function () {
         var that = this;
@@ -127,7 +133,6 @@ var ProjectDrawer = (function () {
     ProjectDrawer.prototype.addDays = function (date, days) {
         var result = new Date(date.getTime());
         result.setDate(result.getDate() + days);
-        //console.log(date.toLocaleString() + " + " + days +" days = " + result.toLocaleString());
         return result;
     };
     ProjectDrawer._instance = null;

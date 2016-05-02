@@ -19,6 +19,9 @@ var TimeLineDrawer = (function () {
             dayNode.position({ x: Utils_1.Utils.dayWidth * i, y: dayNode.position().y });
             date.setDate(date.getDate() + 1);
         }
+        // console.log(Utils.startDate);
+        // console.log(Utils.finishDate);
+        // console.log(layer);
     };
     TimeLineDrawer.prototype.getSingleDay = function (date) {
         var node = TimeLineDrawer.sampleDay.clone({});
@@ -33,6 +36,7 @@ var TimeLineDrawer = (function () {
             node.find('.breakRect')[0].remove();
         }
         dateText.text(this.padding(date.getMonth() + 1, 2) + ". " + this.padding(date.getDate(), 2) + ".");
+        // console.log(node)
         return node;
     };
     TimeLineDrawer.prototype.getSingleHour = function (hour) {

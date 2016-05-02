@@ -13,7 +13,7 @@ import {ProjectGenerator} from "./Util/ProjectGenerator";
 export class GanttCtrl {
 
     zoomLevel:number;
-    private project:Project;
+    project:Project;
     private projectDrawer:ProjectDrawer;
 
     constructor(private ProjectService:ProjectService,

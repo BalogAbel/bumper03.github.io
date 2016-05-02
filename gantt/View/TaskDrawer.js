@@ -120,7 +120,6 @@ var TaskDrawer = (function () {
             _this.taskGroup.setAbsolutePosition({ x: position.x + frame.timeDiff * step, y: position.y });
             if ((forward && _this.taskGroup.getAbsolutePosition().x > slideToPosX) || (!forward && _this.taskGroup.getAbsolutePosition().x < slideToPosX)) {
                 anim.stop();
-                _this.taskGroup.setAbsolutePosition({ x: slideToPosX, y: position.y });
             }
         }, layer);
         anim.start();

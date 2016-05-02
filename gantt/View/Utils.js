@@ -6,7 +6,7 @@ var Utils = (function () {
         return $("#timeLineWrapper").width();
     };
     Utils.getCanvasHeight = function () {
-        return $("#taskWrapper").height();
+        return $("#taskWrapper").outerHeight();
     };
     Utils.dateToPosition = function (date) {
         var days = (date.getTime() - this.startDate.getTime()) / 1000 / 60 / 60 / 24;

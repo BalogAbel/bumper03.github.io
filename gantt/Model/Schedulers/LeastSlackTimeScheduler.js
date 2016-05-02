@@ -16,30 +16,38 @@ var LeastSlackTimeScheduler = (function (_super) {
     LeastSlackTimeScheduler.prototype.schedule = function (tasksParam) {
         this.resourceManager = new ResourceManager_1.ResourceManager();
         var tasks = tasksParam.slice(0);
-        tasks.sort(function (t, t2) {
+        tasks = tasks.sort(function (t, t2) {
             var slackTime1 = t.latestFinish.getTime() - t.earliestFinish.getTime();
             var slackTime2 = t2.latestFinish.getTime() - t2.earliestFinish.getTime();
             return slackTime1 - slackTime2;
         });
         var completed = [];
         while (tasks.length > 0) {
+            console.log(completed.length);
             var taskToSchedule = null;
-            tasks.some(function (task) {
-                var predecessors = task.getPredecessors();
-                for (var i = 0; i < predecessors.length; i++) {
-                    var pred = predecessors[i];
-                    if (completed.indexOf(pred.task) < 0)
-                        return false;
+            for (var i = 0; i < tasks.length && taskToSchedule == null; i++) {
+                console.log("-" + tasks[i].id + "-" + tasks[i].name);
+                var ready = tasks[i].getPredecessors().every(function (pred) {
+                    for (var j = 0; j < completed.length; j++) {
+                        if (pred.task.id == completed[j].id)
+                            return true;
+                    }
+                    return false;
+                });
+                if (ready) {
+                    console.log("----" + tasks[i].name);
+                    taskToSchedule = tasks[i];
                 }
-                taskToSchedule = task;
-                return true;
-            });
+            }
             if (taskToSchedule != null) {
                 this.allocateResources(taskToSchedule);
                 completed.push(taskToSchedule);
                 var index = tasks.indexOf(taskToSchedule);
                 if (index > -1)
                     tasks.splice(index, 1);
+            }
+            else {
+                throw ("error");
             }
         }
     };
@@ -56,22 +64,7 @@ var LeastSlackTimeScheduler = (function (_super) {
         }
         var finish = workingCalendar.add(start, task.duration);
         var allocationSucces = false;
-        //while(!allocationSucces) {
-        //	allocationSucces = true;
-        //	var resources = task.getResourceUsages();
         var newStart = this.resourceManager.allocateTask(task, start);
-        //resources.forEach(resource => {
-        //	for(var i = 0; i < resource.need; i++) {
-        //		var newStart = that.resourceManager.allocateResource(resource.resource, start, task.duration);
-        //		if(newStart != null) {
-        //			allocationSucces = false;
-        //			start.setTime(newStart.getTime());
-        //			finish = workingCalendar.add(newStart, task.duration);
-        //			return;
-        //		}
-        //	}
-        //});
-        //}
         task.start = newStart;
         task.finish = workingCalendar.add(newStart, task.duration);
         if (task.parent != null) {

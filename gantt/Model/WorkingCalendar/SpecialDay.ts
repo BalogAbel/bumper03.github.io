@@ -20,13 +20,13 @@ export class SpecialDay implements Hashable{
     }
 
 
-    deserialize(input:any):Hashable {
+    deserialize(input:any):SpecialDay {
         this.date = new Date(input.date);
         this.workingDay = new WorkingDay().deserialize(input.workingDay);
         return this;
     }
 
-    getNew():Hashable {
+    getNew():SpecialDay {
         return new SpecialDay();
     }
 

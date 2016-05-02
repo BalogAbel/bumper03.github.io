@@ -21,7 +21,8 @@ var SummaryDrawer = (function (_super) {
             y: TaskDrawer_1.TaskDrawer.actualPosition.y
         });
         var durationRect = this.taskGroup.find('.durationRect')[0];
-        durationRect.width(Utils_1.Utils.dateToPosition(this.getTask().finish) - Utils_1.Utils.dateToPosition(this.getTask().start));
+        var width = Utils_1.Utils.dateToPosition(this.getTask().finish) - Utils_1.Utils.dateToPosition(this.getTask().start);
+        durationRect.width(width);
         var that = this;
         timeLineLayer.add(this.taskGroup);
         _super.prototype.draw.call(this, layer, timeLineLayer);

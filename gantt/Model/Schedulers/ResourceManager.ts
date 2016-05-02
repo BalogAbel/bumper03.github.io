@@ -15,11 +15,11 @@ export class ResourceManager {
         this.resourceUsage = [];
     }
 
-    save():void {
+    private save():void {
         this.savedResourceUsage = angular.copy(this.resourceUsage);
     }
 
-    revert():void {
+    private revert():void {
         this.resourceUsage = this.savedResourceUsage;
         this.savedResourceUsage = null;
     }

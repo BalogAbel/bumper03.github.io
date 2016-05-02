@@ -23,7 +23,8 @@ var SchedulableDrawer = (function (_super) {
             y: TaskDrawer_1.TaskDrawer.actualPosition.y + Utils_1.Utils.taskLineHeight * 0.15
         });
         var durationRect = this.taskGroup.find('.durationRect')[0];
-        durationRect.width(Utils_1.Utils.dateToPosition(this.getTask().finish) - Utils_1.Utils.dateToPosition(this.getTask().start));
+        var width = Utils_1.Utils.dateToPosition(this.getTask().finish) - Utils_1.Utils.dateToPosition(this.getTask().start);
+        durationRect.width(width);
         if (this.getTask().earliestFinish.getTime() == this.getTask().latestFinish.getTime()) {
             durationRect.fill("#FFFF85");
         }

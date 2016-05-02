@@ -23,7 +23,9 @@ export class SchedulableDrawer extends TaskDrawer {
 
 
         var durationRect = <Konva.Rect>this.taskGroup.find('.durationRect')[0];
-        durationRect.width(Utils.dateToPosition(this.getTask().finish) - Utils.dateToPosition(this.getTask().start));
+        var width = Utils.dateToPosition(this.getTask().finish) - Utils.dateToPosition(this.getTask().start);
+        durationRect.width(width);
+
         if (this.getTask().earliestFinish.getTime() == this.getTask().latestFinish.getTime()) {
             durationRect.fill("#FFFF85");
         }

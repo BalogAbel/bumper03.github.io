@@ -3,12 +3,15 @@ import {TaskDrawer} from "./TaskDrawer";
 import {Utils} from "./Utils";
 import {TimeLineDrawer} from "./TimeLineDrawer";
 import {TaskDrawerFactory} from "./TaskDrawerFactory";
+import {DependencyDrawer} from "./DependencyDrawer";
 export class ProjectDrawer {
     private project:Project;
     private taskDrawers:TaskDrawer[];
     private static _instance:ProjectDrawer = null;
     private taskLayer:Konva.Layer;
     private timeLineLayer:Konva.Layer;
+    private arrowGroup: Konva.Group;
+    private depDrawers:DependencyDrawer[];
 
     constructor(project:Project) {
         ProjectDrawer._instance = this;
@@ -20,11 +23,6 @@ export class ProjectDrawer {
         Utils.startDate.setDate(Utils.startDate.getDate() - 14);
         Utils.finishDate.setDate(Utils.finishDate.getDate() + 14);
 
-        //$("#timeLineWrapper").animate({
-        //    scrollLeft: 7 * Utils.dayWidth
-        //}, 1);
-
-        this.handleScroll();
         this.handleAddDates();
 
     }
@@ -45,6 +43,14 @@ export class ProjectDrawer {
             this.taskDrawers[i].draw(this.taskLayer, this.timeLineLayer);
         }
 
+        this.arrowGroup = new Konva.Group();
+        this.depDrawers = TaskDrawerFactory.getDependencyDrawers();
+        for(var i = 0; i < this.depDrawers.length; i++) {
+            this.arrowGroup.add(this.depDrawers[i].getArrow());
+        }
+        this.timeLineLayer.add(this.arrowGroup);
+
+
         taskStage.add(this.taskLayer);
         taskStage.height(TaskDrawer.actualPosition.y);
 
@@ -53,14 +59,13 @@ export class ProjectDrawer {
             width: Utils.getCanvasWidth(),
             height: 100
         });
+
         timeLineStage.clear();
         var timelineDrawer = new TimeLineDrawer();
         timelineDrawer.draw(this.timeLineLayer);
 
         timeLineStage.add(this.timeLineLayer);
-        timeLineStage.height(Utils.getCanvasHeight());
-
-        // var that = this;
+        timeLineStage.height(TaskDrawer.actualPosition.y);
         this.scrollToDate(this.project.start);
 
     }
@@ -72,22 +77,26 @@ export class ProjectDrawer {
     }
 
     update():void {
+        this.arrowGroup.removeChildren();
         this.project.schedule();
         for (var i = 0; i < this.taskDrawers.length; i++) {
             this.taskDrawers[i].update(this.timeLineLayer);
         }
+        setTimeout(() => {
+            for(var i = 0; i < this.depDrawers.length; i++) {
+                this.arrowGroup.add(this.depDrawers[i].getArrow());
+            }
+        }, 300);
+
         //ProjectDrawer._instance.draw();
     }
 
     generateTaskDrawers() {
         this.taskDrawers = [];
+        TaskDrawerFactory.reset();
         for (var i:number = 0; i < this.project.tasks.length; i++) {
             this.taskDrawers.push(TaskDrawerFactory.getTaskDrawer(this.project.tasks[i]));
         }
-    }
-
-    private handleScroll() {
-        var that = this;
     }
 
 
@@ -134,12 +143,12 @@ export class ProjectDrawer {
         this.centerDate(centerDate);
     }
 
-    public centerDate(date: Date):void {
+    private centerDate(date: Date):void {
         var div = $("#timeLineWrapper");
         div.scrollLeft(Utils.dateToPosition(date) - div.width() / 2.0);
     }
 
-    scrollToDate(date: Date): void {
+    private scrollToDate(date: Date): void {
         $("#timeLineWrapper").scrollLeft(Utils.dateToPosition(date));
     }
 
@@ -155,7 +164,6 @@ export class ProjectDrawer {
     private addDays(date: Date, days: number) {
         var result = new Date(date.getTime());
         result.setDate(result.getDate() + days);
-        //console.log(date.toLocaleString() + " + " + days +" days = " + result.toLocaleString());
         return result;
     }
 

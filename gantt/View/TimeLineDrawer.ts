@@ -20,6 +20,9 @@ export class TimeLineDrawer {
             dayNode.position({x: Utils.dayWidth * i, y: dayNode.position().y});
             date.setDate(date.getDate() + 1);
         }
+        // console.log(Utils.startDate);
+        // console.log(Utils.finishDate);
+        // console.log(layer);
     }
 
     private getSingleDay(date:Date):Konva.Group {
@@ -34,6 +37,7 @@ export class TimeLineDrawer {
             node.find('.breakRect')[0].remove();
         }
         dateText.text(this.padding(date.getMonth() + 1, 2) + ". " + this.padding(date.getDate(), 2) + ".");
+        // console.log(node)
         return node;
 
     }

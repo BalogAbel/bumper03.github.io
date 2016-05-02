@@ -10,7 +10,7 @@ export class Utils {
     }
 
     static getCanvasHeight():number {
-        return $("#taskWrapper").height();
+        return $("#taskWrapper").outerHeight();
     }
 
     static dateToPosition(date:Date):number {
