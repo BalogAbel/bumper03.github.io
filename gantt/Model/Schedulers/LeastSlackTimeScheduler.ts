@@ -56,15 +56,11 @@ export class LeastSlackTimeScheduler extends Scheduler implements ISerializable<
 
         var predecessors:Dependency[] = task.getPredecessors();
         var start:Date = new Date(task.earliestStart.getTime());
-        var defaultStart:Date = new Date(start.getTime());
         for (var i:number = 0; i < predecessors.length; i++) {
             var actualDate = new Date(predecessors[i].task.finish.getTime());
             actualDate = workingCalendar.add(actualDate, predecessors[i].lag);
             if (actualDate.getTime() > start.getTime()) start.setTime(actualDate.getTime());
         }
-        var finish = workingCalendar.add(start, task.duration);
-
-        var allocationSucces = false;
         var newStart = this.resourceManager.allocateTask(task, start);
         task.start = newStart;
         task.finish = workingCalendar.add(newStart, task.duration);

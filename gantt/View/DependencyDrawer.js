@@ -7,7 +7,7 @@ var DependencyDrawer = (function () {
         this.fromTask = fromTask;
         this.toTask = toTask;
     }
-    DependencyDrawer.prototype.getArrow = function () {
+    DependencyDrawer.prototype.drawArrow = function (group) {
         var points = [];
         var from = {
             x: this.fromTask.taskGroup.position().x + this.fromTask.taskGroup.find('.durationRect')[0].width(),
@@ -30,7 +30,7 @@ var DependencyDrawer = (function () {
             }
         }
         points.push(to.x, to.y);
-        return new Konva.Arrow({
+        group.add(new Konva.Arrow({
             x: 0,
             y: 0,
             points: points,
@@ -39,7 +39,7 @@ var DependencyDrawer = (function () {
             fill: 'black',
             stroke: 'black',
             strokeWidth: 1
-        });
+        }));
     };
     return DependencyDrawer;
 }());

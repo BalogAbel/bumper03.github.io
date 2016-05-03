@@ -30,7 +30,8 @@ var ProjectDrawer = (function () {
         this.arrowGroup = new Konva.Group();
         this.depDrawers = TaskDrawerFactory_1.TaskDrawerFactory.getDependencyDrawers();
         for (var i = 0; i < this.depDrawers.length; i++) {
-            this.arrowGroup.add(this.depDrawers[i].getArrow());
+            this.depDrawers[i].drawArrow(this.arrowGroup);
+            e;
         }
         this.timeLineLayer.add(this.arrowGroup);
         taskStage.add(this.taskLayer);

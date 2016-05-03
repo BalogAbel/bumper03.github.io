@@ -8,7 +8,7 @@ export class DependencyDrawer {
 
     }
 
-    getArrow(): Konva.Arrow {
+    drawArrow(group: Konva.Group) {
         var points: number[] = [];
 
 
@@ -37,7 +37,7 @@ export class DependencyDrawer {
 
 
 
-        return new Konva.Arrow({
+        group.add(new Konva.Arrow({
             x: 0,
             y: 0,
             points: points,
@@ -46,7 +46,7 @@ export class DependencyDrawer {
             fill: 'black',
             stroke: 'black',
             strokeWidth: 1
-        })
+        }));
     }
 
 }

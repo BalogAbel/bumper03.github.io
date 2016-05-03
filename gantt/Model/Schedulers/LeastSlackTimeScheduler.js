@@ -55,15 +55,12 @@ var LeastSlackTimeScheduler = (function (_super) {
         var workingCalendar = WorkingCalendar_1.WorkingCalendar.getWorkingCalendar();
         var predecessors = task.getPredecessors();
         var start = new Date(task.earliestStart.getTime());
-        var defaultStart = new Date(start.getTime());
         for (var i = 0; i < predecessors.length; i++) {
             var actualDate = new Date(predecessors[i].task.finish.getTime());
             actualDate = workingCalendar.add(actualDate, predecessors[i].lag);
             if (actualDate.getTime() > start.getTime())
                 start.setTime(actualDate.getTime());
         }
-        var finish = workingCalendar.add(start, task.duration);
-        var allocationSucces = false;
         var newStart = this.resourceManager.allocateTask(task, start);
         task.start = newStart;
         task.finish = workingCalendar.add(newStart, task.duration);
