@@ -31,7 +31,6 @@ var ProjectDrawer = (function () {
         this.depDrawers = TaskDrawerFactory_1.TaskDrawerFactory.getDependencyDrawers();
         for (var i = 0; i < this.depDrawers.length; i++) {
             this.depDrawers[i].drawArrow(this.arrowGroup);
-            e;
         }
         this.timeLineLayer.add(this.arrowGroup);
         taskStage.add(this.taskLayer);
@@ -62,10 +61,10 @@ var ProjectDrawer = (function () {
         }
         setTimeout(function () {
             for (var i = 0; i < _this.depDrawers.length; i++) {
-                _this.arrowGroup.add(_this.depDrawers[i].getArrow());
+                _this.depDrawers[i].drawArrow(_this.arrowGroup);
             }
+            _this.timeLineLayer.add(_this.arrowGroup);
         }, 300);
-        //ProjectDrawer._instance.draw();
     };
     ProjectDrawer.prototype.generateTaskDrawers = function () {
         this.taskDrawers = [];

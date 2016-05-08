@@ -46,7 +46,7 @@ export class ProjectDrawer {
         this.arrowGroup = new Konva.Group();
         this.depDrawers = TaskDrawerFactory.getDependencyDrawers();
         for(var i = 0; i < this.depDrawers.length; i++) {
-            this.depDrawers[i].drawArrow(this.arrowGroup)e;
+            this.depDrawers[i].drawArrow(this.arrowGroup);
         }
         this.timeLineLayer.add(this.arrowGroup);
 
@@ -84,11 +84,11 @@ export class ProjectDrawer {
         }
         setTimeout(() => {
             for(var i = 0; i < this.depDrawers.length; i++) {
-                this.arrowGroup.add(this.depDrawers[i].getArrow());
+                this.depDrawers[i].drawArrow(this.arrowGroup);
             }
+            this.timeLineLayer.add(this.arrowGroup)
         }, 300);
 
-        //ProjectDrawer._instance.draw();
     }
 
     generateTaskDrawers() {
