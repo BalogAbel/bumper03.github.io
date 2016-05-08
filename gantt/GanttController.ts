@@ -66,6 +66,7 @@ export class GanttCtrl {
             }
             that.project.schedule();
             that.projectDrawer.draw();
+            that.ProjectService.set(that.project);
 
         });
     }
@@ -112,6 +113,7 @@ export class GanttCtrl {
             }
             that.project.schedule();
             that.projectDrawer.draw();
+            that.ProjectService.set(that.project);
         });
     }
 
@@ -126,6 +128,7 @@ export class GanttCtrl {
         }).then(() => {
             this.project.schedule();
             this.projectDrawer.draw();
+            this.ProjectService.set(this.project);
         })
     }
 
@@ -140,6 +143,7 @@ export class GanttCtrl {
         }).then(() => {
             this.project.schedule();
             this.projectDrawer.draw();
+            this.ProjectService.set(this.project);
         })
     }
 

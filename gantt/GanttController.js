@@ -54,6 +54,7 @@ var GanttCtrl = (function () {
             }
             that.project.schedule();
             that.projectDrawer.draw();
+            that.ProjectService.set(that.project);
         });
     };
     GanttCtrl.prototype.editTask = function (task) {
@@ -107,6 +108,7 @@ var GanttCtrl = (function () {
             }
             that.project.schedule();
             that.projectDrawer.draw();
+            that.ProjectService.set(that.project);
         });
     };
     GanttCtrl.prototype.editResources = function () {
@@ -121,6 +123,7 @@ var GanttCtrl = (function () {
         }).then(function () {
             _this.project.schedule();
             _this.projectDrawer.draw();
+            _this.ProjectService.set(_this.project);
         });
     };
     GanttCtrl.prototype.editCalendar = function () {
@@ -135,6 +138,7 @@ var GanttCtrl = (function () {
         }).then(function () {
             _this.project.schedule();
             _this.projectDrawer.draw();
+            _this.ProjectService.set(_this.project);
         });
     };
     return GanttCtrl;
