@@ -29,6 +29,7 @@ export class WorkingDay implements ISerializable<WorkingDay> {
     }
 
     isEnd(date:Date, backward:boolean = false):boolean {
+        if(this.workingHours.length() == 0) return true;
         if (!backward) {
             var lastWHour:WorkingHour = this.workingHours.last();
             return ((lastWHour.toHour == date.getHours() && lastWHour.toMinute <= date.getMinutes()) ||

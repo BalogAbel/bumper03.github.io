@@ -8,6 +8,7 @@ var EditCalendarController = (function () {
         this.specialDay = null;
         this.normalOpen = -1;
         this.newOpen = -1;
+        this.date = null;
     }
     EditCalendarController.prototype.deleteNormalWorkingHour = function (workingHour) {
         this.workingCalendar.normalWorkingDay.workingHours.removeLast(workingHour);
@@ -26,12 +27,17 @@ var EditCalendarController = (function () {
     };
     EditCalendarController.prototype.editSpecialDay = function (specialDay) {
         this.specialDay = specialDay;
+        this.date = new Date(this.specialDay.date.getTime());
         this.newWorkingDay = false;
     };
     EditCalendarController.prototype.saveWorkingDay = function () {
-        if (this.newWorkingDay) {
-            this.workingCalendar.specialDays.add(this.specialDay);
+        if (!this.newWorkingDay) {
+            this.workingCalendar.specialDays.deleteByDate(this.date);
         }
+        this.workingCalendar.specialDays.add(this.specialDay);
+        console.log(SpecialDay_1.SpecialDay.hash(this.specialDay.date));
+        console.log(this.workingCalendar.specialDays);
+        console.log(this.workingCalendar.specialDays.get(this.specialDay.date));
         this.specialDay = null;
     };
     EditCalendarController.prototype.addWorkingHour = function () {

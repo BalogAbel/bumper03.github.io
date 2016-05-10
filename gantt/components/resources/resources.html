@@ -17,7 +17,7 @@
                     <input type="number" step="1" required min="0"
                            ng-model="resourcesController.newResource.available">
                 </md-input-container>
-                <h3>Added resources ({{resourcesController.show}}):</h3>
+                <h3>Added resources:</h3>
                 <md-list-item ng-repeat="resource in resourcesController.resources">
                     <p>
                         <span ng-show="resourcesController.show != resource.id" ng-click="resourcesController.show = resource.id">

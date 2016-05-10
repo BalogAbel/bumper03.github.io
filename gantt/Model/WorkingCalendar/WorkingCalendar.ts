@@ -2,6 +2,8 @@ import {ISerializable} from "../../Util/Serializer";
 import {WorkingDay} from "./WorkingDay";
 import {Duration} from "./Duration";
 import {SpecialDaysList} from "./SpecialDaysList";
+import {WorkingHour} from "./WorkingHour";
+import {SpecialDay} from "./SpecialDay";
 
 export class WorkingCalendar implements ISerializable<WorkingCalendar> {
     private static _instance:WorkingCalendar = null;
@@ -20,9 +22,15 @@ export class WorkingCalendar implements ISerializable<WorkingCalendar> {
 
     }
 
+    static reset():void {
+        WorkingCalendar._instance = new WorkingCalendar();
+    }
+
     constructor() {
         this.workingDays = [, true, true, true, true, true, false, false];
         this.normalWorkingDay = new WorkingDay();
+        this.normalWorkingDay.workingHours.push(new WorkingHour(8, 0, 12, 0));
+        this.normalWorkingDay.workingHours.push(new WorkingHour(12, 30, 16, 30));
         this.specialDays = new SpecialDaysList();
     }
 
@@ -68,6 +76,10 @@ export class WorkingCalendar implements ISerializable<WorkingCalendar> {
 
     private getActualWorkingDay(date:Date, backward:boolean = false):WorkingDay {
         var sday = this.specialDays.get(date);
+        console.log(date);
+        console.log(SpecialDay.hash(date));
+        console.log(sday);
+        console.log("--------------------------------");
         if(sday != null) return sday.workingDay;
         while (!this.workingDays[date.getDay()]) {
             this.setToNextDay(date, backward);

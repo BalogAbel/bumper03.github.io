@@ -1,12 +1,14 @@
 import {ProjectGenerator} from "../gantt/Util/ProjectGenerator";
 import {Project} from "../gantt/Model/Project";
 import {ProjectService} from "../components/ProjectService";
+import {WorkingCalendar} from "../gantt/Model/WorkingCalendar/WorkingCalendar";
 
 export class WelcomeController {
     open = false;
 
     constructor(private $location:ng.ILocationService,
                 private ProjectService:ProjectService) {
+        WorkingCalendar.reset();
 
     }
 

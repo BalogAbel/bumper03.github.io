@@ -144,13 +144,9 @@ export class ProjectGenerator {
 
 
         var workingCalendar:WorkingCalendar = WorkingCalendar.getWorkingCalendar();
-        var normalWorkingDay:WorkingDay = new WorkingDay();
-        normalWorkingDay.workingHours.push(new WorkingHour(8, 0, 12, 0));
-        normalWorkingDay.workingHours.push(new WorkingHour(12, 30, 16, 30));
-        workingCalendar.normalWorkingDay = normalWorkingDay;
         var sday1 = new WorkingDay();
         sday1.workingHours.push(new WorkingHour(10, 0, 10, 10));
-        workingCalendar.specialDays.add(new SpecialDay(new Date("2016.03.18"), sday1));
+        workingCalendar.specialDays.add(new SpecialDay(new Date(), sday1));
 
         project.workingCalendar = workingCalendar;
         project.resourceTypes.push(resourceType);

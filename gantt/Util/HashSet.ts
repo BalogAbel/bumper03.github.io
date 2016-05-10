@@ -24,7 +24,7 @@ export class HashSet<T extends Hashable> {
     }
 
     get(hash: number): T {
-        return this.set[hash];
+        return this.set["hash." + hash];
     }
 
     clear() {
@@ -80,7 +80,7 @@ export class HashSet<T extends Hashable> {
         this._length = input._length;
         for (var prop in input.set) {
             var item = inst.getNew().deserialize(input.set[prop]);
-            this.set["hash"+item.hash()] = item;
+            this.set["hash."+item.hash()] = item;
         }
         return this;
     }

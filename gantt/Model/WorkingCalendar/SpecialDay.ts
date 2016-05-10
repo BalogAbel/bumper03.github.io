@@ -12,11 +12,11 @@ export class SpecialDay implements Hashable{
     }
 
     hash():number {
-        return Math.floor(this.date.getTime() /1000 / 60 / 60 / 24);
+        return SpecialDay.hash(this.date);
     }
 
     static hash(date: Date): number {
-        return Math.floor(date.getTime() /1000 / 60 / 60 / 24);
+        return date.getDate() + 100 * date.getMonth() + 10000 * date.getFullYear();
     }
 
 

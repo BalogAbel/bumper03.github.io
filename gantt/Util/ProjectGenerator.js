@@ -130,13 +130,9 @@ var ProjectGenerator = (function () {
         project.start = new Date();
         project.start.setHours(0, 0, 0, 0);
         var workingCalendar = WorkingCalendar_1.WorkingCalendar.getWorkingCalendar();
-        var normalWorkingDay = new WorkingDay_1.WorkingDay();
-        normalWorkingDay.workingHours.push(new WorkingHour_1.WorkingHour(8, 0, 12, 0));
-        normalWorkingDay.workingHours.push(new WorkingHour_1.WorkingHour(12, 30, 16, 30));
-        workingCalendar.normalWorkingDay = normalWorkingDay;
         var sday1 = new WorkingDay_1.WorkingDay();
         sday1.workingHours.push(new WorkingHour_1.WorkingHour(10, 0, 10, 10));
-        workingCalendar.specialDays.add(new SpecialDay_1.SpecialDay(new Date("2016.03.18"), sday1));
+        workingCalendar.specialDays.add(new SpecialDay_1.SpecialDay(new Date(), sday1));
         project.workingCalendar = workingCalendar;
         project.resourceTypes.push(resourceType);
         project.resourceTypes.push(resourceType2);

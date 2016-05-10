@@ -67,7 +67,7 @@
                             <md-datepicker ng-model="editCalendarCtrl.specialDay.date" md-placeholder="Enter date"></md-datepicker>
                         </div>
                         <div layout-margin>
-                            <md-button class="md-primary" ng-click="editCalendarCtrl.addWorkingHour()">
+                            <md-button ng-click="editCalendarCtrl.addWorkingHour()">
                                 Add new workhour
                             </md-button>
                         </div>
@@ -104,9 +104,9 @@
                                      ng-click="editCalendarCtrl.deleteWorkingHour(normalHour)"/>
                             </md-list-item>
                         </md-list>
-                        <md-button class="md-primary"
+                        <md-button class="md-primary small"
                                    ng-click="editCalendarCtrl.saveWorkingDay()">
-                            Cancel
+                            Save
                         </md-button>
                     </div>
                 </md-tab>

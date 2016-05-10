@@ -6,9 +6,11 @@ import {SpecialDay} from "../../Model/WorkingCalendar/SpecialDay";
 export class EditCalendarController {
     specialDay: SpecialDay = null;
 
-    private normalOpen = -1;
-    private newOpen = -1;
+    normalOpen = -1;
+    newOpen = -1;
     newWorkingDay:boolean;
+
+    date: Date = null;
 
     constructor(private $mdDialog:ng.material.IDialogService, private workingCalendar:WorkingCalendar) {
     }
@@ -34,17 +36,21 @@ export class EditCalendarController {
 
     editSpecialDay(specialDay:SpecialDay):void {
         this.specialDay = specialDay;
+        this.date = new Date(this.specialDay.date.getTime());
         this.newWorkingDay = false;
     }
 
     saveWorkingDay():void {
-        if(this.newWorkingDay) {
-            this.workingCalendar.specialDays.add(this.specialDay);
+        if(!this.newWorkingDay) {
+            this.workingCalendar.specialDays.deleteByDate(this.date);
         }
+        this.workingCalendar.specialDays.add(this.specialDay);
+        console.log(SpecialDay.hash( this.specialDay.date));
+        console.log(this.workingCalendar.specialDays);
+        console.log(this.workingCalendar.specialDays.get(this.specialDay.date));
         this.specialDay = null;
 
     }
-
 
     addWorkingHour():void {
         var lastWH = this.specialDay.workingDay.workingHours.last();

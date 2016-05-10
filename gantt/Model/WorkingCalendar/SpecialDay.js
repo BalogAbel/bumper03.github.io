@@ -8,10 +8,10 @@ var SpecialDay = (function () {
         this.workingDay = workingDay;
     }
     SpecialDay.prototype.hash = function () {
-        return Math.floor(this.date.getTime() / 1000 / 60 / 60 / 24);
+        return SpecialDay.hash(this.date);
     };
     SpecialDay.hash = function (date) {
-        return Math.floor(date.getTime() / 1000 / 60 / 60 / 24);
+        return date.getDate() + 100 * date.getMonth() + 10000 * date.getFullYear();
     };
     SpecialDay.prototype.deserialize = function (input) {
         if (!input.hasOwnProperty('date'))

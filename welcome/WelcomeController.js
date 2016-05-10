@@ -1,11 +1,13 @@
 "use strict";
 var ProjectGenerator_1 = require("../gantt/Util/ProjectGenerator");
 var Project_1 = require("../gantt/Model/Project");
+var WorkingCalendar_1 = require("../gantt/Model/WorkingCalendar/WorkingCalendar");
 var WelcomeController = (function () {
     function WelcomeController($location, ProjectService) {
         this.$location = $location;
         this.ProjectService = ProjectService;
         this.open = false;
+        WorkingCalendar_1.WorkingCalendar.reset();
     }
     WelcomeController.prototype.newEmpty = function () {
         var project = new Project_1.Project();

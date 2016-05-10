@@ -22,6 +22,8 @@ var WorkingDay = (function () {
     };
     WorkingDay.prototype.isEnd = function (date, backward) {
         if (backward === void 0) { backward = false; }
+        if (this.workingHours.length() == 0)
+            return true;
         if (!backward) {
             var lastWHour = this.workingHours.last();
             return ((lastWHour.toHour == date.getHours() && lastWHour.toMinute <= date.getMinutes()) ||

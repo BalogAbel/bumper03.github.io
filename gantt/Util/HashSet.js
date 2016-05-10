@@ -17,7 +17,7 @@ var HashSet = (function () {
         });
     };
     HashSet.prototype.get = function (hash) {
-        return this.set[hash];
+        return this.set["hash." + hash];
     };
     HashSet.prototype.clear = function () {
         this._length = 0;
@@ -65,7 +65,7 @@ var HashSet = (function () {
         this._length = input._length;
         for (var prop in input.set) {
             var item = inst.getNew().deserialize(input.set[prop]);
-            this.set["hash" + item.hash()] = item;
+            this.set["hash." + item.hash()] = item;
         }
         return this;
     };
