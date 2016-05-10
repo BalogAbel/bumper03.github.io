@@ -6,8 +6,12 @@ export class ResourcesController {
 
     constructor(private $mdDialog:ng.material.IDialogService, private resources:ResourceType[]) {
         this.newResource = new ResourceType();
-        console.log(resources);
     }
+
+    close(): void {
+       this.$mdDialog.hide();
+    }
+
 
     //addDependency(): void {
     //    this.task.dependencies.push(this.newDependency);

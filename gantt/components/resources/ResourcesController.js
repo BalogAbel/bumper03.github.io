@@ -6,8 +6,10 @@ var ResourcesController = (function () {
         this.resources = resources;
         this.show = -1;
         this.newResource = new ResourceType_1.ResourceType();
-        console.log(resources);
     }
+    ResourcesController.prototype.close = function () {
+        this.$mdDialog.hide();
+    };
     return ResourcesController;
 }());
 exports.ResourcesController = ResourcesController;
