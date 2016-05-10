@@ -14,6 +14,8 @@ var SpecialDay = (function () {
         return Math.floor(date.getTime() / 1000 / 60 / 60 / 24);
     };
     SpecialDay.prototype.deserialize = function (input) {
+        if (!input.hasOwnProperty('date'))
+            return input;
         this.date = new Date(input.date);
         this.workingDay = new WorkingDay_1.WorkingDay().deserialize(input.workingDay);
         return this;

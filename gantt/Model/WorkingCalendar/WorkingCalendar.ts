@@ -86,6 +86,7 @@ export class WorkingCalendar implements ISerializable<WorkingCalendar> {
     }
 
     deserialize(input:any):WorkingCalendar {
+        if (!input.hasOwnProperty('workingDays')) return input;
         this.workingDays = input.workingDays;
         this.normalWorkingDay = new WorkingDay().deserialize(input.normalWorkingDay);
         this.specialDays = new SpecialDaysList().deserialize(input.specialDays);

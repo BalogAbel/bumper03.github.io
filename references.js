@@ -13,7 +13,6 @@
 ///<reference path='gantt/Model/WorkingCalendar/Duration.ts'/>
 ///<reference path='gantt/Model/WorkingCalendar/WorkingHour.ts'/>
 ///<reference path='gantt/Model/WorkingCalendar/WorkingDay.ts'/>
-///<reference path='gantt/Model/WorkingCalendar/Exclusion.ts'/>
 ///<reference path='gantt/Model/WorkingCalendar/WorkingCalendar.ts'/>
 ///<reference path='gantt/Model/Schedulers/ResourceManager.ts'/>
 ///<reference path='gantt/Model/Schedulers/Scheduler.ts'/>

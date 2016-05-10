@@ -43,6 +43,7 @@ export class Summary extends Task implements ISerializable<Summary> {
     }
 
     deserialize(input:any):Summary {
+        if (!input.hasOwnProperty('tasks')) return input;
         super.deserialize(input);
         if (input.tasks != null) {
             for (var i = 0; i < input.tasks.length; i++) {

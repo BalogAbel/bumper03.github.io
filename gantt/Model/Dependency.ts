@@ -19,6 +19,7 @@ export class Dependency implements Hashable, ISerializable<Dependency> {
     }
 
     deserialize(input:any):Dependency {
+        if (!input.hasOwnProperty('id')) return input;
         this.id = input.id;
         this.task = Task.deserializeHelper(input.task);
         this.lag = new Duration().deserialize(input.lag);

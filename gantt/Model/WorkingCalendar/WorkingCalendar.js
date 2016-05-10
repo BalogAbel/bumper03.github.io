@@ -67,6 +67,8 @@ var WorkingCalendar = (function () {
         }
     };
     WorkingCalendar.prototype.deserialize = function (input) {
+        if (!input.hasOwnProperty('workingDays'))
+            return input;
         this.workingDays = input.workingDays;
         this.normalWorkingDay = new WorkingDay_1.WorkingDay().deserialize(input.normalWorkingDay);
         this.specialDays = new SpecialDaysList_1.SpecialDaysList().deserialize(input.specialDays);

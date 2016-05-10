@@ -7,6 +7,7 @@ export class ResourceUsage implements ISerializable<ResourceUsage> {
     need:number;
 
     deserialize(input:any):ResourceUsage {
+        if (!input.hasOwnProperty('resource')) return input;
         this.id = input.id;
         this.resource = new ResourceType().deserialize(input.resource);
         this.need = input.need;

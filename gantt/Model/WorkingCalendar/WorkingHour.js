@@ -89,6 +89,8 @@ var WorkingHour = (function () {
         return 0;
     };
     WorkingHour.prototype.deserialize = function (input) {
+        if (!input.hasOwnProperty('fromHour'))
+            return input;
         this.fromHour = input.fromHour;
         this.fromMinute = input.fromMinute;
         this.toHour = input.toHour;

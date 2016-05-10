@@ -113,13 +113,14 @@ var TaskDrawer = (function () {
     TaskDrawer.prototype.moveToDate = function (layer) {
         var _this = this;
         var slideToPosX = Utils_1.Utils.dateToPosition(this.task.start);
-        var step = (slideToPosX - this.taskGroup.getAbsolutePosition().x) / 100;
+        var step = (slideToPosX - this.taskGroup.getAbsolutePosition().x) / 100.0;
         var forward = this.taskGroup.getAbsolutePosition().x < slideToPosX;
         var anim = new Konva.Animation(function (frame) {
             var position = _this.taskGroup.getAbsolutePosition();
             _this.taskGroup.setAbsolutePosition({ x: position.x + frame.timeDiff * step, y: position.y });
             if ((forward && _this.taskGroup.getAbsolutePosition().x > slideToPosX) || (!forward && _this.taskGroup.getAbsolutePosition().x < slideToPosX)) {
                 anim.stop();
+                _this.taskGroup.setAbsolutePosition({ x: slideToPosX, y: position.y });
             }
         }, layer);
         anim.start();

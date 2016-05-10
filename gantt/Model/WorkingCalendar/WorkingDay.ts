@@ -100,6 +100,7 @@ export class WorkingDay implements ISerializable<WorkingDay> {
     }
 
     deserialize(input:any):WorkingDay {
+        if (!input.hasOwnProperty('workingHours')) return input;
         this.workingHours = new IntervalList<WorkingHour>().deserialize(input.workingHours);
         return this;
     }

@@ -93,6 +93,8 @@ var Task = (function () {
         return result;
     };
     Task.prototype.deserialize = function (input) {
+        if (!input.hasOwnProperty('name'))
+            return input;
         this.id = input.id;
         this.name = input.name;
         this.description = input.description;

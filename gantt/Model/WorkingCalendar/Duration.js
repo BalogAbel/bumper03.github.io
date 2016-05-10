@@ -36,6 +36,8 @@ var Duration = (function () {
         return (this.day * this.hoursPerDay + this.hour) * 60 + this.minute;
     };
     Duration.prototype.deserialize = function (input) {
+        if (!input.hasOwnProperty('hoursPerDay'))
+            return input;
         this.day = input.day;
         this.hour = input.hour;
         this.minute = input.minute;

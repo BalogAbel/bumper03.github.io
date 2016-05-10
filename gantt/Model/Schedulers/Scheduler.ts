@@ -18,8 +18,7 @@ export class Scheduler implements ISerializable<Scheduler> {
     static deserializeHelper(input:any):Scheduler {
         if (input.hasOwnProperty('leastSlackTimeScheduler'))
             return new LeastSlackTimeScheduler().deserialize(input);
-
-        throw "Not a scheduler";
+        return input;
     }
 
 }

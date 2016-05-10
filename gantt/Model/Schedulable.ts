@@ -26,7 +26,7 @@ export class Schedulable extends Task implements ISerializable<Schedulable> {
         var workingCalendar = WorkingCalendar.getWorkingCalendar();
 
         var start:Date = new Date(projectStartDate.getTime());
-        var defaultStart:Date = new Date(projectStartDate.getTime());
+        // var defaultStart:Date = new Date(projectStartDate.getTime());
         for (var i:number = 0; i < predecessors.length; i++) {
             var actualDate = new Date((<Schedulable>predecessors[i].task).earliestFinish.getTime());
             actualDate = workingCalendar.add(actualDate, predecessors[i].lag);
@@ -47,7 +47,6 @@ export class Schedulable extends Task implements ISerializable<Schedulable> {
         var workingCalendar = WorkingCalendar.getWorkingCalendar();
 
         var finish:Date = new Date(projectEndDate.getTime());
-        var defaultFinish:Date = new Date(projectEndDate.getTime());
         for (var i:number = 0; i < successors.length; i++) {
             var actualDate = new Date((<Schedulable>successors[i].task).latestStart.getTime());
             actualDate = workingCalendar.subTract(actualDate, successors[i].lag);
@@ -70,6 +69,7 @@ export class Schedulable extends Task implements ISerializable<Schedulable> {
     }
 
     deserialize(input:any):Schedulable {
+        if (!input.hasOwnProperty('duration')) return input;
         super.deserialize(input);
         this.duration = new Duration().deserialize(input.duration);
         this.earliestStart = new Date(input.earliestStart);

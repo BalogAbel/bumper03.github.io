@@ -120,6 +120,7 @@ export class Task implements Hashable, ISerializable<Task> {
     }
 
     deserialize(input:any):Task {
+        if (!input.hasOwnProperty('name')) return input;
         this.id = input.id;
 
         this.name = input.name;

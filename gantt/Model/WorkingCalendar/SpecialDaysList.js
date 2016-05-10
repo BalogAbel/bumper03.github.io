@@ -24,6 +24,8 @@ var SpecialDaysList = (function () {
         // return result;
     };
     SpecialDaysList.prototype.deserialize = function (input) {
+        if (!input.hasOwnProperty('specialDays'))
+            return input;
         this.specialDays = new HashSet_1.HashSet();
         this.specialDays.deserialize(input.specialDays, new SpecialDay_1.SpecialDay());
         return this;

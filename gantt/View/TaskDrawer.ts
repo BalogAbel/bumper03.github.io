@@ -142,13 +142,14 @@ export class TaskDrawer {
 
     moveToDate(layer:Konva.Layer) {
         var slideToPosX = Utils.dateToPosition(this.task.start);
-        var step = (slideToPosX - this.taskGroup.getAbsolutePosition().x) / 100;
+        var step = (slideToPosX - this.taskGroup.getAbsolutePosition().x) / 100.0;
         var forward = this.taskGroup.getAbsolutePosition().x < slideToPosX;
         var anim = new Konva.Animation((frame:any) => {
             var position = this.taskGroup.getAbsolutePosition();
             this.taskGroup.setAbsolutePosition({x: position.x + frame.timeDiff * step, y: position.y});
             if ((forward && this.taskGroup.getAbsolutePosition().x > slideToPosX) || (!forward && this.taskGroup.getAbsolutePosition().x < slideToPosX)) {
                 anim.stop();
+                this.taskGroup.setAbsolutePosition({x: slideToPosX, y: position.y});
             }
         }, layer);
         anim.start();

@@ -25,7 +25,7 @@ var Schedulable = (function (_super) {
         }
         var workingCalendar = WorkingCalendar_1.WorkingCalendar.getWorkingCalendar();
         var start = new Date(projectStartDate.getTime());
-        var defaultStart = new Date(projectStartDate.getTime());
+        // var defaultStart:Date = new Date(projectStartDate.getTime());
         for (var i = 0; i < predecessors.length; i++) {
             var actualDate = new Date(predecessors[i].task.earliestFinish.getTime());
             actualDate = workingCalendar.add(actualDate, predecessors[i].lag);
@@ -44,7 +44,6 @@ var Schedulable = (function (_super) {
         var successors = this.getSuccessors();
         var workingCalendar = WorkingCalendar_1.WorkingCalendar.getWorkingCalendar();
         var finish = new Date(projectEndDate.getTime());
-        var defaultFinish = new Date(projectEndDate.getTime());
         for (var i = 0; i < successors.length; i++) {
             var actualDate = new Date(successors[i].task.latestStart.getTime());
             actualDate = workingCalendar.subTract(actualDate, successors[i].lag);
@@ -63,6 +62,8 @@ var Schedulable = (function (_super) {
         });
     };
     Schedulable.prototype.deserialize = function (input) {
+        if (!input.hasOwnProperty('duration'))
+            return input;
         _super.prototype.deserialize.call(this, input);
         this.duration = new Duration_1.Duration().deserialize(input.duration);
         this.earliestStart = new Date(input.earliestStart);

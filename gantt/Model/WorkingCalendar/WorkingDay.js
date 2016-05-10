@@ -86,6 +86,8 @@ var WorkingDay = (function () {
         });
     };
     WorkingDay.prototype.deserialize = function (input) {
+        if (!input.hasOwnProperty('workingHours'))
+            return input;
         this.workingHours = new IntervalList_1.IntervalList().deserialize(input.workingHours);
         return this;
     };

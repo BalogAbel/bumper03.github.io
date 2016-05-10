@@ -38,6 +38,8 @@ var Summary = (function (_super) {
         }
     };
     Summary.prototype.deserialize = function (input) {
+        if (!input.hasOwnProperty('tasks'))
+            return input;
         _super.prototype.deserialize.call(this, input);
         if (input.tasks != null) {
             for (var i = 0; i < input.tasks.length; i++) {

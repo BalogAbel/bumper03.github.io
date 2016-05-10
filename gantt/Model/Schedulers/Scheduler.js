@@ -11,7 +11,7 @@ var Scheduler = (function () {
     Scheduler.deserializeHelper = function (input) {
         if (input.hasOwnProperty('leastSlackTimeScheduler'))
             return new LeastSlackTimeScheduler_1.LeastSlackTimeScheduler().deserialize(input);
-        throw "Not a scheduler";
+        return input;
     };
     return Scheduler;
 }());

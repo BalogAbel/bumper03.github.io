@@ -97,6 +97,7 @@ export class WorkingHour implements IComparable, IInterval, ISerializable<Workin
     }
 
     deserialize(input:any):WorkingHour {
+        if (!input.hasOwnProperty('fromHour')) return input;
         this.fromHour = input.fromHour;
         this.fromMinute = input.fromMinute;
         this.toHour = input.toHour;

@@ -23,10 +23,8 @@ var LeastSlackTimeScheduler = (function (_super) {
         });
         var completed = [];
         while (tasks.length > 0) {
-            console.log(completed.length);
             var taskToSchedule = null;
             for (var i = 0; i < tasks.length && taskToSchedule == null; i++) {
-                console.log("-" + tasks[i].id + "-" + tasks[i].name);
                 var ready = tasks[i].getPredecessors().every(function (pred) {
                     for (var j = 0; j < completed.length; j++) {
                         if (pred.task.id == completed[j].id)
@@ -35,7 +33,6 @@ var LeastSlackTimeScheduler = (function (_super) {
                     return false;
                 });
                 if (ready) {
-                    console.log("----" + tasks[i].name);
                     taskToSchedule = tasks[i];
                 }
             }

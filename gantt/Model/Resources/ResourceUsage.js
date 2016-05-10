@@ -4,6 +4,8 @@ var ResourceUsage = (function () {
     function ResourceUsage() {
     }
     ResourceUsage.prototype.deserialize = function (input) {
+        if (!input.hasOwnProperty('resource'))
+            return input;
         this.id = input.id;
         this.resource = new ResourceType_1.ResourceType().deserialize(input.resource);
         this.need = input.need;

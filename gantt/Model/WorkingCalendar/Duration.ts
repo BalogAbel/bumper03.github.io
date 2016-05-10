@@ -50,6 +50,7 @@ export class Duration implements ISerializable<Duration> {
     }
 
     deserialize(input:any):Duration {
+        if (!input.hasOwnProperty('hoursPerDay')) return input;
         this.day = input.day;
         this.hour = input.hour;
         this.minute = input.minute;

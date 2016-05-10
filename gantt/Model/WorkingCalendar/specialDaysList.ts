@@ -34,6 +34,7 @@ export class SpecialDaysList implements ISerializable<SpecialDaysList> {
     }
 
     deserialize(input:any):SpecialDaysList {
+        if (!input.hasOwnProperty('specialDays')) return input;
         this.specialDays = new HashSet<SpecialDay>();
         this.specialDays.deserialize(input.specialDays, new SpecialDay());
         return this;

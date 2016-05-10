@@ -9,6 +9,8 @@ var Dependency = (function () {
         return this.id;
     };
     Dependency.prototype.deserialize = function (input) {
+        if (!input.hasOwnProperty('id'))
+            return input;
         this.id = input.id;
         this.task = Task_1.Task.deserializeHelper(input.task);
         this.lag = new Duration_1.Duration().deserialize(input.lag);

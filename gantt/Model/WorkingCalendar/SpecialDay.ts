@@ -21,6 +21,7 @@ export class SpecialDay implements Hashable{
 
 
     deserialize(input:any):SpecialDay {
+        if (!input.hasOwnProperty('date')) return input;
         this.date = new Date(input.date);
         this.workingDay = new WorkingDay().deserialize(input.workingDay);
         return this;
