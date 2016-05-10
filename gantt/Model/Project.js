@@ -5,6 +5,7 @@ var ResourceType_1 = require("./Resources/ResourceType");
 var Scheduler_1 = require("./Schedulers/Scheduler");
 var LeastSlackTimeScheduler_1 = require("./Schedulers/LeastSlackTimeScheduler");
 var HashSet_1 = require("../Util/HashSet");
+var ProjectService_1 = require("../../components/ProjectService");
 var Project = (function () {
     function Project() {
         this.tasks = [];
@@ -31,6 +32,7 @@ var Project = (function () {
             if (that.finish.getTime() < task.finish.getTime())
                 that.finish.setTime(task.finish.getTime());
         });
+        ProjectService_1.ProjectService.getInstance().set(this);
     };
     /**
      *

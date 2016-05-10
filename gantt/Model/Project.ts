@@ -8,6 +8,7 @@ import {Scheduler} from "./Schedulers/Scheduler";
 import {LeastSlackTimeScheduler} from "./Schedulers/LeastSlackTimeScheduler";
 import {Dependency} from "./Dependency";
 import {HashSet} from "../Util/HashSet";
+import {ProjectService} from "../../components/ProjectService";
 
 export class Project implements ISerializable<Project> {
 
@@ -49,6 +50,8 @@ export class Project implements ISerializable<Project> {
             if (that.finish.getTime() < task.finish.getTime())
                 that.finish.setTime(task.finish.getTime());
         });
+
+        ProjectService.getInstance().set(this);
     }
 
     /**

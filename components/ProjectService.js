@@ -8,7 +8,11 @@ var ProjectService = (function () {
         this.$window = $window;
         this.$mdToast = $mdToast;
         this.project = null;
+        ProjectService.instance = this;
     }
+    ProjectService.getInstance = function () {
+        return ProjectService.instance;
+    };
     ProjectService.prototype.get = function () {
         if (this.project == null) {
             var projectObj = JSON.parse(localStorage.getItem("project"));

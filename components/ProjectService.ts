@@ -5,10 +5,16 @@ import IPromise = angular.IPromise;
 
 export class ProjectService {
     project:Project = null;
+    static instance: ProjectService;
 
 
     constructor(private gDriveService:GDriveService, private $mdDialog:angular.material.IDialogService,
                 private $window: angular.IWindowService, private $mdToast: ng.material.IToastService) {
+        ProjectService.instance = this;
+    }
+
+    static getInstance(): ProjectService {
+        return ProjectService.instance;
     }
 
     get():Project {
