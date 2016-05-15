@@ -76,10 +76,6 @@ export class WorkingCalendar implements ISerializable<WorkingCalendar> {
 
     private getActualWorkingDay(date:Date, backward:boolean = false):WorkingDay {
         var sday = this.specialDays.get(date);
-        console.log(date);
-        console.log(SpecialDay.hash(date));
-        console.log(sday);
-        console.log("--------------------------------");
         if(sday != null) return sday.workingDay;
         while (!this.workingDays[date.getDay()]) {
             this.setToNextDay(date, backward);

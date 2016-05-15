@@ -2,7 +2,6 @@ import {ResourceType} from "../../Model/Resources/ResourceType";
 
 export class ResourcesController {
     private newResource:ResourceType;
-    private show = -1;
 
     constructor(private $mdDialog:ng.material.IDialogService, private resources:ResourceType[]) {
         this.newResource = new ResourceType();
@@ -11,6 +10,19 @@ export class ResourcesController {
     close(): void {
        this.$mdDialog.hide();
     }
+
+    removeResource(resource: ResourceType): void {
+        var idx = this.resources.indexOf(resource);
+        if (idx == -1) return;
+        this.resources.splice(idx, 1);
+    }
+
+    addResource() {
+        this.resources.push(this.newResource);
+        this.newResource = new ResourceType();
+    }
+
+
 
 
     //addDependency(): void {

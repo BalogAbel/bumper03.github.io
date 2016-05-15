@@ -2,7 +2,6 @@
 var WorkingDay_1 = require("./WorkingDay");
 var SpecialDaysList_1 = require("./SpecialDaysList");
 var WorkingHour_1 = require("./WorkingHour");
-var SpecialDay_1 = require("./SpecialDay");
 var WorkingCalendar = (function () {
     function WorkingCalendar() {
         this.workingDays = [, true, true, true, true, true, false, false];
@@ -55,10 +54,6 @@ var WorkingCalendar = (function () {
     WorkingCalendar.prototype.getActualWorkingDay = function (date, backward) {
         if (backward === void 0) { backward = false; }
         var sday = this.specialDays.get(date);
-        console.log(date);
-        console.log(SpecialDay_1.SpecialDay.hash(date));
-        console.log(sday);
-        console.log("--------------------------------");
         if (sday != null)
             return sday.workingDay;
         while (!this.workingDays[date.getDay()]) {
