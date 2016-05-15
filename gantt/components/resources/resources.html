@@ -21,11 +21,9 @@
             <h3>Added resources:</h3>
             <md-list>
                 <md-list-item ng-repeat="resource in resourcesController.resources">
-                    <p layout layout-sm="column">
-                        {{resource.name}}&nbsp;({{resource.available}})
-                        <img class="remove-icon" ng-src="img/remove.png"
-                             ng-click="resourcesController.removeResource(resource)"/>
-                    </p>
+                    {{resource.name}}&nbsp;({{resource.available}})
+                    <img class="remove-icon" ng-src="img/remove.png"
+                         ng-click="resourcesController.removeResource(resource)"/>
                 </md-list-item>
             </md-list>
         </md-dialog-content>
