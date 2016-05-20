@@ -18,7 +18,7 @@ export class Schedulable extends Task implements ISerializable<Schedulable> {
         return result;
     }
 
-    calculateCriticalCost(projectStartDate:Date, predecessors:Dependency[] = null) {
+    calculateEarliest(projectStartDate:Date, predecessors:Dependency[] = null) {
         if (predecessors == null) {
             predecessors = this.getPredecessors();
         }

@@ -26,7 +26,7 @@ var SchedulableDrawer = (function (_super) {
         var width = Utils_1.Utils.dateToPosition(this.getTask().finish) - Utils_1.Utils.dateToPosition(this.getTask().start);
         durationRect.width(width);
         if (this.getTask().earliestFinish.getTime() == this.getTask().latestFinish.getTime()) {
-            durationRect.fill("#FFFF85");
+            durationRect.fill("#33691E");
         }
         timeLineLayer.add(this.taskGroup);
         _super.prototype.draw.call(this, layer, timeLineLayer);
@@ -50,7 +50,7 @@ var SchedulableDrawer = (function (_super) {
             x: 0,
             y: 0,
             height: Utils_1.Utils.taskLineHeight * 0.7,
-            fill: '#ADFF85',
+            fill: '#2E7D32',
             //stroke: 'black',
             //strokeWidth: 2,
             shadowColor: '#999',

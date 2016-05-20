@@ -58,7 +58,7 @@ var Project = (function () {
                         var index = remaining.indexOf(schedulable);
                         if (index > -1)
                             remaining.splice(index, 1);
-                        schedulable.calculateCriticalCost(this.start, dependencies);
+                        schedulable.calculateEarliest(this.start, dependencies);
                         if (this.earliestFinish.getTime() < schedulable.earliestFinish.getTime()) {
                             this.earliestFinish.setTime(schedulable.earliestFinish.getTime());
                         }

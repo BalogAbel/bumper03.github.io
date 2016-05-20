@@ -60,7 +60,7 @@ export class SummaryDrawer extends TaskDrawer {
             x: 0,
             y: Utils.taskLineHeight * 0.33,
             height: Utils.taskLineHeight * 0.33,
-            fill: '#99C2FF',
+            fill: '#283593',
             shadowColor: '#999',
             shadowBlur: 5,
             shadowOffsetX: 0,

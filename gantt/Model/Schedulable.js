@@ -18,7 +18,7 @@ var Schedulable = (function (_super) {
         result.put(this);
         return result;
     };
-    Schedulable.prototype.calculateCriticalCost = function (projectStartDate, predecessors) {
+    Schedulable.prototype.calculateEarliest = function (projectStartDate, predecessors) {
         if (predecessors === void 0) { predecessors = null; }
         if (predecessors == null) {
             predecessors = this.getPredecessors();
